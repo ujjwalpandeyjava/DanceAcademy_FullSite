@@ -1,0 +1,51 @@
+extends extenderBase.pug
+
+block style
+    style
+        include ../static/StyleApply.css
+block content
+    h1.h1 Apply for classes
+    div#contact-box
+        form(action='/apply' method="post")
+            .form-group
+                label(for='name') Full Name: 
+                input#name(type='text' name='name' placeholder='Enter your name')
+            .form-group
+                label(for='gender') Gender:
+                select#decotare(name='gender')
+                    option(value='' disabled='' selected='') Gender
+                    option(value='Male') Male
+                    option(value='Female') Female
+                    option(value='Other') Others
+            .form-group
+                label(for='danceForm') Choose a Dance Form:
+                select#decotare(name='danceForm')
+                    option(value='' disabled='' selected='') Select a Dance form
+                    option(value='Belly dance') Belly dance
+                    option(value='Gangnam Style') Gangnam Style
+                    option(value='Yangko Dance') Yangko Dance
+                    option(value='Salsa') Salsa
+                    option(value='Ballet') Ballet
+                    option(value='Kathak') Kathak
+                    option(value='B-boying') B-boying
+                    option(value='Break Dance') Break Dance
+                    option(value='Line dance') Line dance
+            .form-group
+                label(for='e-main-id') E-mail: 
+                input#e-main-id(type='email' name='e-main-id' placeholder='Enter your e-mail id')
+            .form-group
+                label(for='phone_no') Phone no: 
+                input#tele-no(type='tel' name='phn_no' placeholder='Enter contact number')
+            .form-group
+                label(for='gardien_phone_no.') Gardien contact no: 
+                input#tele-no(type='tel' name='gardien_phone_no' placeholder='Enter Gardien contact number')
+            .form-group
+                label(for='address') Address: 
+                input#tele-no(type='text' name='address' placeholder='Enter address')
+            .form-group
+                label(for='e-main-id') Some extra details:
+                i (optional) 
+                textarea#message( name='extra detail' rows='7' cols='20' placeholder='Enter something you want to say.')
+            input(type='submit' value='Apply' id="submitButton")
+
+
