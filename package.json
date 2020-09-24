@@ -1,4 +1,5 @@
 {
+  "srart": "app.js",
   "name": "dance-website",
   "version": "1.0.0",
   "description": "Full Dance website",
