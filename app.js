@@ -97,6 +97,6 @@ res.render('Contact', { 'title': 'Contact-Paney Dance Academy.com' });
 
 //START THE SERVER.
 app.listen(port, (req, res) => {
-    console.log(`Serves has been started on :- localhost:${port} `)
+    console.log(`Serves has been started on :- http://localhost:${port} `)
     // const honstname = '127.0.0.1';    console.log(`Serves has been started on :- http://${hostname}:${port}/`))
 });
