@@ -41,9 +41,9 @@ const Concern = mongoose.model('newQuery', toQuery);        //Name of collection
 
 
 //EXPRESS SPECIFIC STUFF/CONFIGRITION
-app.use('/static', express.static('static'));
-//app.use(express.static(__dirname + '/static'));
-app.use(express.urlencoded())                   //To get data fom the page and add mongo database.
+app.use('/assets', express.static('assets'));
+//app.use(express.static(__dirname + '/assets'));
+// app.use(express.urlencoded())                   //To get data fom the page and add mongo database.
 
 //PUG SPECIFIC STUFF
 app.set('view engine', 'pug');       //now can use .pug files. for showing html files. whithout mentioning extension.
