@@ -1,0 +1,13 @@
+/*Footer*/
+#footer {
+	display: block;
+	margin-top: 0.6rem;
+	/* background-color: #f8def8; */
+	background-color: #222122;
+	color: white;
+	text-align: center;
+}
+#footer p {
+	font-size: 0.9rem;
+	padding: 13px 0px;
+}

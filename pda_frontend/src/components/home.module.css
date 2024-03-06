@@ -1,0 +1,146 @@
+#lookImg {
+}
+#main_heading {
+}
+#sponsers {
+}
+#about {
+}
+
+/* FONTS IMPORTED */
+
+/*lookImg*/
+section#lookImg {
+	font-size: 45px;
+	position: relative;
+	height: 545px;
+	display: flex;
+	justify-content: center;
+}
+section#lookImg div {
+	margin: auto 0px;
+	text-align: center;
+}
+section#lookImg div p {
+	text-align: center;
+	font-family: cursive;
+	font-size: 20px;
+	margin: auto 0px;
+}
+#lookImg::before {
+	content: "";
+	position: absolute;
+	background: url("./assets/pictures/bg-1.jpg") no-repeat center center/cover;
+	height: 100%;
+	width: 100%;
+	opacity: 0.7;
+	left: 0;
+	right: 0;
+	z-index: -1;
+}
+
+/*Main body*/
+#main_heading {
+	font-size: 50px;
+	margin-top: 30px;
+	text-align: center;
+	color: #693131;
+}
+#main_heading #main {
+	color: black;
+	padding: 15px;
+	margin: 0 auto 5px auto;
+	display: flex;
+	font-size: 0.9rem;
+	flex-direction: row;
+	overflow: auto;
+	scrollbar-face-color: red;
+}
+div.card {
+	border: 2px solid black;
+	margin: 5px;
+	padding: 10px;
+	border-radius: 8px;
+}
+div.card h3 {
+	padding-bottom: 5px;
+}
+div.candance {
+	display: flex;
+	flex-direction: row;
+}
+div.candance div:last-of-type {
+	display: flex;
+	flex-direction: column;
+}
+div.candance div:last-of-type p {
+	padding: 5px;
+}
+.imges {
+	width: 100%;
+	height: auto;
+	flex: 1;
+}
+.imges img {
+	width: 100%;
+	height: auto;
+	min-width: 65px;
+}
+
+/*Sponsers*/
+section#sponsers {
+	background-color: #f5eff8;
+	text-align: center;
+	margin: 10px;
+	padding: 10px;
+}
+section#sponsers div {
+	display: flex;
+	flex-flow: row wrap;
+	padding: 20px;
+	margin: 0px auto;
+}
+section#sponsers h2 {
+	font-size: 50px;
+	color: #3d3d37;
+}
+section#sponsers div div img {
+	width: 80px;
+	height: auto;
+}
+
+/*About*/
+section#about {
+	padding: 12px 20px;
+	margin: 7px 10px;
+	background-color: #fcf9d9;
+}
+
+/*Media Query*/
+@media all and (max-width: 425px) {
+	#heading {
+		font-size: 40px;
+	}
+	#navbar ul {
+		flex-direction: column;
+	}
+	ul li a {
+		font-size: 18px;
+	}
+	#ab_quote {
+		bottom: 25px;
+		right: 10px;
+	}
+	#main_heading #main {
+		flex-direction: column;
+	}
+	#main_heading {
+		font-size: 43px;
+		font-weight: 600;
+	}
+}
+@media all and (max-width: 320px) {
+	section#sponsers div div img {
+		width: 50px;
+	}
+}
