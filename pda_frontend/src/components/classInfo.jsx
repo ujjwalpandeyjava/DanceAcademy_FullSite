@@ -7,11 +7,11 @@ function ClassInfo() {
   return (
     <div>
       <NavBar />
-      <h1 class={sheet.h1}>Class timings </h1>
+      <h1 className={sheet.h1}>Class timings </h1>
       <div id={sheet.classesTiming}>
         <div>
           <h2>Morning classes</h2>
-          <div class={sheet.eachTiming}>
+          <div className={sheet.eachTiming}>
             <div>10:00 am -- 11:00 pm</div>
             <div>11:30 am -- 01:00 pm</div>
             <div>01:30 pm -- 3:00 pm <i>(new batch)</i></div>
@@ -19,7 +19,7 @@ function ClassInfo() {
         </div>
         <div>
           <h2>Evening classes</h2>
-          <div class={sheet.eachTiming}>
+          <div className={sheet.eachTiming}>
             <div>3:30 pm -- 5:00 pm</div>
             <div>05:30 pm -- 07:00 pm</div>
             <div>7:30 pm -- 9:00 pm</div>

@@ -10,7 +10,7 @@ import App from './app';
 import './components/global/index.css';
 
 
-document.title = "Health Companion";
+document.title = "Pandey Dance Academy";
 const routesWithJSX = createBrowserRouter(
   createRoutesFromElements(
     <Route path="" element={<App />} >

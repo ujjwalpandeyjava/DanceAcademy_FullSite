@@ -40,7 +40,7 @@ export default function Home() {
 					<div className={sheet.card}>
 						<h2>Zumbaa</h2>
 						<div className={sheet.candance}>
-							<div className={sheet.imges}><img src={logo2} alt="" srcset="" /></div>
+							<div className={sheet.imges}><img src={logo2} alt="" srcSet="" /></div>
 							<div>
 								<p>Lorem ipsum dolor sit amet consectetur adipisicing elit.</p>
 								<p>Lorem ipsum dolor sit amet consectetur adipisicing elit.</p>
@@ -50,7 +50,7 @@ export default function Home() {
 					<div className={sheet.card}>
 						<h2>Free Dancing</h2>
 						<div className={sheet.candance}>
-							<div className={sheet.imges}><img src={logo3} alt="" srcset="" /></div>
+							<div className={sheet.imges}><img src={logo3} alt="" srcSet="" /></div>
 							<div>
 								<p>Lorem ipsum dolor sit amet consectetur adipisicing elit.</p>
 								<p>Lorem ipsum dolor sit amet consectetur adipisicing elit.</p>
@@ -62,11 +62,11 @@ export default function Home() {
 			<section id={sheet.sponsers}>
 				<h2>Sponsers</h2>
 				<div>
-					<div><img src={img0} alt="" srcset="" /></div>
-					<div><img src={img1} alt="" srcset="" /></div>
-					<div><img src={img2} alt="" srcset="" /></div>
-					<div><img src={img3} alt="" srcset="" /></div>
-					<div><img src={img4} alt="" srcset="" /></div>
+					<div><img src={img0} alt="" srcSet="" /></div>
+					<div><img src={img1} alt="" srcSet="" /></div>
+					<div><img src={img2} alt="" srcSet="" /></div>
+					<div><img src={img3} alt="" srcSet="" /></div>
+					<div><img src={img4} alt="" srcSet="" /></div>
 				</div>
 			</section>
 			<section id={sheet.about}>
