@@ -1,7 +1,7 @@
 package pandeyDanceAcademy.pda_backend.enums;
 
 public enum RESPONSE_STATUS {
-	MESSAGE("Message"), SUCCESS("Success"), SUCCESSFUL("Successful"), ERROR("Error");
+	MESSAGE("Message"), SUCCESS("Success"), SUCCESSFULL("Successfull"), ERROR("Error"), EMPTY_BODY("Empty body");
 
 	private String value;
 
