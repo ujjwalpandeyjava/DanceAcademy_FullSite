@@ -1,5 +1,7 @@
 package pandeyDanceAcademy.pda_backend.services;
 
-public class XImpl {
+import pandeyDanceAcademy.pda_backend.services.inter.XInter;
+
+public class XImpl implements XInter {
 
 }
