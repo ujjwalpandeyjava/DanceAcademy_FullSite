@@ -7,6 +7,6 @@ import org.springframework.stereotype.Repository;
 import pandeyDanceAcademy.pda_backend.model.CustomerQueryEntity;
 
 @Repository
-public interface CustomerQueryRepo extends MongoRepository<CustomerQueryEntity, ObjectId>{
+public interface CustomerQueryRepo extends MongoRepository<CustomerQueryEntity, String>{
 
 }
