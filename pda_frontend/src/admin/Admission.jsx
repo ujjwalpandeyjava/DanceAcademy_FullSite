@@ -1,7 +1,14 @@
+import Head from "./miniComp/Head"
 
 function Admission() {
   return (
-	<div>Admission</div>
+    <div>
+      <Head title={"Admission"} />
+      <div className="admission">
+        Admission
+      </div>
+
+    </div>
   )
 }
 

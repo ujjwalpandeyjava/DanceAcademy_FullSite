@@ -1,20 +1,15 @@
-import { useState } from 'react'
-import sheet from './admin.module.css'
-import { GiHamburgerMenu } from "react-icons/gi";
-import { IoMdClose } from "react-icons/io";
-import { MdAdminPanelSettings } from "react-icons/md";
-import { Link, Outlet } from 'react-router-dom';
-import { MdOutlineDashboard } from "react-icons/md";
-import { SiGooglebigquery } from "react-icons/si";
-import { GiConcentrationOrb } from "react-icons/gi";
-import { RiCustomerService2Line } from "react-icons/ri";
+import { useState } from 'react';
 import { CgProfile } from "react-icons/cg";
+import { GiConcentrationOrb, GiHamburgerMenu } from "react-icons/gi";
+import { MdOutlineDashboard, MdOutlineExitToApp } from "react-icons/md";
+import { RiCustomerService2Line } from "react-icons/ri";
+import { Link, Outlet } from 'react-router-dom';
+import sheet from './admin.module.css';
 
-import { MdOutlineExitToApp } from "react-icons/md";
 
 function Admin() {
 	const [smallWidth, setSmallWidth] = useState(false);
-	const [name, setName] = useState("Ujjwal Pandey")
+	const [name] = useState("Ujjwal Pandey")
 	return (
 		<div id={sheet.mainContainer}>
 			<div id={sheet.navbar} className={`${smallWidth ? sheet.navIconsOnly : sheet.navFull}`}>

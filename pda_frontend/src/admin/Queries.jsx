@@ -1,7 +1,13 @@
+import Head from "./miniComp/Head";
 
 
 export default function Queries() {
   return (
-    <div>Queries</div>
+    <div>
+      <Head title={"Queries"} />
+      <div className="queries">
+        Queries
+      </div>
+    </div>
   )
 }

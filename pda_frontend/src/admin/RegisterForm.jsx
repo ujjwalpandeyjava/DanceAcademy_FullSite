@@ -36,7 +36,7 @@ const RegisterForm = () => {
 				.finally(a => {
 					console.log("fin");
 					setTimeout(() => {
-						nav("../admin");
+						nav("../login");
 					}, 1000);
 				});
 		}
@@ -73,7 +73,7 @@ const RegisterForm = () => {
 						onChange={(e) => setPassword2(e.target.value)} />
 					{errorMessages.pass2 && <div className={sheet.error}>{errorMessages.pass2}</div>}
 				</div>
-				<input type="submit" className={sheet.submitBtn} value="Login" />
+				<input type="submit" className={sheet.submitBtn} value="Register" />
 				<div className={sheet.actions}>
 					<Link className={sheet.notHere} to={"../login"} relative='path'>Existing user?</Link>
 				</div>
