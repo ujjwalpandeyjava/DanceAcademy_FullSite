@@ -5,7 +5,7 @@ import { FaMapLocationDot } from 'react-icons/fa6'
 
 function FootBar() {
 	return (
-		<Fragment>
+		<div>
 			<section id={sheet.about}>
 				<div className={sheet.connect}>
 					<p>support@pandeyDanceAcademy.com</p>
@@ -24,7 +24,7 @@ function FootBar() {
 			<footer id={sheet.footer}>
 				<p>Copyright @2020 | Pandey Dance Academy.com | All right reserved</p>
 			</footer>
-		</Fragment>
+		</div>
 	)
 }
 

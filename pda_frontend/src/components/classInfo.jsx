@@ -1,6 +1,7 @@
 import NavBar from './global/navBar';
 import FootBar from './global/footBar';
 import sheet from './classInfo.module.css'
+import { Link } from 'react-router-dom';
 
 function ClassInfo() {
   return (
@@ -48,7 +49,7 @@ function ClassInfo() {
           </div>
         </div>
       </div>
-      <div id={sheet.newBatchSoon} style={{ fontSize: '23px', fontFamily: 'Yeon Sung' }}>New batches soon</div>
+      <Link to="../contact" path='route' id={sheet.newBatchSoon} style={{ fontSize: '23px', fontFamily: 'Yeon Sung' }}>Connect for personal class. </Link>
       <FootBar />
     </div>
   )
