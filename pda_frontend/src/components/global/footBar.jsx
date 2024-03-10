@@ -1,7 +1,7 @@
-import { Fragment } from 'react'
-import sheet from './footBar.module.css'
-import { SiCloudfoundry } from 'react-icons/si'
 import { FaMapLocationDot } from 'react-icons/fa6'
+import { SiCloudfoundry } from 'react-icons/si'
+import { Link } from 'react-router-dom'
+import sheet from './footBar.module.css'
 
 function FootBar() {
 	return (
@@ -19,6 +19,7 @@ function FootBar() {
 				</div >
 				<div className={sheet.address}>
 					<div><FaMapLocationDot size={"1.2em"} /> Building no-43, near mate park, Saket, new Delhi-110002</div>
+					<Link to="./user/register" relative='path'>Register</Link>
 				</div>
 			</section>
 			<footer id={sheet.footer}>

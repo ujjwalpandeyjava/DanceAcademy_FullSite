@@ -6,12 +6,14 @@ import Contact from './components/contact';
 import Home from './components/home';
 // import { Provider } from 'react-redux';
 import { Outlet, Route, RouterProvider, createBrowserRouter, createRoutesFromElements } from 'react-router-dom';
-import App from './app';
 import Admin from './admin/Admin.jsx';
+import Admission from './admin/Admission.jsx';
+import Dashboard from './admin/Dashboard.jsx';
+import LoginForm from './admin/LoginForm.jsx';
+import Queries from './admin/Queries.jsx';
+import RegisterForm from './admin/RegisterForm.jsx';
+import App from './app';
 import './components/global/index.css';
-import Dashboard from './admin/Dashboard.jsx'
-import Queries from './admin/Queries.jsx'
-import Admission from './admin/Admission.jsx'
 
 
 document.title = "Pandey Dance Academy";
@@ -19,9 +21,9 @@ const routesWithJSX = createBrowserRouter(
   createRoutesFromElements(
     <Route path="" element={<App />} >
       <Route path="user" element={<Outlet />}>
-        <Route path="" element={<h1>Login form</h1>}></Route>
-        <Route path="login" element={<h1>Login form</h1>} />
-        <Route path="register" element={<h1>Registration form</h1>} />
+        <Route path="" element={<LoginForm />} />
+        <Route path="login" element={<LoginForm />} />
+        <Route path="register" element={<RegisterForm />} />
         <Route path='admin' element={<Admin />}>
           <Route path="" element={<Dashboard />} />
           <Route path="dashboard" element={<Dashboard />} />

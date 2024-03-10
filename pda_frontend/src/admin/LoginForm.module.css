@@ -1,0 +1,95 @@
+.loginForm {
+	background: radial-gradient(rgb(250, 254, 242) 0% 45%, rgb(136, 213, 230));
+	height: 100dvh;
+	width: 100dvw;
+	display: grid;
+	place-content: center;
+	justify-items: center;
+	align-items: center;
+	justify-content: center;
+	align-content: center;
+}
+.heading {
+	font-size: 2.55rem;
+	margin: auto;
+	display: block;
+	text-align: center;
+	font-weight: bold;
+	font-family: Tahoma, Verdana, sans-serif;
+	border-bottom: 1px solid rgb(106, 106, 106);
+	margin-bottom: 1.4rem;
+}
+.loginForm > form {
+	border: 1px solid black;
+	width: 50dvw;
+	font-size: 1.25rem;
+	min-width: 350px;
+	max-width: 550px;
+	padding: 1rem 3rem 2rem 3rem;
+	border-radius: 8px;
+	background-color: white;
+	transition: all 150ms ease;
+	max-height: 90%;
+	overflow: auto;
+	margin: 1rem;
+}
+.loginForm > form:hover {
+	box-shadow: 0 0 5px gray;
+}
+.inputContainer {
+	margin-bottom: 1rem;
+}
+.inputContainer > label {
+	display: block;
+	font-weight: bold;
+	cursor: text;
+	color: rgb(52, 52, 52);
+}
+.inputContainer > input {
+	margin: 8px 0 0 5px;
+	width: 98%;
+	padding: 5px 9px;
+	border: none;
+	border-bottom: 1px solid black;
+	transition: all 150ms ease-in-out;
+}
+.inputContainer > input:is(:focus, :active) {
+	border: none;
+	border-bottom: 1px solid black;
+	outline: none;
+	font-size: 1.1em;
+}
+.submitBtn {
+	display: block;
+	width: 60%;
+	margin: auto;
+	font-size: 1.3rem;
+	padding: 0.5em;
+	background-color: #94d9e7;
+	box-shadow: 0 0 5px #7bc9d7;
+	border: 1px solid darkgray;
+	border-radius: 6px;
+}
+.submitBtn:hover {
+	box-shadow: 2px 2px 5px #7bc9d7;
+}
+.submitBtn:active {
+	background-color: #61c1d5;
+	border: 1px solid black;
+	box-shadow: 2px 2px 10px #7bc9d7;
+}
+.actions {
+	display: block;
+	text-align: right;
+	margin-top: 1.5rem;
+	text-decoration: underline;
+	font-size: 1rem;
+}
+
+.notHere {
+	color: rgb(15 15 82);
+}
+.error {
+	color: rgb(255, 123, 0);
+	font-size: small;
+}

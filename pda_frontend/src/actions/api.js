@@ -1,4 +1,4 @@
-import  axios  from "axios";
+import axios from "axios";
 
 const ax = axios.create({
 	baseURL: `http://localhost:8882`,
@@ -7,9 +7,11 @@ const ax = axios.create({
 const apiEndPoints = {
 	SIMPLE(url = '') {
 		return {
-			home: () => ax.get(url)
+			home: () => ax.get(url),
+			login: (payload) => ax.get(url, { params: { ...payload } })
 		}
 	},
+
 	ADMISSION_QUERY_V1(url = '/api/v1/admissionQuery') {
 		return {
 			save: (newRecord) => ax.post(url, newRecord),
