@@ -1,23 +1,33 @@
 #lookImg {
-}
-#main_heading {
-}
-#sponsers {
-}
-#about {
-}
-
-/* FONTS IMPORTED */
-
-/*lookImg*/
-section#lookImg {
-	font-size: 45px;
-	position: relative;
-	height: 545px;
+	font-size: 2em;
 	display: flex;
+	flex-direction: column;
 	justify-content: center;
+	align-items: center;
+	flex-wrap: nowrap;
+	min-height: 90vh;
+
+	background: url("./assets/pictures/bg_.jpg");
+	background-repeat: no-repeat;
+	background-position-y: top;
+	background-position-x: center;
+	background-attachment: fixed;
+	background-size: cover;
+	height: 100%;
+	width: 100%;
+	opacity: 0.75;
+	color: rgb(255, 255, 255);
+	font-weight: bold;
+	text-align: center;
+	padding-inline: 1em;
 }
-section#lookImg div {
+#lookImg > p {
+	font-size: 0.8em;
+	font-weight: normal;
+	font-style: italic;
+	margin-top: 0.5em;
+}
+#lookImg div {
 	margin: auto 0px;
 	text-align: center;
 }
@@ -27,40 +37,41 @@ section#lookImg div p {
 	font-size: 20px;
 	margin: auto 0px;
 }
-#lookImg::before {
-	content: "";
-	position: absolute;
-	background: url("./assets/pictures/bg-1.jpg") no-repeat center center/cover;
-	height: 100%;
-	width: 100%;
-	opacity: 0.7;
-	left: 0;
-	right: 0;
-	z-index: -1;
-}
 
 /*Main body*/
 #main_heading {
-	font-size: 50px;
-	margin-top: 30px;
+	padding: 3rem 0.5rem;
+}
+.styleHeading {
 	text-align: center;
-	color: #693131;
+	font-size: 3rem;
+	font-weight: bold;
+	margin-bottom: 1.5rem;
 }
 #main_heading #main {
-	color: black;
-	padding: 15px;
-	margin: 0 auto 5px auto;
+	padding: 1rem;
 	display: flex;
-	font-size: 0.9rem;
 	flex-direction: row;
 	overflow: auto;
-	scrollbar-face-color: red;
+	flex-wrap: wrap;
+	align-items: stretch;
+	gap: 10px;
+	justify-content: space-around;
 }
 div.card {
 	border: 2px solid black;
 	margin: 5px;
-	padding: 10px;
+	padding: 1.25rem;
 	border-radius: 8px;
+	min-width: 350px;
+	flex: 1 1;
+	transition: all 200ms ease-in-out;
+}
+.card:hover {
+	border: 2px solid rgb(28, 28, 28);
+	box-shadow:
+		rgba(0, 0, 0, 0.1) 0px 4px 12px,
+		0 0 7px -1px rgb(1, 1, 142);
 }
 div.card h3 {
 	padding-bottom: 5px;
@@ -68,6 +79,9 @@ div.card h3 {
 div.candance {
 	display: flex;
 	flex-direction: row;
+	align-items: center;
+	flex-wrap: nowrap;
+	gap: 16px;
 }
 div.candance div:last-of-type {
 	display: flex;
@@ -87,65 +101,46 @@ div.candance div:last-of-type p {
 	min-width: 65px;
 }
 
-/*Sponsers*/
-section#sponsers {
-	background-color: #f5eff8;
-	text-align: center;
-	margin: 10px;
-	padding: 10px;
+/*sponsors*/
+section#sponsors {
+    background-color: #f5eff8;
+    text-align: center;
+    padding: 3rem 0.5rem;
 }
-section#sponsers div {
+#sponsorsCards {
 	display: flex;
     flex-flow: row wrap;
-    /* padding: 20px; */
-    /* margin: 0px auto; */
     flex-direction: row;
-    flex-wrap: nowrap;
-    justify-content: space-evenly;
+    flex-wrap: wrap;
+    justify-content: space-around;
     align-items: center;
+    gap: 15px;
+    padding-block: 1.75rem;
 }
-section#sponsers h2 {
+section#sponsors > .styleHeading {
+    display: flex;
+    flex-flow: row wrap;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: space-around;
+    align-items: center;
+    gap: 15px;
+    /* padding-block: 1rem; */
+}
+section#sponsors h2 {
 	font-size: 2.7rem;
 	margin-bottom: 1rem;
 	color: #1c2333;
+	color: #1c2333;
 }
-section#sponsers div div img {
-	width: 80px;
+section#sponsors div img {
+	min-width: 100px;
+	max-width: 135px;
 	height: auto;
 }
-
-/*About*/
-section#about {
-	padding: 12px 20px;
-	margin: 7px 10px;
-	background-color: #fcf9d9;
+section#sponsors div img:hover {
+	transition: all 100ms ease;
+	filter: drop-shadow(2px 2px 6px rgba(27, 156, 126, 0.748));
 }
 
-/*Media Query*/
-@media all and (max-width: 425px) {
-	#heading {
-		font-size: 40px;
-	}
-	#navbar ul {
-		flex-direction: column;
-	}
-	ul li a {
-		font-size: 18px;
-	}
-	#ab_quote {
-		bottom: 25px;
-		right: 10px;
-	}
-	#main_heading #main {
-		flex-direction: column;
-	}
-	#main_heading {
-		font-size: 43px;
-		font-weight: 600;
-	}
-}
-@media all and (max-width: 320px) {
-	section#sponsers div div img {
-		width: 50px;
-	}
-}
+

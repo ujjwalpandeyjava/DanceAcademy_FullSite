@@ -1,4 +1,3 @@
-import React from 'react';
 import NavBar from './global/navBar';
 import FootBar from './global/footBar';
 import sheet from './contact.module.css';

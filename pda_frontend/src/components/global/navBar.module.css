@@ -1,51 +1,43 @@
-.item {
+#navbarCont {
+	background: white linear-gradient(to bottom, rgba(252, 92, 124, 0.438), rgba(106, 130, 251, 0.038));
+	cursor: auto;
+}
+#navbarCont a {
+	text-decoration: none;
+	color: black;
+	font-weight: bolder;
 }
 
+#heading > a {
+	font-size: 1.5em;
+}
 #heading {
-	position: relative;
-	font-size: 75px;
-	padding: 5px 0px;
+	padding: 5px 10px;
 	font-family: "Yeon Sung", "CarrickDancing", serif;
 	text-align: center;
-	justify-content: center;
-}
-#heading::before {
-	content: "";
-	position: absolute;
-	top: 0;
-	left: 0;
-	width: 100%;
-	z-index: -2;
-	height: 100%;
-	margin: 0;
-	/* background-repeat: no-repeat; */
-	background: linear-gradient(to bottom, rgba(252, 92, 124, 0.438), rgba(106, 130, 251, 0.038));
+	display: flex;
+	flex-direction: row;
+	flex-wrap: nowrap;
+	justify-content: space-between;
+	align-items: center;
 }
 
-/*Navigation Bar: List Stying */
 #navbar {
-	font-family: "Yeon Sung", "Hind", sans-serif;
-	position: sticky;
 	display: flex;
-	/* flex-wrap: wrap; no need*/
-	align-items: center;
-	justify-content: center;
-	background-color: rgb(12, 12, 12);
+    align-items: center;
+    justify-content: center;
+    /* background-color: rgb(12, 12, 12); */
+    flex-direction: row;
+    flex-wrap: wrap;
 }
-#navbar ul {
-	display: flex;
-	flex-flow: row wrap;
-}
-#navbar ul li {
-	list-style: none;
-	font-size: 2rem;
-}
-#navbar ul li a {
+#navbar a {
+	color: black;
+	font-size: 1.1em;
 	display: block;
-	color: white;
-	padding: 4px 23px;
+	padding: 8px 1.3em;
 	text-decoration: none;
 }
-#navbar ul li a:hover {
-	background-color: #db31ffed;
+#navbar a:hover {
+	color: white;
+	background-color: #404041ed;
 }

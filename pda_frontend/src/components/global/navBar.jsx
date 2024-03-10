@@ -1,21 +1,18 @@
-import React from 'react'
+import { Link } from 'react-router-dom';
 import sheet from './navBar.module.css';
 
-
 export default function NavBar() {
-	
+
 	return (
-		<div>
-			<div id={sheet.heading}>Pandey Dance Academy</div>
-			<nav id={sheet.navbar}>
-				<ul>
-					<li><a href="/">Home</a></li>
-					<li><a href="/apply">Apply</a></li>
-					<li><a href="/classInfo">Classes</a></li>
-					<li><a href="/home#sponsers">Sponsers</a></li>
-					<li><a href="/contact">Contact</a></li>
-				</ul>
-			</nav>
+		<div id={sheet.navbarCont}>
+			<div id={sheet.heading}><Link relative='route' to="/">Pandey Dance Academy</Link>
+				<nav id={sheet.navbar}>
+					<Link relative='route' to="/home">Home</Link>
+					<Link relative='route' to="/admission">Apply</Link>
+					<Link relative='route' to="/classInfo">Classes</Link>
+					<Link relative='route' to="/contact">Contact</Link>
+				</nav>
+			</div>
 		</div>
 	)
 }

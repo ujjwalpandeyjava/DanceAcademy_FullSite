@@ -15,15 +15,11 @@
 	align-items: center;
 	padding-bottom: 32px;
 	max-width: 800px;
-	margin: auto	;
-}
-#contactBox label {
-	margin: 3px 3px;
+	margin: auto;
 }
 #contactBox input,
 #contactBox textarea,
-#decotare ,
-#submitButton{
+#decotare {
 	padding: 2px 6px;
 	min-height: 30px;
 	width: 100%;
@@ -32,20 +28,15 @@
 	border-style: none;
 	box-shadow: 0px 0px 15px 1px rgb(233, 209, 209);
 }
-#submitButton {
-	margin: unset;
-	background-color: #5027dd7a;
-	cursor: pointer;
-	font-weight: bolder;
-	font-size: 1.3rem;
-}
 .formGroup {
-	padding: 3px;
+	padding: 4px 5px;
 	width: 100%;
+	margin-bottom: 0.6em;
 }
 .formGroup label {
 	color: rgb(22, 41, 94);
 	font-weight: 600;
+	font-size: 1.15em;
 }
 form {
 	width: 70%;
@@ -58,4 +49,26 @@ form {
 	border-radius: default;
 	border-style: default;
 	box-shadow: 0px 0px 15px 1px rgb(233, 209, 209);
+}
+
+#submitButton {
+	padding: 12px 6px;
+	width: 100%;
+	border-radius: 4px;
+	border-style: none;
+	box-shadow: 0px 0px 10px 1px rgb(233, 209, 209);
+	background-color: #5027dd7a;
+	cursor: pointer;
+	font-weight: bolder;
+	font-size: 1.3rem;
+}
+#submitButton:hover {
+	transition: all 150ms ease;
+	box-shadow:
+		0px 0px 15px 1px rgb(233, 209, 209),
+		0 0 5px #3915af7a;
+	font-size: 1.32rem;
+}
+#submitButton:active {
+	border: 1px solid black;
 }

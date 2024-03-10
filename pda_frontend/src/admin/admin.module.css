@@ -1,0 +1,94 @@
+#mainContainer {
+	display: flex;
+	flex-direction: row;
+	flex-wrap: nowrap;
+	align-items: stretch;
+	min-height: 100vh;
+	justify-content: flex-start;
+	background-color: white;
+}
+#navbar {
+	background-color: rgb(216, 216, 216);
+	display: flex;
+	flex-direction: column;
+	flex-wrap: nowrap;
+	justify-content: space-between;
+	align-items: stretch;
+	overflow: hidden;
+	font-size: 1.15rem;
+	transition: all 200ms ease;
+}
+.navFull {
+	width: 280px;
+}
+.navIconsOnly {
+	width: 4rem;
+}
+.navIconsOnly .eachOption {
+	/* display: grid; */
+	place-items: center;
+	justify-content: center;
+	align-items: center;
+	justify-items: center;
+	padding: 5px;
+}
+.navbarOptions {
+	display: flex;
+	padding: 1rem;
+
+	flex-direction: column;
+	flex-wrap: nowrap;
+	align-items: flex-start;
+	/* gap: 0.9em; */
+	font-size: 1.23rem;
+}
+.menuSwitch {
+	cursor: pointer;
+	font-size: 1.2em;
+}
+.eachOption {
+	cursor: pointer;
+	width: 100%;
+	text-decoration: none;
+	color: black;
+	display: flex;
+	flex-direction: row;
+	flex-wrap: nowrap;
+	align-items: center;
+	padding: 5px 10px 5px 3px;
+	justify-content: flex-start;
+	gap: 0.3em;
+	border-radius: 3px;
+	margin-top: 15px;
+}
+.eachOption:hover {
+	box-shadow: 1px 2px 4px gray;
+	margin-top: 17px;
+}
+.profile {
+	padding: 1rem;
+	display: flex;
+	background-color: rgb(239, 238, 238);
+	flex-direction: row;
+	flex-wrap: nowrap;
+	align-items: center;
+	justify-content: space-evenly;
+}
+.profile svg{
+	cursor: pointer;
+
+}
+.profile a {
+	font-size: 0.9em;
+	color: gray;
+	display: flex;
+	flex-direction: row;
+	flex-wrap: nowrap;
+	justify-content: space-evenly;
+	align-items: center;
+}
+#content {
+	padding: 1rem;
+	background-color: beige;
+	width: 100%;
+}
