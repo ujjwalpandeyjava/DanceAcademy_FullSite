@@ -11,7 +11,7 @@ import lombok.Data;
 import pandeyDanceAcademy.pda_backend.constants.QueryStatuses;
 
 @Data
-@Document("customerQueries")
+@Document("admissionQueries")
 public class CustomerQueryEntity {
 	@Id
 	private String id;
@@ -22,13 +22,13 @@ public class CustomerQueryEntity {
 	@NotNull(message = "DanceForm cannot be null")
 	@NotBlank(message = "DanceForm must be filled")
 	private String danceForm;
-	private String emailID;
+	private String email;
 	@NotNull(message = "Contact cannot be null")
 	@NotBlank(message = "Contact must be given for connecting purpose")
 	private String contactNo;
+	private String guardianContactNo;
 	private String address;
-	private String extraDetail;
+	private String description;
 	private Date createdDate;
 	private String status = QueryStatuses.New;
-
 }
