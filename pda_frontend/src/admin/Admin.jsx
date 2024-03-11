@@ -1,15 +1,29 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { CgProfile } from "react-icons/cg";
 import { GiConcentrationOrb, GiHamburgerMenu } from "react-icons/gi";
-import { MdOutlineDashboard, MdOutlineExitToApp } from "react-icons/md";
+import { MdOutlineDashboard, MdOutlineExitToApp, MdOutlineMovieFilter } from "react-icons/md";
 import { RiCustomerService2Line } from "react-icons/ri";
 import { Link, Outlet } from 'react-router-dom';
 import sheet from './admin.module.css';
 
 
+// https://www.npmjs.com/package/echarts for queries
 function Admin() {
 	const [smallWidth, setSmallWidth] = useState(false);
 	const [name] = useState("Ujjwal Pandey")
+	useEffect(() => {
+		window.addEventListener('resize', widthChange);
+		return () => {
+			window.removeEventListener('resize', widthChange);
+		};
+
+	}, [])
+	function widthChange() {
+		if (window.innerWidth < 500)
+			setSmallWidth(true);
+		// else setSmallWidth(false)
+	}
+
 	return (
 		<div id={sheet.mainContainer}>
 			<div id={sheet.navbar} className={`${smallWidth ? sheet.navIconsOnly : sheet.navFull}`}>
@@ -23,6 +37,9 @@ function Admin() {
 					</Link>
 					<Link to={"./admissions"} relative='path' className={sheet.eachOption}>
 						<GiConcentrationOrb /> {!smallWidth && <>Admissions Queries</>}
+					</Link>
+					<Link to={"./classes"} relative='path' className={sheet.eachOption}>
+						<MdOutlineMovieFilter /> {!smallWidth && <>Classes</>}
 					</Link>
 					<Link to={"./queries"} relative='path' className={sheet.eachOption}>
 						<RiCustomerService2Line /> {smallWidth ? null : <>Customer Queries</>}

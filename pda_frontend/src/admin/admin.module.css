@@ -4,22 +4,24 @@
 	flex-wrap: nowrap;
 	align-items: stretch;
 	min-height: 100vh;
+	min-width: 370px;
 	justify-content: flex-start;
 	background-color: white;
 }
 #navbar {
 	background-color: #d8d8d8bd;
-    display: flex;
-    flex-direction: column;
-    flex-wrap: nowrap;
-    justify-content: space-between;
-    align-items: stretch;
-    overflow: hidden;
-    font-size: 1.15rem;
-    position: sticky;
-    transition: all 200ms ease;
-    top: 0;
-    height: 100dvh;
+	display: flex;
+	flex-direction: column;
+	flex-wrap: nowrap;
+	justify-content: space-between;
+	align-items: stretch;
+	overflow: hidden;
+	font-size: 1.15rem;
+	position: sticky;
+	transition: all 200ms ease;
+	top: 0;
+	height: 100dvh;
+	min-width: 55px;
 }
 .navFull {
 	width: 280px;
@@ -77,9 +79,8 @@
 	align-items: center;
 	justify-content: space-evenly;
 }
-.profile svg{
+.profile svg {
 	cursor: pointer;
-
 }
 .profile a {
 	font-size: 0.9em;

@@ -8,6 +8,7 @@ import Home from './components/home';
 import { Outlet, Route, RouterProvider, createBrowserRouter, createRoutesFromElements } from 'react-router-dom';
 import Admin from './admin/Admin.jsx';
 import Admission from './admin/Admission.jsx';
+import Classes from './admin/Classes.jsx';
 import Dashboard from './admin/Dashboard.jsx';
 import LoginForm from './admin/LoginForm.jsx';
 import Queries from './admin/Queries.jsx';
@@ -28,6 +29,7 @@ const routesWithJSX = createBrowserRouter(
           <Route path="" element={<Dashboard />} />
           <Route path="dashboard" element={<Dashboard />} />
           <Route path="admissions" element={<Admission />} />
+          <Route path="classes" element={<Classes />} />
           <Route path="queries" element={<Queries />} />
           <Route path='*' element={<h2>Page Option Not found</h2>} />
         </Route>

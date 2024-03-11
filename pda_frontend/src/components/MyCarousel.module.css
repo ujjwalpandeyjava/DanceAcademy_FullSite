@@ -12,11 +12,9 @@
 .myCarousel > img {
     border-radius: 15px;
     filter: drop-shadow(2px 2px 13px gray);
-    /* height: 100%; */
-    /* aspect-ratio: 1/1; */
-	margin-block: 4em;
-    width: 500px;
-    max-width: 90dvw;
+    margin-block: 4em;
+    height: 480px;
+    max-height: 90dvh;
     object-fit: contain;
 }
 .actionBtn {

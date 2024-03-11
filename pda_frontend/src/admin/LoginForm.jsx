@@ -31,7 +31,7 @@ const LoginForm = () => {
 				.finally(a => {
 					setTimeout(() => {
 						nav("../admin");
-					}, 1000);
+					}, 100);
 				});
 		}
 	};
