@@ -17,7 +17,7 @@ export default function Dashboard() {
               <p>- Existing students</p>
             </div>
           </div>
-          <Link to={"../Admissions"}><button className="button-48">
+          <Link to={"./admissions"}><button className="button-48">
             <span className="text">Check out <FaArrowRight /></span>
           </button></Link>
         </section>
@@ -30,7 +30,7 @@ export default function Dashboard() {
               <p>- Add new upcoming classes</p>
             </div>
           </div>
-          <Link to={"../classes"}>
+          <Link to={"./classes"}>
             <button className="button-48">
               <span className="text">update <FaChevronRight /></span>
             </button>
@@ -46,7 +46,7 @@ export default function Dashboard() {
               <p>- Solve queries</p>
             </div>
           </div>
-          <Link to={"../queries"}>
+          <Link to={"./queries"}>
             <button className="button-48">
               <span className="text">More <FaRegHandPointRight /></span>
             </button>

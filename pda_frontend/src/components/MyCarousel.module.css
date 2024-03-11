@@ -13,9 +13,9 @@
     border-radius: 15px;
     filter: drop-shadow(2px 2px 13px gray);
     margin-block: 4em;
-    height: 480px;
-    max-height: 90dvh;
+    max-height: 480px;
     object-fit: contain;
+	max-width: 90dvw;
 }
 .actionBtn {
 	display: flex;

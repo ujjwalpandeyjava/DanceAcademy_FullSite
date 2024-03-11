@@ -32,7 +32,7 @@ function Admin() {
 						<GiHamburgerMenu />
 						{/* {smallWidth ? <IoMdClose /> : <GiHamburgerMenu />} */}
 					</div>
-					<Link to={"./dashboard"} relative='path' className={sheet.eachOption}>
+					<Link to={"."} relative='path' className={sheet.eachOption}>
 						<MdOutlineDashboard /> {!smallWidth && <>Dashboard</>}
 					</Link>
 					<Link to={"./admissions"} relative='path' className={sheet.eachOption}>
@@ -58,7 +58,7 @@ function Admin() {
 					</div>}
 				</div>
 			</div>
-			<div id={sheet.content}><Outlet /></div>
+			<div id={sheet.content} className='adminPages'><Outlet /></div>
 		</div>
 	)
 }

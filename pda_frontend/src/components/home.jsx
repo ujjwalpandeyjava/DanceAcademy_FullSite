@@ -1,15 +1,16 @@
 import { Fragment } from 'react';
-import img2 from './assets/pictures/AWS.png';
-import img1 from './assets/pictures/FB.png';
-import img4 from './assets/pictures/Vic.png';
-import img0 from './assets/pictures/amaz.png';
-import img3 from './assets/pictures/aws2.png';
-import logo1 from "./assets/pictures/logo-1.png";
-import logo2 from "./assets/pictures/logo-2.png";
-import logo3 from "./assets/pictures/logo-3.png";
+import gurukul from './assets/pictures/gurukul.png';
+import morden2 from './assets/pictures/morden2.png';
+
+import MyCarousel from './MyCarousel';
+import girl_dancing from './assets/pictures/girl_dancing.png';
+import man_dancing from './assets/pictures/man_dancing.png';
+import modern from './assets/pictures/modern.jpg';
+import mooi from './assets/pictures/mooi.jpg';
+import soyluna from './assets/pictures/soyluna.png';
+import zumba from './assets/pictures/zumba.png';
 import FootBar from './global/footBar';
 import NavBar from './global/navBar';
-import MyCarousel from './MyCarousel';
 import sheet from './home.module.css';
 
 const imageUrls = [
@@ -39,17 +40,17 @@ export default function Home() {
 					<div className={sheet.card}>
 						<h2>Hip Hop</h2>
 						<div className={sheet.candance}>
-							<div className={sheet.imges}><img src={logo1} alt="dadf" /></div>
+							<div className={sheet.imges}><img src={man_dancing} alt="dadf" /></div>
 							<div>
 								<p>Hip-hop dance, a fusion of street styles, emerged in 1970s New York.</p>
-								<p>Influenced by breaking, funk styles, and African-American culture, it’s rhythmic, freestyle, and often seen in battles. 🎶💃</p>
+								<p>Influenced by breaking, funk styles, and African-American culture, it's rhythmic, freestyle, and often seen in battles. 🎶💃</p>
 							</div>
 						</div>
 					</div>
 					<div className={sheet.card}>
 						<h2>Zumbaa</h2>
 						<div className={sheet.candance}>
-							<div className={sheet.imges}><img src={logo2} alt="" /></div>
+							<div className={sheet.imges}><img src={zumba} alt="" /></div>
 							<div>
 								<p>Zumba is one of the best-known fitness organizations in the world,</p>
 								<p>A rhythmic dance fitness program that blends energetic music with choreographed movements. A joyful way to stay active, improve coordination, and fun! 💃🎶</p>
@@ -59,7 +60,7 @@ export default function Home() {
 					<div className={sheet.card}>
 						<h2>Free Dancing</h2>
 						<div className={sheet.candance}>
-							<div className={sheet.imges}><img src={logo3} alt="" /></div>
+							<div className={sheet.imges}><img src={girl_dancing} alt="" /></div>
 							<div>
 								<p>Freestyle, the heartbeat of hip-hop, unshackles creativity.</p>
 								<p>Words flow like graffiti on city walls, rhythm syncs with heartbeat, and dancers paint the air with their souls. 🎤🎶💃</p>
@@ -71,11 +72,11 @@ export default function Home() {
 			<section id={sheet.sponsors}>
 				<div className={sheet.styleHeading}>Sponsors</div>
 				<div id={sheet.sponsorsCards}>
-					<img src={img0} alt="" />
-					<img src={img1} alt="" />
-					<img src={img2} alt="" />
-					<img src={img3} alt="" />
-					<img src={img4} alt="" />
+					<img src={mooi} alt="" />
+					<img src={gurukul} alt="" />
+					<img src={morden2} alt="" />
+					<img src={soyluna} alt="" />
+					<img src={modern} alt="" />
 				</div>
 			</section>
 			<MyCarousel images={imageUrls} />

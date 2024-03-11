@@ -24,6 +24,7 @@ import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import jakarta.validation.Valid;
@@ -48,18 +49,29 @@ public class AdmissionQueryController {
 	@PostMapping
 	public ResponseEntity<Map<String, Object>> saveQuery(
 			@Valid @RequestBody(required = true) CustomerQueryEntity body) {
-		System.out.println(body);
 		return new ResponseEntity<Map<String, Object>>(
 				Map.of("newUser", admissionQueryRepo.save(body), Constanst_STRs.Message, Constanst_STRs.Success),
 				HttpStatus.OK);
 	}
 
 	@GetMapping
-	public Page<CustomerQueryEntity> getQueryPaginated(@Valid @RequestBody(required = false) GetPagginate queryPage) {
-		Order order = queryPage.getSort() == 0 ? Order.desc(queryPage.getSortByKey())
-				: Order.asc(queryPage.getSortByKey());
-		return admissionQueryRepo
-				.findAll(PageRequest.of(queryPage.getPageNo(), queryPage.getPageSize(), Sort.by(order)));
+	public Page<CustomerQueryEntity> getQueryPaginated(@RequestParam("pageNo") int pageNo,
+			@RequestParam("pageSize") int pageSize, @RequestParam("sort") int sort,
+			@RequestParam("sortByKey") String sortByKey) {
+		if (pageNo < 0)
+			throw new IllegalArgumentException("Page number must be greater than -1.");
+
+		if (pageSize < 1 || pageSize > 50)
+			throw new IllegalArgumentException("Page size must be between 1 and 50.");
+
+		if (sort != 1 && sort != -1)
+			throw new IllegalArgumentException("Invalid sort value. Use 1 for ascending or -1 for descending.");
+
+		if (sortByKey.isEmpty())
+			throw new IllegalArgumentException("Sort key cannot be empty.");
+
+		Order order = sort == -1 ? Order.desc(sortByKey) : Order.asc(sortByKey);
+		return admissionQueryRepo.findAll(PageRequest.of(pageNo, pageSize, Sort.by(order)));
 	}
 
 	@GetMapping("/all")
@@ -162,6 +174,7 @@ class UpdateBody {
 }
 
 @Data
+@SuppressWarnings("unused")
 class GetPagginate {
 	@Min(value = 0, message = "Value cannot be lower than 0")
 	private int pageNo;

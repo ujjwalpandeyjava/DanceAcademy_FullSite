@@ -115,14 +115,14 @@ section#sponsors {
     padding: 3rem 0.5rem;
 }
 #sponsorsCards {
-	display: flex;
+    display: flex;
     flex-flow: row wrap;
     flex-direction: row;
     flex-wrap: wrap;
-    justify-content: space-around;
     align-items: center;
-    gap: 15px;
-    padding-block: 1.75rem;
+    gap: 6rem;
+    padding: 3rem;
+    justify-content: space-evenly;
 }
 section#sponsors > .styleHeading {
     display: flex;
