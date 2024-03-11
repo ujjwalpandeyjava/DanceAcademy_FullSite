@@ -8,15 +8,18 @@
 	background-color: white;
 }
 #navbar {
-	background-color: rgb(216, 216, 216);
-	display: flex;
-	flex-direction: column;
-	flex-wrap: nowrap;
-	justify-content: space-between;
-	align-items: stretch;
-	overflow: hidden;
-	font-size: 1.15rem;
-	transition: all 200ms ease;
+	background-color: #d8d8d8bd;
+    display: flex;
+    flex-direction: column;
+    flex-wrap: nowrap;
+    justify-content: space-between;
+    align-items: stretch;
+    overflow: hidden;
+    font-size: 1.15rem;
+    position: sticky;
+    transition: all 200ms ease;
+    top: 0;
+    height: 100dvh;
 }
 .navFull {
 	width: 280px;
@@ -89,6 +92,6 @@
 }
 #content {
 	padding: 1rem;
-	background-color: beige;
+	background-color: rgba(255, 255, 243, 0.68);
 	width: 100%;
 }

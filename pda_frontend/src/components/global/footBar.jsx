@@ -19,7 +19,7 @@ function FootBar() {
 				</div >
 				<div className={sheet.address}>
 					<div><FaMapLocationDot size={"1.2em"} /> Building no-43, near mate park, Saket, new Delhi-110002</div>
-					<Link to="./user/register" relative='path'>Register</Link>
+					<Link to="../user/register" relative='route'>Register</Link>
 				</div>
 			</section>
 			<footer id={sheet.footer}>
