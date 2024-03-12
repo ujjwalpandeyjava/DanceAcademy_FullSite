@@ -1,7 +1,6 @@
 import { Link } from 'react-router-dom';
+import logo from '../assets/pictures/logo__.png';
 import sheet from './navBar.module.css';
-import { GiGloop } from "react-icons/gi";import { TbCurlyLoop } from "react-icons/tb";
-import logo from '../assets/pictures/logo__.png'
 
 
 export default function NavBar() {

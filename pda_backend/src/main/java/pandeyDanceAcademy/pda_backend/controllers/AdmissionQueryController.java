@@ -35,7 +35,7 @@ import jakarta.validation.constraints.NotNull;
 import lombok.Data;
 import pandeyDanceAcademy.pda_backend.constants.Constanst_STRs;
 import pandeyDanceAcademy.pda_backend.constants.QueryStatuses;
-import pandeyDanceAcademy.pda_backend.model.CustomerQueryEntity;
+import pandeyDanceAcademy.pda_backend.entity.CustomerQueryEntity;
 import pandeyDanceAcademy.pda_backend.repository.AdimissionQueryRepo;
 
 @RestController

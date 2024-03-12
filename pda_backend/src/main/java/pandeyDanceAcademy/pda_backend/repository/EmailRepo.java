@@ -3,9 +3,9 @@ package pandeyDanceAcademy.pda_backend.repository;
 import org.springframework.data.mongodb.repository.MongoRepository;
 import org.springframework.stereotype.Repository;
 
-import pandeyDanceAcademy.pda_backend.entity.CustomerQueryEntity;
+import pandeyDanceAcademy.pda_backend.entity.EmailDetails;
 
 @Repository
-public interface AdimissionQueryRepo extends MongoRepository<CustomerQueryEntity, String>{
+public interface EmailRepo extends MongoRepository<EmailDetails, String> {
 
 }

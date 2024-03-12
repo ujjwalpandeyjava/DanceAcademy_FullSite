@@ -1,4 +1,4 @@
-package pandeyDanceAcademy.pda_backend.model;
+package pandeyDanceAcademy.pda_backend.entity;
 
 import java.util.Date;
 
@@ -12,7 +12,6 @@ import pandeyDanceAcademy.pda_backend.constants.QueryStatuses;
 
 @Data
 @Document("admissionQueries")
-@SuppressWarnings("unused")
 public class CustomerQueryEntity {
 	@Id
 	private String id;
