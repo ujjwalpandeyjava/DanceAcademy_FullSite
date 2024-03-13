@@ -8,47 +8,69 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.http.converter.HttpMessageNotReadableException;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.validation.FieldError;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import jakarta.validation.Valid;
-import pandeyDanceAcademy.pda_backend.constants.Constanst_STRs;
 import pandeyDanceAcademy.pda_backend.entity.EmailDetails;
+import pandeyDanceAcademy.pda_backend.entity.UserRegistration;
+import pandeyDanceAcademy.pda_backend.repository.UserRegistrationRepo;
 import pandeyDanceAcademy.pda_backend.service.implementation.EmailSendingService;
+import pandeyDanceAcademy.pda_backend.utlity.Generator;
 
 @RestController
-@RequestMapping("/api/v1/email")
-public class EmailController {
+@RequestMapping("api/v1/auth")
+public class AuthController {
 
+	@Autowired
+	EmailDetails eDetails;
 	@Autowired
 	private EmailSendingService emailService;
 	@Autowired
-	EmailDetails eDetails;
+	private UserRegistrationRepo userRegistrationRepo;
 
-	@PostMapping("/sendMail")
-	public ResponseEntity<String> sendMail(@Valid @RequestBody EmailDetails details) {
-		if (emailService.sendSimpleMail(details)) {
-			// Now persist to DB
-			return new ResponseEntity<String>(Constanst_STRs.Success, HttpStatus.OK);
-		} else {
-			return new ResponseEntity<String>(Constanst_STRs.Error, HttpStatus.OK);
-		}
+	@PostMapping("addNewUser")
+	public String sendOTPForRegistration(@Valid @RequestBody UserRegistration userReg) {
+		System.out.println(userReg + " --- " + eDetails);
+
+		String otpString = Generator.generateNumberedPassword(5);
+		System.out.println("otpString: " + otpString);
+		String subject = "Holla Loop Login OPT " + otpString;
+		StringBuilder body = new StringBuilder();
+		body.append("""
+				<html>
+					<body>
+						<h1>Welcome to the hoola loop</h1>
+						<p>This is your loging OTP:<br/>
+						<b>""" + otpString + """
+								</b>
+						</p>
+					</body>
+				</html>""");
+		eDetails.setRecipient(userReg.getEmailID());
+		eDetails.setSubject(subject);
+		eDetails.setMsgBody(body.toString());
+		System.out.println("=== " + emailService.sendSimpleMailWithHTMLContent(eDetails));
+		userRegistrationRepo.save(userReg);
+		return "success";
+		// create opt
+		// send main
+		// SaveNewUser to Theme DB
+		// send req back ...
+
 	}
 
-	@PostMapping("/sendMailWithAttachment")
-	public ResponseEntity<String> sendMailWithAttachment(@RequestBody EmailDetails details) {
-		if (emailService.sendMailWithAttachment(details)) {
-			// Now persist to DB
-			return new ResponseEntity<String>(Constanst_STRs.Success, HttpStatus.OK);
-		} else {
-
-			return new ResponseEntity<String>(Constanst_STRs.Error, HttpStatus.OK);
-		}
+	@GetMapping("loginReq")
+	@Transactional
+	public void loignRequest(@RequestParam(name = "mailID", required = true) String receiver) {
 	}
 
 	@ExceptionHandler({ MethodArgumentNotValidException.class, HttpMessageNotReadableException.class, IOException.class,

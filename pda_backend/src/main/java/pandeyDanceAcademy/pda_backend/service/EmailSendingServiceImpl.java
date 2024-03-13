@@ -11,6 +11,8 @@ import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.stereotype.Service;
 
 import jakarta.mail.MessagingException;
+import jakarta.mail.internet.AddressException;
+import jakarta.mail.internet.InternetAddress;
 import jakarta.mail.internet.MimeMessage;
 import pandeyDanceAcademy.pda_backend.entity.EmailDetails;
 import pandeyDanceAcademy.pda_backend.service.implementation.EmailSendingService;
@@ -63,6 +65,7 @@ public class EmailSendingServiceImpl implements EmailSendingService {
 		MimeMessage mimeMessage = javaMailSender.createMimeMessage();
 		MimeMessageHelper mimeMessageHelper;
 		try {
+
 			mimeMessageHelper = new MimeMessageHelper(mimeMessage, true);
 			mimeMessageHelper.setFrom(sender);
 			mimeMessageHelper.setTo(details.getRecipient());
@@ -75,9 +78,20 @@ public class EmailSendingServiceImpl implements EmailSendingService {
 			javaMailSender.send(mimeMessage);
 			return true;
 		} catch (MessagingException e) {
+			e.printStackTrace();
 			return false;
 		}
 
+	}
+
+	public boolean isValidEmailAddress(String email) {
+		try {
+			InternetAddress internetAddress = new InternetAddress(email);
+			internetAddress.validate();
+			return true;
+		} catch (AddressException ex) {
+			return false;
+		}
 	}
 
 }
