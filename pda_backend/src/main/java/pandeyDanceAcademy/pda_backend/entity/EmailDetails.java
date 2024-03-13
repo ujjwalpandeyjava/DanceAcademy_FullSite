@@ -19,7 +19,7 @@ public class EmailDetails {
 	@Id
 	private String id;
 	@NotBlank(message = "Whome to send?")
-	private String recipient;
+	private String recipientEmail;
 	@NotBlank(message = "Provide subject")
 	@NotNull
 	private String subject;

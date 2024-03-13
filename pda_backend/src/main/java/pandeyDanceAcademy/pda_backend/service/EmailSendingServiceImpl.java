@@ -26,10 +26,12 @@ public class EmailSendingServiceImpl implements EmailSendingService {
 	private String sender;
 
 	public boolean sendSimpleMail(EmailDetails details) {
+		if (isValidEmailAddress(details.getRecipientEmail()) == false)
+			return false;
 		try {
 			SimpleMailMessage mailMessage = new SimpleMailMessage();
 			mailMessage.setFrom(sender);
-			mailMessage.setTo(details.getRecipient());
+			mailMessage.setTo(details.getRecipientEmail());
 			mailMessage.setText(details.getMsgBody());
 			mailMessage.setSubject(details.getSubject());
 			javaMailSender.send(mailMessage);
@@ -41,12 +43,14 @@ public class EmailSendingServiceImpl implements EmailSendingService {
 	}
 
 	public boolean sendMailWithAttachment(EmailDetails details) {
+		if (isValidEmailAddress(details.getRecipientEmail()) == false)
+			return false;
 		MimeMessage mimeMessage = javaMailSender.createMimeMessage();
 		MimeMessageHelper mimeMessageHelper;
 		try {
 			mimeMessageHelper = new MimeMessageHelper(mimeMessage, true);
 			mimeMessageHelper.setFrom(sender);
-			mimeMessageHelper.setTo(details.getRecipient());
+			mimeMessageHelper.setTo(details.getRecipientEmail());
 			mimeMessageHelper.setText(details.getMsgBody());
 			mimeMessageHelper.setSubject(details.getSubject());
 			if (details.getAttachment() != null) {
@@ -62,13 +66,14 @@ public class EmailSendingServiceImpl implements EmailSendingService {
 
 	@Override
 	public boolean sendSimpleMailWithHTMLContent(EmailDetails details) {
+		if (isValidEmailAddress(details.getRecipientEmail()) == false)
+			return false;
 		MimeMessage mimeMessage = javaMailSender.createMimeMessage();
 		MimeMessageHelper mimeMessageHelper;
 		try {
-
 			mimeMessageHelper = new MimeMessageHelper(mimeMessage, true);
 			mimeMessageHelper.setFrom(sender);
-			mimeMessageHelper.setTo(details.getRecipient());
+			mimeMessageHelper.setTo(details.getRecipientEmail());
 			mimeMessageHelper.setText(details.getMsgBody(), true);
 			mimeMessageHelper.setSubject(details.getSubject());
 			if (details.getAttachment() != null) {
@@ -84,7 +89,7 @@ public class EmailSendingServiceImpl implements EmailSendingService {
 
 	}
 
-	public boolean isValidEmailAddress(String email) {
+	private boolean isValidEmailAddress(String email) {
 		try {
 			InternetAddress internetAddress = new InternetAddress(email);
 			internetAddress.validate();

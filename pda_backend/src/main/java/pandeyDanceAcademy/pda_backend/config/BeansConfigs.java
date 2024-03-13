@@ -4,6 +4,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
 import pandeyDanceAcademy.pda_backend.entity.EmailDetails;
+import pandeyDanceAcademy.pda_backend.entity.RegisteredUser;
 import pandeyDanceAcademy.pda_backend.entity.UserRegistration;
 
 @Configuration
@@ -17,6 +18,11 @@ public class BeansConfigs {
 	@Bean
 	public UserRegistration getUserRegistration() {
 		return new UserRegistration();
+	}
+
+	@Bean
+	public RegisteredUser getRegisteredUser() {
+		return new RegisteredUser();
 	}
 
 }
