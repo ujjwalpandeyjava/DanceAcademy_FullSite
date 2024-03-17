@@ -1,17 +1,27 @@
 package pandeyDanceAcademy.pda_backend.controllers;
 
+import java.io.File;
 import java.io.IOException;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 
+import org.bson.types.Binary;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.domain.Sort.Order;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.http.converter.HttpMessageNotReadableException;
 import org.springframework.validation.FieldError;
@@ -20,38 +30,101 @@ import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.multipart.MultipartFile;
+
+import com.fasterxml.jackson.databind.ObjectMapper;
 
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.Max;
 import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
+import lombok.Builder;
 import lombok.Data;
 import pandeyDanceAcademy.pda_backend.constants.Constant_String;
 import pandeyDanceAcademy.pda_backend.constants.QueryStatuses;
 import pandeyDanceAcademy.pda_backend.entity.CustomerQueryEntity;
+import pandeyDanceAcademy.pda_backend.entity.CustomerQueryEntity.CustomerQueryEntityBuilder;
+import pandeyDanceAcademy.pda_backend.entity.File_Type;
+import pandeyDanceAcademy.pda_backend.entity.File_Type.File_TypeBuilder;
 import pandeyDanceAcademy.pda_backend.repository.AdimissionQueryRepo;
 
 @RestController
 @RequestMapping("/api/v1/admissionQuery")
 @CrossOrigin(origins = { "http://localhost:3000", "http://localhost:8080" })
+//@MultipartConfig(maxFileSize = 100000, fileSizeThreshold = 1000)
 public class AdmissionQueryController {
 
+	private Logger logger = LoggerFactory.getLogger(AdmissionQueryController.class);
 	@Autowired
 	private AdimissionQueryRepo admissionQueryRepo;
+	@Autowired
+	ObjectMapper objectMapper;
 
-	@PostMapping
-	public ResponseEntity<Map<String, Object>> saveQuery(
-			@Valid @RequestBody(required = true) CustomerQueryEntity body) {
-		return new ResponseEntity<Map<String, Object>>(
-				Map.of("newUser", admissionQueryRepo.save(body), Constant_String.MESSAGE, Constant_String.SUCCESS),
-				HttpStatus.OK);
+	/**
+	 * Save the user admission query, with multiple files with storage, and one file in binary form.
+	 * 
+	 * @param body all the parameters in an object.
+	 * @return the created object.
+	 */
+	@PostMapping(value = "", consumes = { MediaType.MULTIPART_FORM_DATA_VALUE })
+	public ResponseEntity<Map<String, Object>> saveQuery(@Valid @ModelAttribute CustomerQueryEntityModel body) {
+
+		ArrayList<File_Type> files = new ArrayList<File_Type>();
+
+		if (body.getNImgList() != null) {
+			logger.info("len: {}, data: {}", body.getNImgList().length, body.getNImgList().toString());
+			Arrays.stream(body.getNImgList()).forEach(multipart -> {
+				String fileName = LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd_HH:mm:ss__"))
+						+ multipart.getOriginalFilename();
+//				String rootDirectory = System.getProperty("user.dir");	// Working fine...
+				String rootDirectory = new File("").getAbsolutePath();
+				String filePath = rootDirectory + "/uploads/" + fileName;
+				try {
+					File uploadsDir = new File(rootDirectory + "/uploads");
+					if (!uploadsDir.exists())
+						uploadsDir.mkdir();
+					File file = new File(filePath);
+					multipart.transferTo(file);
+					File_TypeBuilder fileDetails = File_Type.builder().originalName(multipart.getOriginalFilename()).filePath(filePath).type(multipart.getContentType());
+					files.add(fileDetails.build());
+				} catch (IOException e) {
+					logger.error("Failed to save file: {} ", e.getMessage());
+				}
+				logger.warn("File paths: {}", filePath);
+			});
+		}
+
+		CustomerQueryEntityBuilder cqeb = CustomerQueryEntity.builder()
+				.name(body.getName())
+				.gender(body.getGender())
+				.danceForm(body.getDanceForm())
+				.email(body.getEmail())
+				.contactNo(body.getContactNo())
+				.guardianContactNo(body.getGuardianContactNo())
+				.address(body.getAddress())
+				.description(body.getDescription())
+				.createdDate(new Date())
+				.status(QueryStatuses.New)
+				.files(files);
+
+		if (body.getOneImg() != null) {
+			try {
+				cqeb.imageBase64(new Binary(body.getOneImg().getBytes()));
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+		}
+
+		return new ResponseEntity<Map<String, Object>>(Map.of("newUser", admissionQueryRepo.save(cqeb.build()),
+				Constant_String.MESSAGE, Constant_String.SUCCESS), HttpStatus.OK);
 	}
 
 	@GetMapping
@@ -174,7 +247,7 @@ class UpdateBody {
 }
 
 @Data
-@SuppressWarnings("unused")
+
 class GetPagginate {
 	@Min(value = 0, message = "Value cannot be lower than 0")
 	private int pageNo;
@@ -185,5 +258,25 @@ class GetPagginate {
 	@Max(value = 1, message = "Value cannot excced 1")
 	private int sort; // 0 ascending, 1 descending
 	private String sortByKey = "id";
+}
 
+@Data
+@Builder
+class CustomerQueryEntityModel {
+	@NotBlank
+	private String name;
+	@NotBlank(message = "Must specify gender")
+	private String gender;
+	@NotBlank(message = "DanceForm must be filled")
+	private String danceForm;
+	private String email;
+	@NotBlank(message = "Contact must be given for connecting purpose")
+	private String contactNo;
+	private String guardianContactNo;
+	private String address;
+	private String description;
+	private Date createdDate;
+	private String status;
+	private MultipartFile oneImg;
+	private MultipartFile[] nImgList;
 }
