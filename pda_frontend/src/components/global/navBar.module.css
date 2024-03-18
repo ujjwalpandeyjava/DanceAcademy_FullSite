@@ -1,10 +1,10 @@
 #navbarCont {
-    background: white linear-gradient(to top, #3f586f, #4147a1);
+    background: white linear-gradient(to top, #ffffff, #ffdfc4);
     position: sticky;
     cursor: auto;
     top: 0;
     z-index: 6;
-    box-shadow: 0 3px 8px #1a1c3c;
+    box-shadow: 0 3px 13px -7px #1a1c3c;
 }
 #navbarCont a {
 	text-decoration: none;

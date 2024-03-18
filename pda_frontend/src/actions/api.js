@@ -43,8 +43,8 @@ ax.interceptors.response.use(response => {
 }, function (error) {
 	// console.error("Error in response interceptor: ", error);
 	if (error?.response?.status === 400) {
-		alert("==="+ error?.response?.data?.Message)
-	  }
+		// alert("==="+ error?.response?.data?.Message)
+	}
 	return Promise.reject(error);
 });
 export default apiEndPoints;

@@ -15,12 +15,14 @@ import Queries from './admin/Queries.jsx';
 import RegisterForm from './admin/RegisterForm.jsx';
 import App from './app';
 import './components/global/index.css';
-
+import 'react-toastify/dist/ReactToastify.css';
 
 document.title = "Pandey Dance Academy";
 const routesWithJSX = createBrowserRouter(
   createRoutesFromElements(
     <Route path="" element={<App />} >
+      <Route path="" element={<Home />} />
+      <Route path="home" element={<Home />} />
       <Route path="user" element={<Outlet />}>
         <Route path="" element={<LoginForm />} />
         <Route path="login" element={<LoginForm />} />
@@ -33,8 +35,6 @@ const routesWithJSX = createBrowserRouter(
           <Route path='*' element={<h2>Page Option Not found</h2>} />
         </Route>
       </Route>
-      <Route path="" element={<Home />} />
-      <Route path="home" element={<Home />} />
       <Route path="admission" element={<Apply />} />
       <Route path="contact" element={<Contact />} />
       <Route path="classInfo" element={<ClassInfo />} />
@@ -46,10 +46,8 @@ const routesWithJSX = createBrowserRouter(
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <Fragment>
-    {/* <React.StrictMode> */}
     {/* <Provider store={reduxStore}> */}
     <RouterProvider router={routesWithJSX} />
     {/* </Provider> */}
-    {/* </React.StrictMode> */}
   </Fragment>
 );

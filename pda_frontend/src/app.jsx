@@ -1,5 +1,7 @@
 import { Outlet } from 'react-router-dom'
 import apiEndPoints from './actions/api';
+import { Fragment } from 'react';
+import { ToastContainer } from 'react-toastify';
 
 function App() {
 	apiEndPoints.SIMPLE().home()
@@ -8,13 +10,16 @@ function App() {
 			return response.data
 		})
 		.then(response => {
-			console.log(response);
+			// console.log(response);
 		})
 		.catch(error => {
 			console.error(error.message)
 		});
 	return (
-		<Outlet />
+		<Fragment>
+			<Outlet />
+			<ToastContainer />
+		</Fragment>
 	)
 }
 

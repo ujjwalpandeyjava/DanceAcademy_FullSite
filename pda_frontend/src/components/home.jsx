@@ -21,9 +21,7 @@ const imageUrls = [
 	"https://images.pexels.com/photos/1918445/pexels-photo-1918445.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2",
 	"https://images.pexels.com/photos/40186/dance-ballet-powder-girl-40186.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2",
 	"https://images.pexels.com/photos/2285932/pexels-photo-2285932.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2",
-	"https://images.pexels.com/photos/1450116/pexels-photo-1450116.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2",
-
-
+	"https://images.pexels.com/photos/1450116/pexels-photo-1450116.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2"
 ];
 export default function Home() {
 	document.title = "Home";
@@ -31,7 +29,7 @@ export default function Home() {
 		<Fragment>
 			<NavBar />
 			<section id={sheet.lookImg}>
-				Welcome to Pandey Dance Academy.com
+				Welcome to Hollo-Loop Dance Academy
 				<p>Free feel to dance and dance to feel free.</p>
 			</section>
 			<div id={sheet.main_heading}>
