@@ -2,7 +2,7 @@ import axios from "axios";
 
 const ax = axios.create({
 	baseURL: `http://localhost:8882`,
-	timeout: 30000,
+	timeout: 30000
 });
 const apiEndPoints = {
 	SIMPLE(url = '') {
@@ -30,7 +30,10 @@ const apiEndPoints = {
 
 // Axios Interceptors
 ax.interceptors.request.use(config => {
-	// console.log("Req params" +config.params);
+	console.log("from interceptor", { "Req params": config.params, "Req headers": config.headers });
+	config.headers['Content-Type'] = 'application/json';
+	config.headers['Accept'] = 'application/json';
+	config.headers['Authorization'] = `Bearer YOUR_JWT_TOKEN`;
 	return config;
 },
 	(error) => {
