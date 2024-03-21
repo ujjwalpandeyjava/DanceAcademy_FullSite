@@ -15,6 +15,8 @@ public class UserRegistration {
 	private String id;
 	@NotBlank
 	private String emailID;
+	@NotBlank
+	private String defaultPassword;
 	private String otp;
 	private String registrationDateTime = Instant.now().toString();
 	private String expireDateTime = Instant.now().plus(Duration.ofMinutes(Constant_Num.ONE_TWENTY)).toString();

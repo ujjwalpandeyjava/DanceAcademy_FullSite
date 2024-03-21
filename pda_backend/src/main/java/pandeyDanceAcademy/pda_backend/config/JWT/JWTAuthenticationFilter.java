@@ -34,25 +34,20 @@ import jakarta.servlet.http.HttpServletResponse;
 @Order(0)
 public class JWTAuthenticationFilter extends OncePerRequestFilter {
 
-	Logger logger = LoggerFactory.getLogger(OncePerRequestFilter.class);
+	Logger logger = LoggerFactory.getLogger(JWTAuthenticationFilter.class);
 	@Autowired private JWTHelper jwtHelper;
 	@Autowired private UserDetailsService userDetailsService;
 
 	@Override
 	protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
 
-		// Has to be: Authorization: Bearer abacslkejs;
-		String reqHeader = request.getHeader("Authorization");
-		logger.info("header auth: {}", reqHeader);
+		String reqHeader = request.getHeader("authorization");
 		String username = null;
 		String token = null;
 
 		if (reqHeader != null && reqHeader.startsWith("Bearer")) {
-			logger.info("header auth starts with: {}", reqHeader.startsWith("Bearer"));
-			
-			// now work...
 			token = reqHeader.split(" ")[1];
-			logger.info("token: {}", token);
+			logger.info("headAuthorization {}",reqHeader);
 			
 			try {
 				username = this.jwtHelper.getUsernameFromToken(token);
@@ -79,13 +74,9 @@ public class JWTAuthenticationFilter extends OncePerRequestFilter {
 			UserDetails userDetail = this.userDetailsService.loadUserByUsername(username);
 			Boolean isTokenValid = this.jwtHelper.validateToken(token, userDetail);
 			if (isTokenValid) {
-				UsernamePasswordAuthenticationToken authentication = new UsernamePasswordAuthenticationToken(userDetail,
-						userDetail.getAuthorities());
+				UsernamePasswordAuthenticationToken authentication = new UsernamePasswordAuthenticationToken(userDetail, userDetail.getAuthorities(), userDetail.getAuthorities());
 				authentication.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
-
-				// It has everything of security
 				SecurityContextHolder.getContext().setAuthentication(authentication);
-
 			} else {
 				logger.info("Token not valid with the logged-in user");
 			}

@@ -18,12 +18,16 @@ import org.springframework.http.converter.HttpMessageNotReadableException;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.validation.FieldError;
 import org.springframework.web.HttpRequestMethodNotSupportedException;
 import org.springframework.web.bind.MethodArgumentNotValidException;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -34,13 +38,14 @@ import org.springframework.web.bind.annotation.RestController;
 
 import jakarta.validation.Valid;
 import pandeyDanceAcademy.pda_backend.config.JWT.JWTHelper;
-import pandeyDanceAcademy.pda_backend.config.JWT.models.JWTRequest;
-import pandeyDanceAcademy.pda_backend.config.JWT.models.JWTResponse;
+import pandeyDanceAcademy.pda_backend.config.JWT.models.LoginReqBody;
 import pandeyDanceAcademy.pda_backend.constants.Constant_Num;
 import pandeyDanceAcademy.pda_backend.constants.Constant_String;
 import pandeyDanceAcademy.pda_backend.entity.EmailDetails;
 import pandeyDanceAcademy.pda_backend.entity.RegisteredUser;
 import pandeyDanceAcademy.pda_backend.entity.UserRegistration;
+import pandeyDanceAcademy.pda_backend.global.constants.Const_Numb;
+import pandeyDanceAcademy.pda_backend.global.constants.Const_String;
 import pandeyDanceAcademy.pda_backend.repository.RegisteredUserRepo;
 import pandeyDanceAcademy.pda_backend.repository.UserRegistrationRepo;
 import pandeyDanceAcademy.pda_backend.service.implementation.EmailSendingService;
@@ -50,45 +55,56 @@ import pandeyDanceAcademy.pda_backend.utlity.Generator;
 @RequestMapping("api/v1/auth")
 public class AuthController {
 
-	@Autowired
-	EmailDetails eDetails;
-	@Autowired
-	RegisteredUser registeredUser;
-	@Autowired
-	private EmailSendingService emailService;
-	@Autowired
-	private UserRegistrationRepo userRegistrationRepo;
-	@Autowired
-	private RegisteredUserRepo registeredUserRepo;
-
-	// For JWT
-	@Autowired
-	private UserDetailsService userDetailsService;
-	@Autowired
-	private AuthenticationManager authManager;
-	@Autowired
-	private JWTHelper jwtHelper;
 	Logger logger = LoggerFactory.getLogger(AuthController.class);
+	private PasswordEncoder passwordEncoderBCrypt;
 
-	@PostMapping("/getToken")
-	public ResponseEntity<JWTResponse> loginAndGetToken(@RequestBody JWTRequest body) {
-		logger.info("inside loginAndGetToken {}", body);
-		this.doAuthenticate(body.getUserName(), body.getPassword());
+	@Autowired EmailDetails eDetails;
+	@Autowired RegisteredUser registeredUser;
+	@Autowired private EmailSendingService emailService;
+	@Autowired private UserRegistrationRepo userRegistrationRepo;
+	@Autowired private RegisteredUserRepo registeredUserRepo;
+	
+	// For JWT
+	private UserDetailsService userDetailsService;
+	private AuthenticationManager authenticationManager;
+	private final JWTHelper jwtHelper;
 
-		UserDetails userDetail = userDetailsService.loadUserByUsername(body.getUserName());
-		String newToken = this.jwtHelper.generateToken(userDetail);
-		JWTResponse response = JWTResponse.builder().token(newToken).userName(userDetail.getUsername()).build();
-		return ResponseEntity.ok(response);
-
+	public AuthController(AuthenticationManager authenticationManager, JWTHelper jwtHelper, UserDetailsService userDetailsService, PasswordEncoder passwordEncoderBCrypt) {
+		this.authenticationManager = authenticationManager;
+		this.jwtHelper = jwtHelper;
+		this.userDetailsService = userDetailsService;
+		this.passwordEncoderBCrypt = passwordEncoderBCrypt;
 	}
 
-	private void doAuthenticate(String email, String password) {
-		UsernamePasswordAuthenticationToken authenticationToken = new UsernamePasswordAuthenticationToken(email, password);
+	@PostMapping({"/getToken", "/login"})
+	public ResponseEntity<Map<String, Object>> loginAndGetToken(@Valid @RequestBody LoginReqBody body) {
+		HashMap<String, Object> response = new HashMap<String, Object>();
+		UserDetails userDetail = userDetailsService.loadUserByUsername(body.getUserName());
+		if(!passwordEncoderBCrypt.matches(body.getPassword(), userDetail.getPassword())) 
+			return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(Map.of("MESSAGE","Incorrect password"));
+
 		try {
-			authManager.authenticate(authenticationToken);
+			Authentication authentication = authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(body.getUserName(), body.getPassword(), userDetail.getAuthorities()));
+
+			SecurityContextHolder.getContext().setAuthentication(authentication);
+//	        UserDetails userDetail2 = (UserDetails) authentication.getPrincipal();
+	        String newToken = jwtHelper.generateToken(userDetail);
+
+	        response.put("token", newToken);
+	        response.put("expiresIn", Const_Numb.JWT_TOKEN_VALIDITY);
+	        response.put("expiresIn Unit", Const_String.JWT_TOKEN_VALIDITY_UNIT);
+			response.put("user", Map.of("username",userDetail.getUsername(), "authorities", userDetail.getAuthorities()));
+
 		} catch (BadCredentialsException bce) {
 			throw new RuntimeErrorException(new Error(), "Invalid username or password!! ");
 		}
+		return ResponseEntity.status(HttpStatus.OK).body(response);
+	}
+
+	@DeleteMapping({"/releaseToken", "/logout"})
+	public ResponseEntity<Map<String, Object>> logout_ReleaseToken(@Valid @RequestParam("token") String tokenToRelease) {
+		
+		return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(Map.of("MESSAGE","Incorrect password"));		
 	}
 
 	@PostMapping("addNewUser")

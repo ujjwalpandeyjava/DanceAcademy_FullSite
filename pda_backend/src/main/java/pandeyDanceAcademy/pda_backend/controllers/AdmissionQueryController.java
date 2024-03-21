@@ -26,7 +26,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.http.converter.HttpMessageNotReadableException;
 import org.springframework.validation.FieldError;
 import org.springframework.web.bind.MethodArgumentNotValidException;
-import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -46,6 +45,7 @@ import jakarta.validation.constraints.Max;
 import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
+import jakarta.websocket.server.PathParam;
 import lombok.Builder;
 import lombok.Data;
 import pandeyDanceAcademy.pda_backend.constants.Constant_String;
@@ -58,7 +58,7 @@ import pandeyDanceAcademy.pda_backend.repository.AdimissionQueryRepo;
 
 @RestController
 @RequestMapping("/api/v1/admissionQuery")
-@CrossOrigin(origins = { "http://localhost:3000", "http://localhost:8080" })
+//@CrossOrigin(origins = { "http://localhost:3000", "http://localhost:8080" })
 //@MultipartConfig(maxFileSize = 100000, fileSizeThreshold = 1000)
 public class AdmissionQueryController {
 
@@ -74,7 +74,7 @@ public class AdmissionQueryController {
 	 * @param body all the parameters in an object.
 	 * @return the created object.
 	 */
-	@PostMapping(value = "", consumes = { MediaType.MULTIPART_FORM_DATA_VALUE })
+	@PostMapping(value = "/save", consumes = {MediaType.MULTIPART_FORM_DATA_VALUE})
 	public ResponseEntity<Map<String, Object>> saveQuery(@Valid @ModelAttribute CustomerQueryEntityModel body) {
 
 		ArrayList<File_Type> files = new ArrayList<File_Type>();
@@ -127,7 +127,7 @@ public class AdmissionQueryController {
 				Constant_String.MESSAGE, Constant_String.SUCCESS), HttpStatus.OK);
 	}
 
-	@GetMapping
+	@GetMapping("/pagginated")
 	public Page<CustomerQueryEntity> getQueryPaginated(@RequestParam("pageNo") int pageNo,
 			@RequestParam("pageSize") int pageSize, @RequestParam("sort") int sort,
 			@RequestParam("sortByKey") String sortByKey) {
@@ -152,9 +152,10 @@ public class AdmissionQueryController {
 		return Optional.of(admissionQueryRepo.findAll());
 	}
 
-	@GetMapping("/single")
-	public Optional<CustomerQueryEntity> getOneQuery(@Valid @RequestBody(required = true) GetOneBody objDetails) {
-		return admissionQueryRepo.findById(objDetails.getId());
+	@GetMapping("/:id")
+	public Optional<CustomerQueryEntity> getOneQuery(@Valid @PathParam("id") String id) {
+		System.out.println("==="+id);
+		return admissionQueryRepo.findById(id);
 	}
 
 	@DeleteMapping

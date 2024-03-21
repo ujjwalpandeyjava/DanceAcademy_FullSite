@@ -29,7 +29,7 @@ public class SecurityAppConfig {
 //	@Autowired UserDetailsService userDetailService;
 	
 	@Autowired private JWTAuthenticationEntryPoint jwtEntryPoint;
-	private JWTAuthenticationFilter jwtAuthenticationFilter;
+	@Autowired private JWTAuthenticationFilter jwtAuthenticationFilter;
 	
 	public SecurityAppConfig(JWTAuthenticationFilter jwtAuthenticationFilter) {
         this.jwtAuthenticationFilter = jwtAuthenticationFilter;
@@ -75,27 +75,17 @@ public class SecurityAppConfig {
 	@Bean
 	public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
 		 http
-//				.cors(cors ->{
-//					cors.configurationSource(corsConfigurationSource());
-//				})
+				.cors(cors -> cors.configurationSource(corsConfigurationSource()))
 //				.cors(Customizer.withDefaults())
-				.cors(cors->cors.disable())
+//				.cors(cors -> cors.disable())
 				.csrf(csrf -> csrf.disable()) // Cross-Site Request Forgery - disabled to avoid complexities
 				.authorizeHttpRequests(authorize -> {
-					authorize.requestMatchers("/admin").hasAnyRole("ADMIN", "SUPER_ADMIN");
-					authorize.requestMatchers( "/index", "/home","/api/v1/auth/getToken", "/api/v1/admissionQuery/").permitAll();
+//					authorize.requestMatchers("/admin").hasAnyRole("ADMIN", "SUPER_ADMIN");
+					authorize.requestMatchers( "/index", "/home","/api/v1/auth/getToken", "/api/v1/admissionQuery/save").permitAll();
 					authorize.anyRequest().authenticated();
 				})
-				.exceptionHandling(eh -> {
-					// Runs before DD
-					eh.authenticationEntryPoint(jwtEntryPoint);
-				})
-				.sessionManagement(sessMag -> {
-					sessMag.sessionCreationPolicy(SessionCreationPolicy.STATELESS);
-				})
-//				.oauth2Login(Customizer.withDefaults())
-//				.formLogin(Customizer.withDefaults())
-				;
+				.exceptionHandling(eh -> eh.authenticationEntryPoint(jwtEntryPoint))
+				.sessionManagement(sessMag -> sessMag.sessionCreationPolicy(SessionCreationPolicy.STATELESS));
 		 http.addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class);
 		 return http.build();
 	}
