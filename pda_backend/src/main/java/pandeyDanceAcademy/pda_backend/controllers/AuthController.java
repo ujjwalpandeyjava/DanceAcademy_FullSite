@@ -7,10 +7,19 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Optional;
 
+import javax.management.RuntimeErrorException;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.http.converter.HttpMessageNotReadableException;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.BadCredentialsException;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.validation.FieldError;
 import org.springframework.web.HttpRequestMethodNotSupportedException;
@@ -24,6 +33,9 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import jakarta.validation.Valid;
+import pandeyDanceAcademy.pda_backend.config.JWT.JWTHelper;
+import pandeyDanceAcademy.pda_backend.config.JWT.models.JWTRequest;
+import pandeyDanceAcademy.pda_backend.config.JWT.models.JWTResponse;
 import pandeyDanceAcademy.pda_backend.constants.Constant_Num;
 import pandeyDanceAcademy.pda_backend.constants.Constant_String;
 import pandeyDanceAcademy.pda_backend.entity.EmailDetails;
@@ -48,6 +60,36 @@ public class AuthController {
 	private UserRegistrationRepo userRegistrationRepo;
 	@Autowired
 	private RegisteredUserRepo registeredUserRepo;
+
+	// For JWT
+	@Autowired
+	private UserDetailsService userDetailsService;
+	@Autowired
+	private AuthenticationManager authManager;
+	@Autowired
+	private JWTHelper jwtHelper;
+	Logger logger = LoggerFactory.getLogger(AuthController.class);
+
+	@PostMapping("/getToken")
+	public ResponseEntity<JWTResponse> loginAndGetToken(@RequestBody JWTRequest body) {
+		logger.info("inside loginAndGetToken {}", body);
+		this.doAuthenticate(body.getUserName(), body.getPassword());
+
+		UserDetails userDetail = userDetailsService.loadUserByUsername(body.getUserName());
+		String newToken = this.jwtHelper.generateToken(userDetail);
+		JWTResponse response = JWTResponse.builder().token(newToken).userName(userDetail.getUsername()).build();
+		return ResponseEntity.ok(response);
+
+	}
+
+	private void doAuthenticate(String email, String password) {
+		UsernamePasswordAuthenticationToken authenticationToken = new UsernamePasswordAuthenticationToken(email, password);
+		try {
+			authManager.authenticate(authenticationToken);
+		} catch (BadCredentialsException bce) {
+			throw new RuntimeErrorException(new Error(), "Invalid username or password!! ");
+		}
+	}
 
 	@PostMapping("addNewUser")
 	public ResponseEntity<String> sendOTPForRegistration(@Valid @RequestBody UserRegistration userReg) {

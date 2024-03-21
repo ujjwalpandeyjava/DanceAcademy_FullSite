@@ -1,4 +1,4 @@
-package pandeyDanceAcademy.pda_backend.global;
+package pandeyDanceAcademy.pda_backend.global.exceptions;
 
 import java.util.HashMap;
 import java.util.Map;
