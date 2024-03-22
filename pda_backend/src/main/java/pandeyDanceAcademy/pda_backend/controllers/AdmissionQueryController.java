@@ -48,7 +48,7 @@ import jakarta.validation.constraints.NotNull;
 import jakarta.websocket.server.PathParam;
 import lombok.Builder;
 import lombok.Data;
-import pandeyDanceAcademy.pda_backend.constants.Constant_String;
+import pandeyDanceAcademy.pda_backend.constants.Constant;
 import pandeyDanceAcademy.pda_backend.constants.QueryStatuses;
 import pandeyDanceAcademy.pda_backend.entity.CustomerQueryEntity;
 import pandeyDanceAcademy.pda_backend.entity.CustomerQueryEntity.CustomerQueryEntityBuilder;
@@ -123,7 +123,7 @@ public class AdmissionQueryController {
 		}
 
 		return new ResponseEntity<Map<String, Object>>(Map.of("newUser", admissionQueryRepo.save(cqeb.build()),
-				Constant_String.MESSAGE, Constant_String.SUCCESS), HttpStatus.CREATED);
+				Constant.MESSAGE, Constant.SUCCESS), HttpStatus.CREATED);
 	}
 
 	@GetMapping("/pagginated")
@@ -161,9 +161,9 @@ public class AdmissionQueryController {
 	public Map<String, Object> deleteQuery(@Valid @RequestBody(required = true) DeleteBody deleteBody) {
 		if (admissionQueryRepo.existsById(deleteBody.getId())) {
 			admissionQueryRepo.deleteById(deleteBody.getId());
-			return Map.of(Constant_String.MESSAGE, Constant_String.SUCCESS);
+			return Map.of(Constant.MESSAGE, Constant.SUCCESS);
 		} else
-			return Map.of(Constant_String.MESSAGE, Constant_String.Not_Found);
+			return Map.of(Constant.MESSAGE, Constant.Not_Found);
 	}
 
 	@PatchMapping
@@ -176,14 +176,14 @@ public class AdmissionQueryController {
 			if (QueryStatuses.isValidStatus(body.getStatus())) {
 				query.setStatus(body.getStatus());
 				admissionQueryRepo.save(query);
-				returnObj = Map.of(Constant_String.MESSAGE, Constant_String.SUCCESS);
+				returnObj = Map.of(Constant.MESSAGE, Constant.SUCCESS);
 				statusCode = HttpStatus.OK;
 			} else {
-				returnObj = Map.of(Constant_String.MESSAGE, Constant_String.NotValidStatus);
+				returnObj = Map.of(Constant.MESSAGE, Constant.NotValidStatus);
 				statusCode = HttpStatus.CONFLICT;
 			}
 		} else {
-			returnObj = Map.of(Constant_String.MESSAGE, Constant_String.Not_Found);
+			returnObj = Map.of(Constant.MESSAGE, Constant.Not_Found);
 			statusCode = HttpStatus.NO_CONTENT;
 		}
 		return new ResponseEntity<Map<String, Object>>(returnObj, statusCode);

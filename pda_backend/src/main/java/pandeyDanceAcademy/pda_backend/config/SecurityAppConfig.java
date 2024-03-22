@@ -8,7 +8,6 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
-import org.springframework.http.HttpStatus;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.http.SessionCreationPolicy;
@@ -66,15 +65,18 @@ public class SecurityAppConfig {
 	@Bean
 	public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
 		 http
-				.cors(cors -> cors.configurationSource(corsConfigurationSource()))
-				.csrf(csrf -> csrf.disable())
-				.authorizeHttpRequests(authorize -> {
-					authorize.requestMatchers(HttpMethod.POST, "/api/v1/auth/getToken", "/api/v1/admissionQuery/save").permitAll();
-					authorize.anyRequest().authenticated();
-				})
-				.exceptionHandling(eh -> eh.authenticationEntryPoint(jwtEntryPoint))
-				.sessionManagement(sessMag -> sessMag.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
-				.addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class);
+			.cors(cors -> cors.configurationSource(corsConfigurationSource()))
+			.csrf(csrf -> csrf.disable())
+			.authorizeHttpRequests(authorize -> {
+				authorize.requestMatchers(HttpMethod.GET, "/", "index", "home").permitAll();
+				authorize.requestMatchers(HttpMethod.POST, "/api/v1/auth/verifyNewUser").permitAll();
+				authorize.requestMatchers(HttpMethod.POST, "/api/v1/auth/addNewUser").hasAnyAuthority("ADMIN");
+				authorize.requestMatchers(HttpMethod.POST, "/api/v1/auth/getToken", "/api/v1/admissionQuery/save").permitAll();
+				authorize.anyRequest().authenticated();
+			})
+			.exceptionHandling(eh -> eh.authenticationEntryPoint(jwtEntryPoint))
+			.sessionManagement(sessMag -> sessMag.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
+			.addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class);
 		 return http.build();
 	}
 }

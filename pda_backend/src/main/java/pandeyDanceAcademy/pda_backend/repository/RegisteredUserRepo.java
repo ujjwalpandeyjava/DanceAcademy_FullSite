@@ -10,6 +10,7 @@ import pandeyDanceAcademy.pda_backend.entity.RegisteredUser;
 @Repository
 public interface RegisteredUserRepo extends MongoRepository<RegisteredUser, String> {
 
-	Optional<RegisteredUser> findByEmailID(String emailID);
+//	Optional<RegisteredUser> findByEmailID(String emailID);
+	Optional<RegisteredUser> findByUsername(String emailID);
 
 }
