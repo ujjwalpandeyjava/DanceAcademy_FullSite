@@ -44,8 +44,7 @@ import pandeyDanceAcademy.pda_backend.constants.Constant_String;
 import pandeyDanceAcademy.pda_backend.entity.EmailDetails;
 import pandeyDanceAcademy.pda_backend.entity.RegisteredUser;
 import pandeyDanceAcademy.pda_backend.entity.UserRegistration;
-import pandeyDanceAcademy.pda_backend.global.constants.Const_Numb;
-import pandeyDanceAcademy.pda_backend.global.constants.Const_String;
+import pandeyDanceAcademy.pda_backend.global.constants.Const;
 import pandeyDanceAcademy.pda_backend.repository.RegisteredUserRepo;
 import pandeyDanceAcademy.pda_backend.repository.UserRegistrationRepo;
 import pandeyDanceAcademy.pda_backend.service.implementation.EmailSendingService;
@@ -91,8 +90,8 @@ public class AuthController {
 	        String newToken = jwtHelper.generateToken(userDetail);
 
 	        response.put("token", newToken);
-	        response.put("expiresIn", Const_Numb.JWT_TOKEN_VALIDITY);
-	        response.put("expiresIn Unit", Const_String.JWT_TOKEN_VALIDITY_UNIT);
+	        response.put("expiresIn", Const.JWT_TOKEN_VALIDITY);
+	        response.put("expiresIn Unit", Const.JWT_TOKEN_VALIDITY_UNIT_S);
 			response.put("user", Map.of("username",userDetail.getUsername(), "authorities", userDetail.getAuthorities()));
 
 		} catch (BadCredentialsException bce) {
@@ -100,12 +99,12 @@ public class AuthController {
 		}
 		return ResponseEntity.status(HttpStatus.OK).body(response);
 	}
-
-	@DeleteMapping({"/releaseToken", "/logout"})
-	public ResponseEntity<Map<String, Object>> logout_ReleaseToken(@Valid @RequestParam("token") String tokenToRelease) {
-		
-		return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(Map.of("MESSAGE","Incorrect password"));		
-	}
+	
+	@DeleteMapping(value={"/logout","/releaseToken"})
+    public ResponseEntity<Map<String, String>> logout() {
+        SecurityContextHolder.getContext().setAuthentication(null);
+        return ResponseEntity.ok(Map.of("MEssage", "Logged out successfully"));
+    }
 
 	@PostMapping("addNewUser")
 	public ResponseEntity<String> sendOTPForRegistration(@Valid @RequestBody UserRegistration userReg) {

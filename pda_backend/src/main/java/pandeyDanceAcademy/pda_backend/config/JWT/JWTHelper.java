@@ -17,7 +17,7 @@ import org.springframework.stereotype.Component;
 
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
-import pandeyDanceAcademy.pda_backend.global.constants.Const_Numb;
+import pandeyDanceAcademy.pda_backend.global.constants.Const;
 
 @Component
 public class JWTHelper {
@@ -53,7 +53,7 @@ public class JWTHelper {
 
 	private String doGenerateToken(Map<String, Object> claims, String sub) {
 		LocalDateTime currentUTCTime = LocalDateTime.now(ZoneOffset.UTC);
-		LocalDateTime futureUTCTime = currentUTCTime.plusSeconds(Const_Numb.JWT_TOKEN_VALIDITY);
+		LocalDateTime futureUTCTime = currentUTCTime.plusSeconds(Const.JWT_TOKEN_VALIDITY);
 
 		String compact = Jwts.builder()
 				.claims(claims)

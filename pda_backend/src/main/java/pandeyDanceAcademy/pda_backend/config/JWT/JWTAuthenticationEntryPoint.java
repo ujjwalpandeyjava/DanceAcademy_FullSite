@@ -1,11 +1,14 @@
 package pandeyDanceAcademy.pda_backend.config.JWT;
 
 import java.io.IOException;
-import java.io.PrintWriter;
+import java.util.HashMap;
+import java.util.Map;
 
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.web.AuthenticationEntryPoint;
 import org.springframework.stereotype.Component;
+
+import com.fasterxml.jackson.databind.ObjectMapper;
 
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
@@ -14,12 +17,30 @@ import jakarta.servlet.http.HttpServletResponse;
 @Component
 public class JWTAuthenticationEntryPoint implements AuthenticationEntryPoint {
 
-	// Like exception handler for JWT.
+	
+	private final ObjectMapper objectMapper;
+
+    public JWTAuthenticationEntryPoint(ObjectMapper objectMapper) {
+        this.objectMapper = objectMapper;
+    }
+    
+    
+	// Exception handler for JWT
 	@Override
 	public void commence(HttpServletRequest request, HttpServletResponse response, AuthenticationException authException) throws IOException, ServletException {
+		
 		response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
-		PrintWriter pr = response.getWriter();
-		pr.println("Access denied!\nReason: "+authException.getMessage());
+		
+		// Without this line response will be a simple string.
+        response.setContentType("application/json");
+
+        Map<String, Object> responseBody = new HashMap<>();
+        responseBody.put("path", request.getRequestURI());
+        responseBody.put("method", request.getMethod());
+        responseBody.put("error", "Access denied");
+        responseBody.put("message", authException.getMessage());
+
+        objectMapper.writeValue(response.getWriter(), responseBody);
 	}
 
 }

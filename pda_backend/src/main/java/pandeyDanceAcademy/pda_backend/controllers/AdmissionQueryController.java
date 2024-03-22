@@ -58,7 +58,6 @@ import pandeyDanceAcademy.pda_backend.repository.AdimissionQueryRepo;
 
 @RestController
 @RequestMapping("/api/v1/admissionQuery")
-//@CrossOrigin(origins = { "http://localhost:3000", "http://localhost:8080" })
 //@MultipartConfig(maxFileSize = 100000, fileSizeThreshold = 1000)
 public class AdmissionQueryController {
 
@@ -74,7 +73,7 @@ public class AdmissionQueryController {
 	 * @param body all the parameters in an object.
 	 * @return the created object.
 	 */
-	@PostMapping(value = "/save", consumes = {MediaType.MULTIPART_FORM_DATA_VALUE})
+	@PostMapping(value = "/save", consumes = {MediaType.MULTIPART_FORM_DATA_VALUE, MediaType.APPLICATION_JSON_VALUE})
 	public ResponseEntity<Map<String, Object>> saveQuery(@Valid @ModelAttribute CustomerQueryEntityModel body) {
 
 		ArrayList<File_Type> files = new ArrayList<File_Type>();
@@ -124,7 +123,7 @@ public class AdmissionQueryController {
 		}
 
 		return new ResponseEntity<Map<String, Object>>(Map.of("newUser", admissionQueryRepo.save(cqeb.build()),
-				Constant_String.MESSAGE, Constant_String.SUCCESS), HttpStatus.OK);
+				Constant_String.MESSAGE, Constant_String.SUCCESS), HttpStatus.CREATED);
 	}
 
 	@GetMapping("/pagginated")
@@ -276,7 +275,7 @@ class CustomerQueryEntityModel {
 	private String guardianContactNo;
 	private String address;
 	private String description;
-	private Date createdDate;
+	private String createdDate;
 	private String status;
 	private MultipartFile oneImg;
 	private MultipartFile[] nImgList;
