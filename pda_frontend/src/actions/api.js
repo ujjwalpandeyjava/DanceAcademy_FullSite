@@ -25,7 +25,13 @@ const apiEndPoints = {
 	},
 	ADMISSION_QUERY_V1(url = '/api/v1/admissionQuery') {
 		return {
-			save: (newRecord) => ax.post(url, newRecord),
+			save: (formData) => {
+				return ax.post(url + "/save", formData, {
+					headers: { "Content-Type": "multipart/form-data" },
+					params: {}
+				})
+			}
+			,
 			fetchPaginated: (paginateData) => {
 				const params = { ...paginateData };
 				const headers = {};
@@ -39,11 +45,11 @@ const apiEndPoints = {
 	}
 }
 
-// Axios Interceptors
 ax.interceptors.request.use(config => {
 	// console.log("from interceptor", { "Req params": config.params, "Req headers": config.headers });
-	config.headers['Content-Type'] = 'application/json';
-	config.headers['Accept'] = 'application/json';
+	// Set the header in their own api calls..
+	// config.headers['Content-Type'] = 'application/json';
+	// config.headers['Accept'] = 'application/json';
 
 	if (!config.url.endsWith('v1/auth/getToken')) {
 		let tokenData = getJWTTokenFromLocalStorage();
@@ -83,7 +89,7 @@ ax.interceptors.response.use(response => {
 	}
 	return response;
 }, function (error) {
-	console.error("Error in response interceptor: ", error);
+	// console.error("Error in response interceptor: ", error);
 	if (error?.response?.status === 401) {
 		toast.error("Logged out!")
 		getToHome();

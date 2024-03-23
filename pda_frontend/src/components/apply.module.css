@@ -13,7 +13,7 @@
 	flex-direction: column;
 	justify-content: center;
 	align-items: center;
-	padding-bottom: 32px;
+	padding: 2.2em;
 	max-width: 800px;
 	margin: auto;
 }

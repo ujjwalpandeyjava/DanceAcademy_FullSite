@@ -38,8 +38,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
-
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.Max;
 import jakarta.validation.constraints.Min;
@@ -62,10 +60,7 @@ import pandeyDanceAcademy.pda_backend.repository.AdimissionQueryRepo;
 public class AdmissionQueryController {
 
 	private Logger logger = LoggerFactory.getLogger(AdmissionQueryController.class);
-	@Autowired
-	private AdimissionQueryRepo admissionQueryRepo;
-	@Autowired
-	ObjectMapper objectMapper;
+	@Autowired private AdimissionQueryRepo admissionQueryRepo;
 
 	/**
 	 * Save the user admission query, with multiple files with storage, and one file in binary form.
@@ -75,15 +70,12 @@ public class AdmissionQueryController {
 	 */
 	@PostMapping(value = "/save", consumes = {MediaType.MULTIPART_FORM_DATA_VALUE, MediaType.APPLICATION_JSON_VALUE})
 	public ResponseEntity<Map<String, Object>> saveQuery(@Valid @ModelAttribute CustomerQueryEntityModel body) {
-
 		ArrayList<File_Type> files = new ArrayList<File_Type>();
-
 		if (body.getNImgList() != null) {
 			logger.info("len: {}, data: {}", body.getNImgList().length, body.getNImgList().toString());
 			Arrays.stream(body.getNImgList()).forEach(multipart -> {
 				String fileName = LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd_HH:mm:ss__"))
 						+ multipart.getOriginalFilename();
-//				String rootDirectory = System.getProperty("user.dir");	// Working fine...
 				String rootDirectory = new File("").getAbsolutePath();
 				String filePath = rootDirectory + "/uploads/" + fileName;
 				try {

@@ -34,13 +34,13 @@ public class SecurityAppConfig {
 
 	// CORS filter , create and use multiple (one with one) securityFilterChain and CorsCongifurationSource for different sites access allowed method...
 	@Bean
+//	@Order(1)
 	public UrlBasedCorsConfigurationSource  corsConfigurationSource() {
 
 		CorsConfiguration corConfigs = new CorsConfiguration();
 		corConfigs.setAllowCredentials(true);
 
-		corConfigs.setAllowedOrigins(Arrays.asList("http://localhost:3000", "https://localhost:3000", "http://localhost:3000/", "https://localhost:3000/"));
-
+		corConfigs.setAllowedOrigins(Arrays.asList("http://localhost:3000", "https://localhost:3000"));
 
 		corConfigs.setAllowedMethods(Arrays.asList(
 				HttpMethod.GET.name(),
@@ -63,13 +63,14 @@ public class SecurityAppConfig {
 	}
 	
 	@Bean
+//	@Order(0)
 	public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
 		 http
 			.cors(cors -> cors.configurationSource(corsConfigurationSource()))
 			.csrf(csrf -> csrf.disable())
 			.authorizeHttpRequests(authorize -> {
 //				authorize.requestMatchers(HttpMethod.GET, "/", "index", "home").permitAll();
-				authorize.requestMatchers(HttpMethod.POST, "/api/v1/auth/verifyNewUser").permitAll();
+				authorize.requestMatchers(HttpMethod.POST, "/api/v1/admissionQuery/save", "/api/v1/auth/verifyNewUser").permitAll();
 				authorize.requestMatchers(HttpMethod.POST, "/api/v1/auth/addNewUser").hasAnyAuthority("ADMIN");
 				authorize.requestMatchers(HttpMethod.POST, "/api/v1/auth/getToken", "/api/v1/admissionQuery/save").permitAll();
 				authorize.anyRequest().authenticated();

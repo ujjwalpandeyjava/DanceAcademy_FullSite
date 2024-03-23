@@ -19,16 +19,7 @@ function Apply() {
 
   function submitForm() {
     if (!name.current.value || !gender.current.value || !danceForm.current.value || !contactNo.current.value) {
-      toast.warn("Fill all required fields, (Name, Gender, Danced form, Contact No)", {
-        position: "top-right",
-        autoClose: 5000,
-        hideProgressBar: false,
-        closeOnClick: true,
-        pauseOnHover: true,
-        draggable: true,
-        theme: "light",
-        transition: Bounce,
-      });
+      toast.warn("Fill all required fields, (Name, Gender, Danced form, Contact No)");
       return;
     }
     setSubmitState(true)
@@ -50,21 +41,14 @@ function Apply() {
         formData.append("nImgList", imagesUpload.current.files[i]);
     }
 
+    console.log(formData);
+
     apiEndPoints.ADMISSION_QUERY_V1()
       .save(formData)
       .then(async response => {
-        if (response.status === 200) {
+        if (response.status === 201) {
           response = await response.data;
-          toast.warn("Query saved successfully!", {
-            position: "top-right",
-            autoClose: 5000,
-            hideProgressBar: false,
-            closeOnClick: true,
-            pauseOnHover: true,
-            draggable: true,
-            theme: "light",
-            transition: Bounce,
-          });
+          toast.success("Query saved successfully!");
           resetForm();
         }
       })
@@ -80,14 +64,13 @@ function Apply() {
         }
       })
       .finally(() => {
-        console.log("===");
-        setSubmitState(true)
+        setSubmitState(false)
       });
   }
 
   function resetForm() {
-    name.current.value = null;
-    danceForm.current.value = gender.current.value = email.current.value = contactNo.current.value = guardianContactNo.current.value = address.current.value = description.current.value = imagesUpload.current.value = null;
+    name.current.value = danceForm.current.value = gender.current.value = email.current.value = contactNo.current.value = null;
+    guardianContactNo.current.value = address.current.value = description.current.value = imagesUpload.current.value = null;
   }
 
   return (
