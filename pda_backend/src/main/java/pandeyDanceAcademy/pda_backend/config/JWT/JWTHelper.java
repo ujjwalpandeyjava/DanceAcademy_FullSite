@@ -22,7 +22,7 @@ import pandeyDanceAcademy.pda_backend.global.constants.Const;
 @Component
 public class JWTHelper {
 	Logger logger = LoggerFactory.getLogger(JWTHelper.class);
-	private final String JWT_SERVER_SECRETE_KEY_STRING="abcdefghijklThisIsServerKeythisisanotherkeywithsomeamazing";
+	private final String JWT_SERVER_SECRETE_KEY_STRING = "abcdefghijklThisIsServerKeythisisanotherkeywithsomeamazing";
 
 	public String getUsernameFromToken(String token) {
 		return getClaimFromToken(token, Claims::getSubject); // Claims.SUBJECT
@@ -34,7 +34,6 @@ public class JWTHelper {
 
 	public <T> T getClaimFromToken(String token, Function<Claims, T> claimsResolver) {
 		final Claims claims = getAllClaimsFromToken(token);
-//		logger.info("claims {}", claims);
 		return claimsResolver.apply(claims);
 	}
 
@@ -53,16 +52,25 @@ public class JWTHelper {
 
 	private String doGenerateToken(Map<String, Object> claims, String sub) {
 		LocalDateTime currentUTCTime = LocalDateTime.now(ZoneOffset.UTC);
-		LocalDateTime futureUTCTime = currentUTCTime.plusSeconds(Const.JWT_TOKEN_VALIDITY);
+		LocalDateTime futureUTCTime = Const.JWT_TOKEN_VALIDITY_UNIT_S.equals(Const.SECONDS)
+				? currentUTCTime.plusSeconds(Const.JWT_TOKEN_VALIDITY)
+				: currentUTCTime.plusMinutes(Const.JWT_TOKEN_VALIDITY);
 
-		String compact = Jwts.builder()
-				.claims(claims)
-				.subject(sub)
+		String compact = Jwts.builder().subject(sub).claims(claims)
 				.issuedAt(Date.from(currentUTCTime.toInstant(ZoneOffset.UTC)))
-				.expiration(Date.from(futureUTCTime.toInstant(ZoneOffset.UTC)))
-				.signWith(getSignKey())
-				.compact();
-		logger.warn("New token: {}", compact);
+				.expiration(Date.from(futureUTCTime.toInstant(ZoneOffset.UTC))).signWith(getSignKey()).compact();
+		logger.debug("New token: {}", compact);
+		return compact;
+	}
+
+	public String revokeToken(String userName) {
+		LocalDateTime currentUTCTime = LocalDateTime.now(ZoneOffset.UTC);
+		LocalDateTime futureUTCTime = currentUTCTime.plusSeconds(Const.ONE);
+
+		String compact = Jwts.builder().subject(userName).claims(null)
+				.issuedAt(Date.from(currentUTCTime.toInstant(ZoneOffset.UTC)))
+				.expiration(Date.from(futureUTCTime.toInstant(ZoneOffset.UTC))).signWith(getSignKey()).compact();
+		logger.debug("New token: {}", compact);
 		return compact;
 	}
 
@@ -74,7 +82,7 @@ public class JWTHelper {
 	// it generates a random secrete key everytim hit.
 	private SecretKey getSignKey() {
 		byte[] secretKeyBytes = JWT_SERVER_SECRETE_KEY_STRING.getBytes();
-        return new SecretKeySpec(secretKeyBytes, "HmacSHA384");
+		return new SecretKeySpec(secretKeyBytes, "HmacSHA384");
 //		return SIG.HS256.key().build();
 	}
 }

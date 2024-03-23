@@ -5,6 +5,8 @@ import { MdOutlineDashboard, MdOutlineExitToApp, MdOutlineMovieFilter } from "re
 import { RiCustomerService2Line } from "react-icons/ri";
 import { Link, Outlet } from 'react-router-dom';
 import sheet from './admin.module.css';
+import apiEndPoints from '../actions/api';
+import { logoutUser } from '../components/global/Utlity';
 
 
 // https://www.npmjs.com/package/echarts for queries
@@ -12,6 +14,17 @@ function Admin() {
 	const [smallWidth, setSmallWidth] = useState(false);
 	const [name] = useState("Ujjwal Pandey")
 	useEffect(() => {
+		apiEndPoints.SIMPLE().home()
+			.then(response => {
+				console.log(response);
+				return response.data
+			})
+			.then(response => {
+				// console.log(response);
+			})
+			.catch(error => {
+				console.error(error.message)
+			});
 		window.addEventListener('resize', widthChange);
 		return () => {
 			window.removeEventListener('resize', widthChange);
@@ -50,10 +63,9 @@ function Admin() {
 					{!smallWidth && <div>
 						{name}
 						<p>
-							<Link to="../login" relative='route' >
-								Logout
-								<MdOutlineExitToApp />
-							</Link>
+							<p onClick={logoutUser}  style={{cursor: 'pointer'}}>
+								Logout <MdOutlineExitToApp />
+							</p>
 						</p>
 					</div>}
 				</div>

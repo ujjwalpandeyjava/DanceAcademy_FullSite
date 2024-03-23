@@ -18,3 +18,24 @@ a {
   content: "*";
   color: orangered;
 }
+
+.logoutWarning{
+}
+.logoutWarningActions{
+  display: flex;
+  flex-direction: row;
+  justify-content: space-evenly;
+  align-items: center;
+  flex-wrap: nowrap;
+  padding: 10px;
+}
+.logoutWarningActions button{
+  padding: 5px 10px;
+  color: black;
+  border: 1px solid gray;
+  border-radius: 5px;
+}
+
+.logoutWarningActions button:hover{
+  box-shadow: 0 0 5px gray;
+}

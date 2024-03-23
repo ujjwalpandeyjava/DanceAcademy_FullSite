@@ -17,8 +17,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import jakarta.validation.Valid;
-import pandeyDanceAcademy.pda_backend.constants.Constant;
 import pandeyDanceAcademy.pda_backend.entity.EmailDetails;
+import pandeyDanceAcademy.pda_backend.global.constants.Const;
 import pandeyDanceAcademy.pda_backend.service.implementation.EmailSendingService;
 
 @RestController
@@ -34,9 +34,9 @@ public class EmailController {
 	public ResponseEntity<String> sendMail(@Valid @RequestBody EmailDetails details) {
 		if (emailService.sendSimpleMail(details)) {
 			// Now persist to DB
-			return new ResponseEntity<String>(Constant.SUCCESS, HttpStatus.OK);
+			return new ResponseEntity<String>(Const.SUCCESS, HttpStatus.OK);
 		} else {
-			return new ResponseEntity<String>(Constant.ERROR, HttpStatus.OK);
+			return new ResponseEntity<String>(Const.ERROR, HttpStatus.OK);
 		}
 	}
 
@@ -44,10 +44,10 @@ public class EmailController {
 	public ResponseEntity<String> sendMailWithAttachment(@RequestBody EmailDetails details) {
 		if (emailService.sendMailWithAttachment(details)) {
 			// Now persist to DB
-			return new ResponseEntity<String>(Constant.SUCCESS, HttpStatus.OK);
+			return new ResponseEntity<String>(Const.SUCCESS, HttpStatus.OK);
 		} else {
 
-			return new ResponseEntity<String>(Constant.ERROR, HttpStatus.OK);
+			return new ResponseEntity<String>(Const.ERROR, HttpStatus.OK);
 		}
 	}
 

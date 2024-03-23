@@ -46,9 +46,7 @@ public class JWTAuthenticationFilter extends OncePerRequestFilter {
 		String token = null;
 
 		if (reqHeader != null && reqHeader.startsWith("Bearer")) {
-			token = reqHeader.split(" ")[1];
-			logger.info("headAuthorization {}",reqHeader);
-			
+			token = reqHeader.split(" ")[1];			
 			try {
 				username = this.jwtHelper.getUsernameFromToken(token);
 			} catch (IllegalArgumentException e) {

@@ -14,7 +14,9 @@ function Admission() {
       "sort": 1,
       "sortByKey": "createdDate"
     }
-    apiEndPoints.ADMISSION_QUERY_V1().fetchPaginated(parms)
+   
+    apiEndPoints.SIMPLE().home();
+    /*apiEndPoints.ADMISSION_QUERY_V1().fetchPaginated(parms)
       .then((res) => {
         // console.log(res);
         if (res.status === 200)
@@ -33,6 +35,7 @@ function Admission() {
     return () => {
       setAdmissions(null);
     }
+    */
   }, [pageNo])
 
 

@@ -19,11 +19,11 @@ function FootBar() {
 				</div >
 				<div className={sheet.address}>
 					<div><FaMapLocationDot size={"1.2em"} /> Building no-43, near mate park, Saket, new Delhi-110002</div>
-					<Link to="../user/register" relative='route'>Register</Link>
+					<Link to="../user/login" relative='route'>Login</Link>
 				</div>
 			</section>
 			<footer id={sheet.footer}>
-				<p>Copyright @2020 | Pandey Dance Academy.com | All right reserved</p>
+				<p>Copyright @2020 | Hollo-Loop.com | All right reserved</p>
 			</footer>
 		</div>
 	)

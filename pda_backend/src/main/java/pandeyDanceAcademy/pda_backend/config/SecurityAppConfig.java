@@ -39,8 +39,8 @@ public class SecurityAppConfig {
 		CorsConfiguration corConfigs = new CorsConfiguration();
 		corConfigs.setAllowCredentials(true);
 
-		corConfigs.setAllowedOrigins(Arrays.asList("http://localhost:3001"));
-		corConfigs.addAllowedOrigin("http://localhost:3000");
+		corConfigs.setAllowedOrigins(Arrays.asList("http://localhost:3000", "https://localhost:3000", "http://localhost:3000/", "https://localhost:3000/"));
+
 
 		corConfigs.setAllowedMethods(Arrays.asList(
 				HttpMethod.GET.name(),
@@ -58,7 +58,7 @@ public class SecurityAppConfig {
 		corConfigs.setMaxAge(Duration.ofMinutes(20));
 		
 		UrlBasedCorsConfigurationSource urlBasedCorsConfigSrc = new UrlBasedCorsConfigurationSource();
-		urlBasedCorsConfigSrc.registerCorsConfiguration("**", corConfigs);
+		urlBasedCorsConfigSrc.registerCorsConfiguration("/**", corConfigs);
 		return urlBasedCorsConfigSrc;
 	}
 	
@@ -68,7 +68,7 @@ public class SecurityAppConfig {
 			.cors(cors -> cors.configurationSource(corsConfigurationSource()))
 			.csrf(csrf -> csrf.disable())
 			.authorizeHttpRequests(authorize -> {
-				authorize.requestMatchers(HttpMethod.GET, "/", "index", "home").permitAll();
+//				authorize.requestMatchers(HttpMethod.GET, "/", "index", "home").permitAll();
 				authorize.requestMatchers(HttpMethod.POST, "/api/v1/auth/verifyNewUser").permitAll();
 				authorize.requestMatchers(HttpMethod.POST, "/api/v1/auth/addNewUser").hasAnyAuthority("ADMIN");
 				authorize.requestMatchers(HttpMethod.POST, "/api/v1/auth/getToken", "/api/v1/admissionQuery/save").permitAll();

@@ -1,4 +1,4 @@
-package pandeyDanceAcademy.pda_backend.constants;
+package pandeyDanceAcademy.pda_backend.global.constants;
 
 public class QueryStatuses {
 	public static final String New = "New";

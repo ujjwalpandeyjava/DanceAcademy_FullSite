@@ -15,13 +15,13 @@ import sheet from './home.module.css';
 
 const imageUrls = [
 	'https://images.pexels.com/photos/209948/pexels-photo-209948.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2',
-	"https://images.pexels.com/photos/1701202/pexels-photo-1701202.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2",
+	"https://images.pexels.com/photos/1450116/pexels-photo-1450116.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2",
 	"https://images.pexels.com/photos/2188012/pexels-photo-2188012.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2",
 	"https://images.pexels.com/photos/175659/pexels-photo-175659.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2",
-	"https://images.pexels.com/photos/1918445/pexels-photo-1918445.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2",
 	"https://images.pexels.com/photos/40186/dance-ballet-powder-girl-40186.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2",
+	"https://images.pexels.com/photos/1918445/pexels-photo-1918445.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2",
 	"https://images.pexels.com/photos/2285932/pexels-photo-2285932.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2",
-	"https://images.pexels.com/photos/1450116/pexels-photo-1450116.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2"
+	"https://images.pexels.com/photos/1701202/pexels-photo-1701202.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2",
 ];
 export default function Home() {
 	document.title = "Home";

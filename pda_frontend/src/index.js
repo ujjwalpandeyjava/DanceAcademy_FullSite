@@ -12,7 +12,7 @@ import Classes from './admin/Classes.jsx';
 import Dashboard from './admin/Dashboard.jsx';
 import LoginForm from './admin/LoginForm.jsx';
 import Queries from './admin/Queries.jsx';
-import RegisterForm from './admin/RegisterForm.jsx';
+// import RegisterForm from './admin/RegisterForm.jsx';
 import App from './app';
 import './components/global/index.css';
 import 'react-toastify/dist/ReactToastify.css';
@@ -26,7 +26,7 @@ const routesWithJSX = createBrowserRouter(
       <Route path="user" element={<Outlet />}>
         <Route path="" element={<LoginForm />} />
         <Route path="login" element={<LoginForm />} />
-        <Route path="register" element={<RegisterForm />} />
+        {/* <Route path="register" element={<RegisterForm />} /> */}
         <Route path="admin" element={<Admin />}>
           <Route path="" element={<Dashboard />} />
           <Route path="admissions" element={<Admission />} />
