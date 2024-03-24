@@ -14,7 +14,7 @@ public class Const {
 	public static final String SECONDS = "Seconds";
 	public static final String MINUTES = "Minutes";
 
-	public static final int JWT_TOKEN_VALIDITY = 1;
+	public static final int JWT_TOKEN_VALIDITY = 120;
 	public static final String JWT_TOKEN_VALIDITY_UNIT_S = MINUTES;
 	public static final String MESSAGE_S = "MESSAGE";
 	public final static String Action = "Action";

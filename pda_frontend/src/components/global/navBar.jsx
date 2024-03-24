@@ -18,10 +18,10 @@ export default function NavBar() {
 	}, [])
 
 	function widthChange() {
-		console.log("wid", window.innerWidth);
 		if (window.innerWidth < 650)
 			setSmallWidth(true);
-		else setSmallWidth(false)
+		else
+			setSmallWidth(false)
 	}
 	return (
 		<div id={sheet.heading}>

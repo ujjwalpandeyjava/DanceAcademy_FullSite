@@ -42,6 +42,7 @@ public class JWTAuthenticationFilter extends OncePerRequestFilter {
 	protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
 
 		String reqHeader = request.getHeader("authorization");
+		logger.info("request Header authorization {}", reqHeader);
 		String username = null;
 		String token = null;
 

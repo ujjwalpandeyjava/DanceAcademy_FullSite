@@ -8,7 +8,7 @@ function App() {
 		<Fragment>
 			<Outlet />
 			<ToastContainer
-				position="top-right"
+				position="bottom-right"
 				autoClose={7003}
 				hideProgressBar={false}
 				newestOnTop={false}

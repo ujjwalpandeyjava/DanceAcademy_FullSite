@@ -46,7 +46,8 @@ public class SecurityAppConfig {
 				HttpMethod.GET.name(),
 				HttpMethod.POST.name(),
 				HttpMethod.PUT.name(),
-				HttpMethod.DELETE.name()
+				HttpMethod.DELETE.name(),
+				HttpMethod.PATCH.name()
 			));
 
 		corConfigs.setAllowedHeaders(List.of(
@@ -69,10 +70,10 @@ public class SecurityAppConfig {
 			.cors(cors -> cors.configurationSource(corsConfigurationSource()))
 			.csrf(csrf -> csrf.disable())
 			.authorizeHttpRequests(authorize -> {
-//				authorize.requestMatchers(HttpMethod.GET, "/", "index", "home").permitAll();
-				authorize.requestMatchers(HttpMethod.POST, "/api/v1/admissionQuery/save", "/api/v1/auth/verifyNewUser").permitAll();
+				authorize.requestMatchers(HttpMethod.GET, "/", "index", "home").permitAll();
+				authorize.requestMatchers(HttpMethod.POST, "/api/v1/auth/getToken", "/api/v1/auth/verifyNewUser").permitAll();
+				authorize.requestMatchers(HttpMethod.POST, "/api/v1/admissionQuery/save", "/api/v1/query/save").permitAll();
 				authorize.requestMatchers(HttpMethod.POST, "/api/v1/auth/addNewUser").hasAnyAuthority("ADMIN");
-				authorize.requestMatchers(HttpMethod.POST, "/api/v1/auth/getToken", "/api/v1/admissionQuery/save").permitAll();
 				authorize.anyRequest().authenticated();
 			})
 			.exceptionHandling(eh -> eh.authenticationEntryPoint(jwtEntryPoint))

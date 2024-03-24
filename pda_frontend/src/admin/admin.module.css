@@ -9,19 +9,21 @@
 	background-color: white;
 }
 #navbar {
-	background-color: #d8d8d8bd;
-	display: flex;
-	flex-direction: column;
-	flex-wrap: nowrap;
-	justify-content: space-between;
-	align-items: stretch;
-	overflow: hidden;
-	font-size: 1.15rem;
-	position: sticky;
-	transition: all 200ms ease;
-	top: 0;
-	height: 100dvh;
-	min-width: 55px;
+    background-color: #d8d8d8bd;
+    display: flex;
+    flex-direction: column;
+    flex-wrap: nowrap;
+    justify-content: space-between;
+    align-items: stretch;
+    overflow: hidden;
+    font-size: 1.15rem;
+    position: sticky;
+    transition: all 200ms ease;
+    top: 0;
+    min-height: 15em;
+    height: 100dvh;
+    min-width: 55px;
+    overflow: auto;
 }
 .navFull {
 	width: 280px;

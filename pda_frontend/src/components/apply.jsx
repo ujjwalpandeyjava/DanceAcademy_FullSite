@@ -3,7 +3,7 @@ import apiEndPoints from '../actions/api';
 import sheet from './apply.module.css';
 import FootBar from './global/footBar';
 import NavBar from './global/navBar';
-import { Bounce, toast } from 'react-toastify';
+import { toast } from 'react-toastify';
 
 function Apply() {
   const name = useRef();

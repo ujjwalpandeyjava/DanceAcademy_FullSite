@@ -1,6 +1,5 @@
 import { FaArrowRight, FaChevronRight, FaRegHandPointRight } from "react-icons/fa";
 import { Link } from 'react-router-dom';
-import './Admin.scss';
 import Head from './miniComp/Head';
 
 export default function Dashboard() {

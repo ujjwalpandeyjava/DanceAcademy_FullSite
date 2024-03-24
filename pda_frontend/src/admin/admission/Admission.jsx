@@ -1,42 +1,47 @@
-import { Fragment, useEffect, useState } from "react"
-import apiEndPoints from "../../actions/api"
-import Head from "../miniComp/Head"
+import { Fragment, useEffect, useState } from "react";
+import { toast } from "react-toastify";
+import apiEndPoints from "../../actions/api";
+import Head from "../miniComp/Head";
 import EachAdmissionQuery from "./EachAdmissionQuery";
 
 function Admission() {
-  const [pageNo, setPageNo] = useState(1);
+  const [pageNo, setPageNo] = useState(0);
+  const [status, setStatus] = useState("New");
   const [admissions, setAdmissions] = useState(null);
 
   useEffect(() => {
-    const parms = {
+    const body = {
       "pageNo": pageNo,
-      "pageSize": 6,
-      "sort": 1,
-      "sortByKey": "createdDate"
+      "pageSize": 4,
+      "sort": -1,
+      "sortByKey": "createdDate",
+      "status": status  // New, Contacted, Resolved
     }
-   
-    apiEndPoints.SIMPLE().home();
-    /*apiEndPoints.ADMISSION_QUERY_V1().fetchPaginated(parms)
-      .then((res) => {
+
+    apiEndPoints.ADMISSION_QUERY_V1().fetchPaginated(body)
+      .then(res => {
         // console.log(res);
         if (res.status === 200)
           return res.data;
         else {
-          alert(res.data)
+          toast.error(res.data.Message)
         }
+        // else {
+        // alert(res.data)
+        // }
       })
       .then((res) => {
-        console.log(res);
         setAdmissions(res);
       })
       .catch((err) => {
-        console.error(err.message);
+        console.error(err)
+
       });
+
     return () => {
       setAdmissions(null);
     }
-    */
-  }, [pageNo])
+  }, [pageNo, status])
 
 
 
@@ -44,24 +49,32 @@ function Admission() {
     <Fragment>
       <Head title={"Admission"} />
       <div className="admission">
-        {!admissions ? (<h5>Loading...</h5>) : (<div>
-          {admissions.empty === false ?
-            (<div>
-              <h4>Potential students {`${admissions.numberOfElements}/${admissions.totalElements}`}</h4>
-              {admissions.content.map((eachCont) => {
-                console.log(eachCont);
-                return <EachAdmissionQuery details={eachCont} />
-              })}
-              <div>
-                <button disabled={pageNo === 0} onClick={() => setPageNo((pre) => pre -= 1)}>Prev</button>
-                {pageNo}
-                <button disabled={pageNo === admissions.totalPages - 1} onClick={() => setPageNo((pre) => pre += 1)}>Next</button>
-              </div>
-            </div>)
-            : <h2>No more queries</h2>
-          }
-        </div>)}
-        {/* {JSON.stringify(admissions)} */}
+        {!admissions ? (<h5>Loading...</h5>) :
+
+
+
+          (<div>
+            {admissions.empty === true ?
+              <h3>No more queries</h3> :
+              (<div>
+                <h4>Potential students {`${admissions.numberOfElements}/${admissions.totalElements}`}</h4>
+                {admissions.content.map(query => <EachAdmissionQuery status={status} query={query} key={query.id} />)}
+              </div>)}
+            <div className="actionButtons">
+              <button disabled={admissions.first} onClick={() => setPageNo((pre) => pre -= 1)}>Prev</button>
+              {<div>
+                Page: {pageNo} for: <select value={status} onChange={(event) => setStatus(event.target.value)}>
+                  <option value="New">New</option>
+                  <option value="Contacted">Contacted</option>
+                  <option value="Resolved">Resolved</option>
+                </select>
+              </div>}
+              <button disabled={admissions.last} onClick={() => setPageNo((pre) => pre += 1)}>Next</button>
+            </div>
+          </div>)}
+
+
+
       </div>
 
     </Fragment>

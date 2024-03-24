@@ -1,6 +1,6 @@
 .adminPages {
 	overflow: hidden;
-	&>*{
+	& > * {
 		overflow: auto;
 	}
 	.dashboard {
@@ -125,12 +125,97 @@
 		}
 	}
 	.admission {
-		color: blue;
-
-		border: 1px dotted;
+		color: rgb(44, 44, 44);
+		// border: 1px dashed;
 		padding: 5px;
-		.eachAdmissionQuery{
+		.eachAdmissionQuery {
 			border-bottom: 1px solid black;
+			padding: 3px 0;
+			border-radius: 4px;
+			margin-bottom: 10px;
+			&:nth-child(even) {
+				background: rgb(247, 247, 247);
+			}
+			&:hover {
+				background: rgb(240, 239, 239);
+			}
+			& > .head {
+				display: flex;
+				justify-content: space-between;
+				flex-direction: row;
+				flex-wrap: wrap;
+				align-items: center;
+				gap: 1em;
+				padding: 5px;
+				border-bottom: 1px dotted gray;
+				& > .danceForm {
+					background-color: rgba(230, 230, 230, 0.507);
+					padding: 2px 5px;
+					border-radius: 5px;
+					&:hover {
+						background-color: rgba(230, 230, 230, 0.74);
+					}
+				}
+			}
+			& > .details {
+				padding: 2px 9px;
+				& > .detailsAction {
+					display: flex;
+					color: red;
+					flex-direction: row;
+					flex-wrap: nowrap;
+					justify-content: flex-end;
+					align-items: center;
+					gap: 10px;
+					& > button {
+						padding: 3px 7px;
+						background: white;
+						border-radius: 4px;
+						outline: none;
+						cursor: pointer;
+						display: flex;
+						flex-direction: row;
+						flex-wrap: nowrap;
+						justify-content: center;
+						align-items: center;
+						column-gap: 4px;
+						&.edit {
+							border: 1px solid green;
+							&:hover {
+								background-color: green;
+								color: white;
+							}
+						}
+						&.delete {
+							border: 1px solid #ff8383;
+							&:hover {
+								background-color: #ff8383;
+								color: black;
+							}
+						}
+					}
+				}
+			}
+		}
+		.actionButtons {
+			display: flex;
+			flex-direction: row;
+			flex-wrap: nowrap;
+			justify-content: space-evenly;
+			align-items: center;
+			padding: 0.5em 1.8em;
+		}
+		.actionButtons button {
+			padding: 0.5em 1.5em;
+			font-size: 1em;
+			border: 1px solid #130f29;
+			box-shadow: 0px 0px 3px #cccccc;
+			border-radius: 5px;
+			transition: all 150ms ease;
+		}
+		.actionButtons button:hover {
+			background-color: rgb(225, 225, 225);
+			box-shadow: 2px 2px 3px #797979;
 		}
 	}
 	.queries {

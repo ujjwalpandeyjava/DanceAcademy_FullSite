@@ -7,6 +7,7 @@ import { Link, Outlet } from 'react-router-dom';
 import sheet from './admin.module.css';
 import apiEndPoints from '../actions/api';
 import { logoutUser } from '../components/global/Utlity';
+import './Admin.scss';
 
 
 // https://www.npmjs.com/package/echarts for queries
@@ -62,11 +63,9 @@ function Admin() {
 					<CgProfile size="1.5em" onClick={() => setSmallWidth(!smallWidth)} />
 					{!smallWidth && <div>
 						{name}
-						<p>
-							<p onClick={logoutUser}  style={{cursor: 'pointer'}}>
-								Logout <MdOutlineExitToApp />
-							</p>
-						</p>
+						<div onClick={logoutUser} style={{ cursor: 'pointer' }}>
+							Logout <MdOutlineExitToApp />
+						</div>
 					</div>}
 				</div>
 			</div>

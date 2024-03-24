@@ -30,18 +30,28 @@ const apiEndPoints = {
 					headers: { "Content-Type": "multipart/form-data" },
 					params: {}
 				})
-			}
-			,
+			},
 			fetchPaginated: (paginateData) => {
 				const params = { ...paginateData };
-				const headers = {};
-				return ax.get(url, { headers, params })
+				const headers = { "Content-Type": "application/json", "accept": "application/json" };
+				return ax.post(url + "/paginated", params, { headers, params })
 			},
+			update: (id, status) => ax.patch(url + `/${id}`, { status: status }, {
+				params: { status: status }
+			}),
 			fetchAll: () => ax.get(url),
 			fetchById: (id) => ax.get(url + id),
-			update: (id, updatedRecord) => ax.put(url + id, updatedRecord),
-			delete: (id) => ax.delete(url + id),
+			delete: (id, updatedRecord) => ax.put(url + id, updatedRecord),
 		}
+	},
+	ALL_QUERY(url = "/api/v1/query") {
+		return (
+			{
+				save: (formData) => ax.post(url + "/save", formData, {
+					headers: { 'Content-Type': 'application/json' }
+				})
+			}
+		)
 	}
 }
 

@@ -31,6 +31,7 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PatchMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -63,12 +64,13 @@ public class AdmissionQueryController {
 	@Autowired private AdimissionQueryRepo admissionQueryRepo;
 
 	/**
-	 * Save the user admission query, with multiple files with storage, and one file in binary form.
+	 * Save the user admission query, with multiple files with storage, and one file
+	 * in binary form.
 	 * 
 	 * @param body all the parameters in an object.
 	 * @return the created object.
 	 */
-	@PostMapping(value = "/save", consumes = {MediaType.MULTIPART_FORM_DATA_VALUE, MediaType.APPLICATION_JSON_VALUE})
+	@PostMapping(value = "/save", consumes = { MediaType.MULTIPART_FORM_DATA_VALUE, MediaType.APPLICATION_JSON_VALUE })
 	public ResponseEntity<Map<String, Object>> saveQuery(@Valid @ModelAttribute CustomerQueryEntityModel body) {
 		ArrayList<File_Type> files = new ArrayList<File_Type>();
 		if (body.getNImgList() != null) {
@@ -84,7 +86,8 @@ public class AdmissionQueryController {
 						uploadsDir.mkdir();
 					File file = new File(filePath);
 					multipart.transferTo(file);
-					File_TypeBuilder fileDetails = File_Type.builder().originalName(multipart.getOriginalFilename()).filePath(filePath).type(multipart.getContentType());
+					File_TypeBuilder fileDetails = File_Type.builder().originalName(multipart.getOriginalFilename())
+							.filePath(filePath).type(multipart.getContentType());
 					files.add(fileDetails.build());
 				} catch (IOException e) {
 					logger.error("Failed to save file: {} ", e.getMessage());
@@ -93,18 +96,10 @@ public class AdmissionQueryController {
 			});
 		}
 
-		CustomerQueryEntityBuilder cqeb = CustomerQueryEntity.builder()
-				.name(body.getName())
-				.gender(body.getGender())
-				.danceForm(body.getDanceForm())
-				.email(body.getEmail())
-				.contactNo(body.getContactNo())
-				.guardianContactNo(body.getGuardianContactNo())
-				.address(body.getAddress())
-				.description(body.getDescription())
-				.createdDate(new Date())
-				.status(QueryStatuses.New)
-				.files(files);
+		CustomerQueryEntityBuilder cqeb = CustomerQueryEntity.builder().name(body.getName()).gender(body.getGender())
+				.danceForm(body.getDanceForm()).email(body.getEmail()).contactNo(body.getContactNo())
+				.guardianContactNo(body.getGuardianContactNo()).address(body.getAddress())
+				.description(body.getDescription()).createdDate(new Date()).status(QueryStatuses.New).files(files);
 
 		if (body.getOneImg() != null) {
 			try {
@@ -114,28 +109,15 @@ public class AdmissionQueryController {
 			}
 		}
 
-		return new ResponseEntity<Map<String, Object>>(Map.of("newUser", admissionQueryRepo.save(cqeb.build()),
-				Const.MESSAGE, Const.SUCCESS), HttpStatus.CREATED);
+		return new ResponseEntity<Map<String, Object>>(
+				Map.of("newUser", admissionQueryRepo.save(cqeb.build()), Const.MESSAGE, Const.SUCCESS),
+				HttpStatus.CREATED);
 	}
 
-	@GetMapping("/pagginated")
-	public Page<CustomerQueryEntity> getQueryPaginated(@RequestParam("pageNo") int pageNo,
-			@RequestParam("pageSize") int pageSize, @RequestParam("sort") int sort,
-			@RequestParam("sortByKey") String sortByKey) {
-		if (pageNo < 0)
-			throw new IllegalArgumentException("Page number must be greater than -1.");
-
-		if (pageSize < 1 || pageSize > 50)
-			throw new IllegalArgumentException("Page size must be between 1 and 50.");
-
-		if (sort != 1 && sort != -1)
-			throw new IllegalArgumentException("Invalid sort value. Use 1 for ascending or -1 for descending.");
-
-		if (sortByKey.isEmpty())
-			throw new IllegalArgumentException("Sort key cannot be empty.");
-
-		Order order = sort == -1 ? Order.desc(sortByKey) : Order.asc(sortByKey);
-		return admissionQueryRepo.findAll(PageRequest.of(pageNo, pageSize, Sort.by(order)));
+	@PostMapping("/paginated")
+	public Page<CustomerQueryEntity> getQueryPaginated(@Valid @RequestBody GetPagginate pq) {
+		Order order = pq.getSort() < 0 ? Order.desc(pq.getSortByKey()) : Order.asc(pq.getSortByKey());
+		return admissionQueryRepo.findAllByStatus(PageRequest.of(pq.getPageNo(), pq.getPageSize(), Sort.by(order)), pq.getStatus());
 	}
 
 	@GetMapping("/all")
@@ -145,8 +127,26 @@ public class AdmissionQueryController {
 
 	@GetMapping("/:id")
 	public Optional<CustomerQueryEntity> getOneQuery(@Valid @PathParam("id") String id) {
-		System.out.println("==="+id);
+		System.out.println("===" + id);
 		return admissionQueryRepo.findById(id);
+	}
+
+	@PatchMapping("/{id}")
+	public ResponseEntity<Map<String, Object>> updateStatusOneQuery(@PathVariable("id") String id,
+			@RequestParam String status) {
+		logger.info("status {}", status);
+		
+		if (!QueryStatuses.isValidStatus(status))
+			return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(Map.of(Const.MESSAGE, "Statuses can be only: " + QueryStatuses.getAllStatus()));
+
+		Optional<CustomerQueryEntity> query = admissionQueryRepo.findById(id);
+		if (query.isPresent()) {
+			CustomerQueryEntity cqe = query.get();
+			cqe.setStatus(status);
+			return ResponseEntity.status(HttpStatus.ACCEPTED).body(
+					Map.of(Const.MESSAGE, "Status updated succesfully.", "updatedUser", admissionQueryRepo.save(cqe)));
+		} else
+			return ResponseEntity.status(HttpStatus.NOT_MODIFIED).body(Map.of(Const.MESSAGE, "Query not found!"));
 	}
 
 	@DeleteMapping
@@ -239,17 +239,15 @@ class UpdateBody {
 }
 
 @Data
-
 class GetPagginate {
 	@Min(value = 0, message = "Value cannot be lower than 0")
 	private int pageNo;
 	@Min(value = 1, message = "Value cannot be lower than 1")
 	@Max(value = 100, message = "Value cannot excced 100")
 	private int pageSize;
-	@Min(value = 0, message = "Value cannot be lower than 0")
-	@Max(value = 1, message = "Value cannot excced 1")
-	private int sort; // 0 ascending, 1 descending
-	private String sortByKey = "id";
+	private int sort; // 1 ascending, -1 descending
+	private String sortByKey = "createdDate";
+	private String status;
 }
 
 @Data

@@ -8,4 +8,8 @@ public class QueryStatuses {
 	public static boolean isValidStatus(String status) {
 		return status.equals(New) || status.equals(Contacted) || status.equals(Resolved);
 	}
+
+	public static String getAllStatus() {
+		return String.join(", ", New, Contacted, Resolved);
+	}
 }
