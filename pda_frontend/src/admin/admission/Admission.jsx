@@ -6,7 +6,7 @@ import EachAdmissionQuery from "./EachAdmissionQuery";
 
 function Admission() {
   const [pageNo, setPageNo] = useState(0);
-  const [status, setStatus] = useState("New");
+  const [status, setStatus] = useState("Contacted");
   const [admissions, setAdmissions] = useState(null);
 
   useEffect(() => {
@@ -15,7 +15,7 @@ function Admission() {
       "pageSize": 4,
       "sort": -1,
       "sortByKey": "createdDate",
-      "status": status  // New, Contacted, Resolved
+      "status": status  // New, Contacted, Resolved, Admitted
     }
 
     apiEndPoints.ADMISSION_QUERY_V1().fetchPaginated(body)

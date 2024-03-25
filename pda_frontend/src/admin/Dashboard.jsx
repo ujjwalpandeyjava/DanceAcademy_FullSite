@@ -52,12 +52,22 @@ export default function Dashboard() {
           </Link>
         </section>
 
-        {/* <section className="blocks" >
+        <section className="blocks" >
           <div className="details">
-            <h2>Queries</h2>
-            <div>Graph - O </div>
+            <h2>Users</h2>
+            <div>
+              <p>- Register users</p>
+              <p>- Connect with the users</p>
+              <p>- Check details</p>
+            </div>
           </div>
-        </section> */}
+          <Link to={"./users"}>
+            <button className="button-48">
+              <span className="text">Check <FaRegHandPointRight /></span>
+            </button>
+          </Link>
+        </section>
+
       </div>
     </div>
   )

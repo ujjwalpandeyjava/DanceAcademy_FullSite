@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.RestController;
 import jakarta.validation.Valid;
 import pandeyDanceAcademy.pda_backend.entity.Query;
 import pandeyDanceAcademy.pda_backend.global.constants.Const;
-import pandeyDanceAcademy.pda_backend.repository.QueryRepo;
+import pandeyDanceAcademy.pda_backend.service.respoInter.QueryRepo;
 
 @RestController
 @RequestMapping("/api/v1/query")

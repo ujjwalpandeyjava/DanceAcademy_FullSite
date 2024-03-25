@@ -1,11 +1,11 @@
-import Head from "./miniComp/Head"
+import Head from "../miniComp/Head"
 
 function Classes() {
 	return (
 		<div>
 			<Head title={"Classes"} />
 			<div className="classes">
-				Classes
+				Classes --
 			</div>
 		</div>
 	)

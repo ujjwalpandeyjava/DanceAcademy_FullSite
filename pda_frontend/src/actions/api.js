@@ -2,7 +2,6 @@ import axios from "axios";
 import { toast } from "react-toastify";
 import { addJWTTokenInLocalStorage, getJWTTokenFromLocalStorage, getToHome, logoutUser, refreshToken } from "../components/global/Utlity";
 
-
 window.reLoginTime = null;
 window.extraTimeTimeOut = null;
 
@@ -21,6 +20,12 @@ const apiEndPoints = {
 			login: (payload) => ax.post(url + "/getToken", payload.body, { params: { ...payload.params } }),
 			refreshToken: () => ax.post(url + "/refreshToken"),
 			logout: () => ax.delete(url + "/revokeToken"),
+			registerNewUser: (body) => {
+				const headers = { "Content-Type": "application/json", "accept": "application/json" };
+				return ax.post(url + "/addNewUser", { ...body }, {
+					headers: { ...headers }
+				})
+			}
 		}
 	},
 	ADMISSION_QUERY_V1(url = '/api/v1/admissionQuery') {
@@ -52,6 +57,12 @@ const apiEndPoints = {
 				})
 			}
 		)
+	},
+	USERS(url = "api/v1/users") {
+		return {
+			// login: (payload) => ax.post(url + "/getToken", payload.body, { params: { ...payload.params } }),
+			getAll: (params) => ax.get(url, { params: { ...params } })
+		}
 	}
 }
 

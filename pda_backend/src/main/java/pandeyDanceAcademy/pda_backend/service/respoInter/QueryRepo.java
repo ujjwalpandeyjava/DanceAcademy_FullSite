@@ -1,4 +1,4 @@
-package pandeyDanceAcademy.pda_backend.repository;
+package pandeyDanceAcademy.pda_backend.service.respoInter;
 
 import org.springframework.data.mongodb.repository.MongoRepository;
 import org.springframework.stereotype.Repository;

@@ -52,7 +52,9 @@ const LoginForm = () => {
 				})
 				.catch(e => {
 					console.log(e);
-					if (e.response.status === 400) {
+					if (e.message === "Network Error") {
+						toast("Server not working")
+					} else if (e.response.status === 400) {
 						let text = '';
 						for (let key in e.response.data) {
 							if (e.response.data.hasOwnProperty(key)) {
@@ -71,7 +73,7 @@ const LoginForm = () => {
 		<div className={sheet.loginForm}>
 			<form onSubmit={handleSubmit}>
 				<Link to={"../../"} relative='path'>
-				<SiBytedance className={sheet.heading} />
+					<SiBytedance className={sheet.heading} />
 				</Link>
 				<div className={sheet.inputContainer}>
 					<label>Username/Email</label>

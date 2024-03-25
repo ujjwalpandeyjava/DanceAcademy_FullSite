@@ -1,4 +1,5 @@
 import apiEndPoints from "../../actions/api";
+import { FallingLines, TailSpin } from "react-loader-spinner";
 
 export function getToHome() {
 	window.location.replace(new URL(window.location.href).origin);
@@ -44,3 +45,24 @@ export function logoutUser() {
 			console.error(error.message);
 		})
 }
+
+export const TailSpinner = () => <TailSpin
+	visible={true}
+	height="80"
+	width="80"
+	color="#4fa94d"
+	ariaLabel="tail-spin-loading"
+	radius="1"
+	wrapperStyle={{}}
+	wrapperClass=""
+/>
+
+export const fallingLines = () =>
+	<FallingLines
+		color="#4fa94d"
+		width="100"
+		visible={true}
+		ariaLabel="falling-circles-loading"
+	/>
+
+

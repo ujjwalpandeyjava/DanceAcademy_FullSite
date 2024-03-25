@@ -52,16 +52,16 @@ public class JWTAuthenticationFilter extends OncePerRequestFilter {
 				username = this.jwtHelper.getUsernameFromToken(token);
 			} catch (IllegalArgumentException e) {
 				logger.error("Illegal argument whil fetching the username!! Error: {}", e.getMessage());
-				e.printStackTrace();
+//				e.printStackTrace();
 			} catch (ExpiredJwtException e) {
 				logger.error("Token alread expired!! Error: {}", e.getMessage());
-				e.printStackTrace();
+//				e.printStackTrace();
 			} catch (MalformedJwtException e) {
 				logger.error("Tempered token!! Error: {}", e.getMessage());
-				e.printStackTrace();
+//				e.printStackTrace();
 			} catch (Exception e) {
 				logger.error("Generic error!! Error: {}", e.getMessage());
-				e.printStackTrace();
+//				e.printStackTrace();
 			}
 
 		} else {

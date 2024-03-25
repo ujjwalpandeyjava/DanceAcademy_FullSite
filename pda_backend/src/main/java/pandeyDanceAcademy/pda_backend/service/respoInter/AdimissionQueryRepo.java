@@ -1,4 +1,4 @@
-package pandeyDanceAcademy.pda_backend.repository;
+package pandeyDanceAcademy.pda_backend.service.respoInter;
 
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;

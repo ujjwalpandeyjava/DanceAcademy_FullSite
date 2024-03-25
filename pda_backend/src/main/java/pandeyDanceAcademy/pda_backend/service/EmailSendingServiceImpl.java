@@ -15,7 +15,7 @@ import jakarta.mail.internet.AddressException;
 import jakarta.mail.internet.InternetAddress;
 import jakarta.mail.internet.MimeMessage;
 import pandeyDanceAcademy.pda_backend.entity.EmailDetails;
-import pandeyDanceAcademy.pda_backend.service.implementation.EmailSendingService;
+import pandeyDanceAcademy.pda_backend.service.inters.EmailSendingService;
 
 @Service
 public class EmailSendingServiceImpl implements EmailSendingService {

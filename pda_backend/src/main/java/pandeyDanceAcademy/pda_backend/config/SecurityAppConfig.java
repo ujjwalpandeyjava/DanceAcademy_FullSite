@@ -11,6 +11,7 @@ import org.springframework.http.HttpMethod;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.http.SessionCreationPolicy;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import org.springframework.web.cors.CorsConfiguration;
@@ -23,62 +24,58 @@ import pandeyDanceAcademy.pda_backend.config.JWT.JWTAuthenticationFilter;
 @EnableWebSecurity
 public class SecurityAppConfig {
 
-	
 	private JWTAuthenticationEntryPoint jwtEntryPoint;
 	private JWTAuthenticationFilter jwtAuthenticationFilter;
-	
-	public SecurityAppConfig(JWTAuthenticationEntryPoint jwtEntryPoint, JWTAuthenticationFilter jwtAuthenticationFilter) {
-        this.jwtAuthenticationFilter = jwtAuthenticationFilter;
-        this.jwtEntryPoint = jwtEntryPoint;
-    }
 
-	// CORS filter , create and use multiple (one with one) securityFilterChain and CorsCongifurationSource for different sites access allowed method...
+	public SecurityAppConfig(JWTAuthenticationEntryPoint jwtEntryPoint, JWTAuthenticationFilter jwtAuthenticationFilter,
+			PasswordEncoder pase) {
+		this.jwtAuthenticationFilter = jwtAuthenticationFilter;
+		this.jwtEntryPoint = jwtEntryPoint;
+	}
+
+	// CORS filter , create and use multiple (one with one) securityFilterChain and
+	// CorsCongifurationSource for different sites access allowed method...
 	@Bean
 //	@Order(1)
-	public UrlBasedCorsConfigurationSource  corsConfigurationSource() {
+	public UrlBasedCorsConfigurationSource corsConfigurationSource() {
 
 		CorsConfiguration corConfigs = new CorsConfiguration();
 		corConfigs.setAllowCredentials(true);
 
 		corConfigs.setAllowedOrigins(Arrays.asList("http://localhost:3000", "https://localhost:3000"));
 
-		corConfigs.setAllowedMethods(Arrays.asList(
-				HttpMethod.GET.name(),
-				HttpMethod.POST.name(),
-				HttpMethod.PUT.name(),
-				HttpMethod.DELETE.name(),
-				HttpMethod.PATCH.name()
-			));
+		corConfigs.setAllowedMethods(Arrays.asList(HttpMethod.GET.name(), HttpMethod.POST.name(), HttpMethod.PUT.name(),
+				HttpMethod.DELETE.name(), HttpMethod.PATCH.name()));
 
-		corConfigs.setAllowedHeaders(List.of(
-				HttpHeaders.AUTHORIZATION,
-				HttpHeaders.CONTENT_TYPE,
-				HttpHeaders.ACCEPT
-			));
+		corConfigs.setAllowedHeaders(List.of(HttpHeaders.AUTHORIZATION, HttpHeaders.CONTENT_TYPE, HttpHeaders.ACCEPT));
 
 		corConfigs.setMaxAge(Duration.ofMinutes(20));
-		
+
 		UrlBasedCorsConfigurationSource urlBasedCorsConfigSrc = new UrlBasedCorsConfigurationSource();
 		urlBasedCorsConfigSrc.registerCorsConfiguration("/**", corConfigs);
 		return urlBasedCorsConfigSrc;
 	}
-	
+
 	@Bean
 //	@Order(0)
 	public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
-		 http
-			.cors(cors -> cors.configurationSource(corsConfigurationSource()))
-			.csrf(csrf -> csrf.disable())
-			.authorizeHttpRequests(authorize -> {
-				authorize.requestMatchers(HttpMethod.GET, "/", "index", "home").permitAll();
-				authorize.requestMatchers(HttpMethod.POST, "/api/v1/auth/getToken", "/api/v1/auth/verifyNewUser").permitAll();
-				authorize.requestMatchers(HttpMethod.POST, "/api/v1/admissionQuery/save", "/api/v1/query/save").permitAll();
-				authorize.requestMatchers(HttpMethod.POST, "/api/v1/auth/addNewUser").hasAnyAuthority("ADMIN");
-				authorize.anyRequest().authenticated();
-			})
-			.exceptionHandling(eh -> eh.authenticationEntryPoint(jwtEntryPoint))
-			.sessionManagement(sessMag -> sessMag.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
-			.addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class);
-		 return http.build();
+		http.cors(cors -> cors.configurationSource(corsConfigurationSource())).csrf(csrf -> csrf.disable())
+				.authorizeHttpRequests(authorize -> {
+//					authorize.requestMatchers("/**").permitAll();	// For testings
+					authorize.requestMatchers(HttpMethod.GET, "/", "index", "home", "error").permitAll();
+					authorize.requestMatchers(HttpMethod.POST, "/api/v1/auth/getToken").permitAll();
+					authorize.requestMatchers(HttpMethod.GET, "/api/v1/auth/verifyNewUser").permitAll();
+					authorize.requestMatchers(HttpMethod.POST, "/api/v1/admissionQuery/save", "/api/v1/query/save").permitAll();
+					authorize.requestMatchers(HttpMethod.POST, "/api/v1/auth/addNewUser").hasAnyAuthority("ADMIN");
+					authorize.anyRequest().authenticated();
+				}).exceptionHandling(eh -> eh.authenticationEntryPoint(jwtEntryPoint))
+				.sessionManagement(sessMag -> sessMag.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
+				.addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class);
+		return http.build();
 	}
+
+//	@Autowired
+//	  public void configureGlobal(AuthenticationManagerBuilder auth) throws Exception {
+//	    auth.inMemoryAuthentication().withUser("user").password("password").roles("USER");
+//	  }
 }

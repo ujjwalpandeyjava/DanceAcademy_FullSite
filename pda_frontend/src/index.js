@@ -6,16 +6,17 @@ import Contact from './components/contact';
 import Home from './components/home';
 // import { Provider } from 'react-redux';
 import { Outlet, Route, RouterProvider, createBrowserRouter, createRoutesFromElements } from 'react-router-dom';
+import 'react-toastify/dist/ReactToastify.css';
 import Admin from './admin/Admin.jsx';
-import Admission from './admin/admission/Admission.jsx';
-import Classes from './admin/Classes.jsx';
 import Dashboard from './admin/Dashboard.jsx';
 import LoginForm from './admin/LoginForm.jsx';
 import Queries from './admin/Queries.jsx';
-// import RegisterForm from './admin/RegisterForm.jsx';
+import Admission from './admin/admission/Admission.jsx';
+import Classes from './admin/classes/Classes.jsx';
+import AddNewUser from './admin/users/AddNewUser.jsx';
+import Users from './admin/users/Users.jsx';
 import App from './app';
 import './components/global/index.css';
-import 'react-toastify/dist/ReactToastify.css';
 
 document.title = "Pandey Dance Academy";
 const routesWithJSX = createBrowserRouter(
@@ -26,12 +27,15 @@ const routesWithJSX = createBrowserRouter(
       <Route path="user" element={<Outlet />}>
         <Route path="" element={<LoginForm />} />
         <Route path="login" element={<LoginForm />} />
-        {/* <Route path="register" element={<RegisterForm />} /> */}
         <Route path="admin" element={<Admin />}>
           <Route path="" element={<Dashboard />} />
           <Route path="admissions" element={<Admission />} />
           <Route path="classes" element={<Classes />} />
           <Route path="queries" element={<Queries />} />
+          <Route path='users' element={<Outlet />}>
+            <Route path="" element={<Users />} />
+            <Route path="addUser" element={<AddNewUser />} />
+          </Route>
           <Route path='*' element={<h2>Page Option Not found</h2>} />
         </Route>
       </Route>

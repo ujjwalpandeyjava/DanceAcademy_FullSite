@@ -38,8 +38,8 @@ function EachAdmissionQuery({ query, status }) {
 	return (
 		<div className="eachAdmissionQuery" >
 			<div className="head">
-				<strong>{query.name} ({query.gender.substring(0, 1).toUpperCase()})</strong>
-				<i className="danceForm">{query.danceForm}</i>
+				<strong title={query.name + " - " + query.gender}>{query.name} ({query.gender.substring(0, 1).toUpperCase()})</strong>
+				<i className="danceForm" title="Dance form">{query.danceForm}</i>
 				<span>{moment(query.createdDate).format("DD-MM-YY, hh:mm a")}</span>
 			</div>
 			<div className="details">

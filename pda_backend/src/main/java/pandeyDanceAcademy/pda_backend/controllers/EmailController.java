@@ -19,7 +19,7 @@ import org.springframework.web.bind.annotation.RestController;
 import jakarta.validation.Valid;
 import pandeyDanceAcademy.pda_backend.entity.EmailDetails;
 import pandeyDanceAcademy.pda_backend.global.constants.Const;
-import pandeyDanceAcademy.pda_backend.service.implementation.EmailSendingService;
+import pandeyDanceAcademy.pda_backend.service.inters.EmailSendingService;
 
 @RestController
 @RequestMapping("/api/v1/email")

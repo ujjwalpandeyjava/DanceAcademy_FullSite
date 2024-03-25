@@ -7,6 +7,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.HttpMediaTypeNotSupportedException;
 import org.springframework.web.HttpRequestMethodNotSupportedException;
+import org.springframework.web.bind.MissingServletRequestParameterException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 
@@ -20,6 +21,8 @@ public class GlobalException {
 		errors.put("Message", "Request method '" + ex.getMethod() + "' is not supported");
 		return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(errors);
 	}
+	
+	
 	@ExceptionHandler(HttpMediaTypeNotSupportedException.class)
 	public ResponseEntity<Map<String, Object>> httpMediaTypeNotSupportedException(HttpMediaTypeNotSupportedException ex) {
 		Map<String, Object> errors = new HashMap<>();
@@ -28,4 +31,15 @@ public class GlobalException {
 		return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(errors);
 	}
 	
+	
+	@ExceptionHandler(MissingServletRequestParameterException.class)
+	public ResponseEntity<Map<String, Object>> missingServletRequestParameterException(MissingServletRequestParameterException ex) {
+		Map<String, Object> errors = new HashMap<>();
+		System.out.println("global ex, MissingServletRequestParameterException");
+		errors.put("Message", ex.getMessage());
+		return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(errors);
+	}
+	
+	
+//	
 }

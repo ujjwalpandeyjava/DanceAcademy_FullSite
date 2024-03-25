@@ -1,5 +1,6 @@
 package pandeyDanceAcademy.pda_backend.config;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Scope;
@@ -11,9 +12,11 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.provisioning.InMemoryUserDetailsManager;
+import org.springframework.security.provisioning.JdbcUserDetailsManager;
 
 import pandeyDanceAcademy.pda_backend.entity.EmailDetails;
-import pandeyDanceAcademy.pda_backend.entity.UserRegistration;
+import pandeyDanceAcademy.pda_backend.entity.Registrations;
+import pandeyDanceAcademy.pda_backend.global.constants.UserAuthorities_Types;
 
 @Configuration
 public class BeansConfigs {
@@ -26,8 +29,8 @@ public class BeansConfigs {
 
 	@Bean
 	@Scope("prototype")
-	public UserRegistration getUserRegistration() {
-		return new UserRegistration();
+	public Registrations getUserRegistration() {
+		return new Registrations();
 	}
 
 	/*@Bean
@@ -41,26 +44,34 @@ public class BeansConfigs {
 		return new BCryptPasswordEncoder(11);
 	}
 
+//	@Autowired
+//	private DataSource dataSource;
 //	@Bean
 //	public UserDetailsService userDetailsService () {
+//		JdbcUserDetailsManager manager = new JdbcUserDetailsManager();
+//	    manager.setDataSource(dataSource);
+//	    return manager;
 //		return null; // add our UserDetailServiceImpl for crud...
 //	}	
 	
 	
 //	Hard coded users working fine for formLogin
-	@Bean
-	public UserDetailsService setUpUser_HardCodedUsers() {
-//		GrantedAuthority user = new SimpleGrantedAuthority("USER");
-//		List<GrantedAuthority> authorities = new ArrayList<>();
-//		authorities.add(visitor);
+//	@Bean
+//	public UserDetailsService setUpUser_HardCodedUsers() {
+////		GrantedAuthority user = new SimpleGrantedAuthority("USER");
+////		List<GrantedAuthority> authorities = new ArrayList<>();
+////		authorities.add(visitor);
+//	
+//		// In-Memory style
+//		UserDetails userPandey = User.builder().username("admin").password(passwordEncoderBCrypt().encode("123")).authorities(UserAuthorities_Types.ADMIN).build();
+//		UserDetails userUjjwal = User.builder().username("faculty").password(passwordEncoderBCrypt().encode("123")).authorities(UserAuthorities_Types.FACULTY).build();
+//		return new InMemoryUserDetailsManager(userUjjwal, userPandey);	// JdbcUserDetailsManager - InMemoryUserDetailsManager
+//		
+//		// DB style
+//	}
 	
-		UserDetails userPandey = User.builder().username("admin").password(passwordEncoderBCrypt().encode("123")).authorities("ADMIN").build();
-		UserDetails userUjjwal = User.builder().username("faculty").password(passwordEncoderBCrypt().encode("123")).authorities("FACULTY").build();
-		return new InMemoryUserDetailsManager(userUjjwal, userPandey);	// JdbcUserDetailsManager - InMemoryUserDetailsManager
-	}
-	
 	@Bean
-	public AuthenticationManager AuthenticationManager(AuthenticationConfiguration authConfig) throws Exception {
+	public AuthenticationManager authenticationManager(AuthenticationConfiguration authConfig) throws Exception {
 		return authConfig.getAuthenticationManager();
 	}
 }

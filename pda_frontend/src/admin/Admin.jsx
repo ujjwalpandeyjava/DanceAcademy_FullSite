@@ -8,6 +8,7 @@ import sheet from './admin.module.css';
 import apiEndPoints from '../actions/api';
 import { logoutUser } from '../components/global/Utlity';
 import './Admin.scss';
+import { FaUsers } from "react-icons/fa";
 
 
 // https://www.npmjs.com/package/echarts for queries
@@ -57,6 +58,9 @@ function Admin() {
 					</Link>
 					<Link to={"./queries"} relative='path' className={sheet.eachOption}>
 						<RiCustomerService2Line /> {smallWidth ? null : <>Customer Queries</>}
+					</Link>
+					<Link to={"./users"} relative='path' className={sheet.eachOption}>
+						<FaUsers /> {smallWidth ? null : <>Users</>}
 					</Link>
 				</div>
 				<div className={sheet.profile} >

@@ -1,4 +1,4 @@
-package pandeyDanceAcademy.pda_backend.service.implementation;
+package pandeyDanceAcademy.pda_backend.service.inters;
 
 import pandeyDanceAcademy.pda_backend.entity.EmailDetails;
 

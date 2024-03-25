@@ -43,7 +43,6 @@ import jakarta.validation.Valid;
 import jakarta.validation.constraints.Max;
 import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.NotNull;
 import jakarta.websocket.server.PathParam;
 import lombok.Builder;
 import lombok.Data;
@@ -53,7 +52,7 @@ import pandeyDanceAcademy.pda_backend.entity.File_Type;
 import pandeyDanceAcademy.pda_backend.entity.File_Type.File_TypeBuilder;
 import pandeyDanceAcademy.pda_backend.global.constants.Const;
 import pandeyDanceAcademy.pda_backend.global.constants.QueryStatuses;
-import pandeyDanceAcademy.pda_backend.repository.AdimissionQueryRepo;
+import pandeyDanceAcademy.pda_backend.service.respoInter.AdimissionQueryRepo;
 
 @RestController
 @RequestMapping("/api/v1/admissionQuery")
@@ -61,7 +60,8 @@ import pandeyDanceAcademy.pda_backend.repository.AdimissionQueryRepo;
 public class AdmissionQueryController {
 
 	private Logger logger = LoggerFactory.getLogger(AdmissionQueryController.class);
-	@Autowired private AdimissionQueryRepo admissionQueryRepo;
+	@Autowired
+	private AdimissionQueryRepo admissionQueryRepo;
 
 	/**
 	 * Save the user admission query, with multiple files with storage, and one file
@@ -117,7 +117,8 @@ public class AdmissionQueryController {
 	@PostMapping("/paginated")
 	public Page<CustomerQueryEntity> getQueryPaginated(@Valid @RequestBody GetPagginate pq) {
 		Order order = pq.getSort() < 0 ? Order.desc(pq.getSortByKey()) : Order.asc(pq.getSortByKey());
-		return admissionQueryRepo.findAllByStatus(PageRequest.of(pq.getPageNo(), pq.getPageSize(), Sort.by(order)), pq.getStatus());
+		return admissionQueryRepo.findAllByStatus(PageRequest.of(pq.getPageNo(), pq.getPageSize(), Sort.by(order)),
+				pq.getStatus());
 	}
 
 	@GetMapping("/all")
@@ -135,9 +136,10 @@ public class AdmissionQueryController {
 	public ResponseEntity<Map<String, Object>> updateStatusOneQuery(@PathVariable("id") String id,
 			@RequestParam String status) {
 		logger.info("status {}", status);
-		
+
 		if (!QueryStatuses.isValidStatus(status))
-			return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(Map.of(Const.MESSAGE, "Statuses can be only: " + QueryStatuses.getAllStatus()));
+			return ResponseEntity.status(HttpStatus.BAD_REQUEST)
+					.body(Map.of(Const.MESSAGE, "Statuses can be only: " + QueryStatuses.getAllStatus()));
 
 		Optional<CustomerQueryEntity> query = admissionQueryRepo.findById(id);
 		if (query.isPresent()) {
@@ -149,10 +151,10 @@ public class AdmissionQueryController {
 			return ResponseEntity.status(HttpStatus.NOT_MODIFIED).body(Map.of(Const.MESSAGE, "Query not found!"));
 	}
 
-	@DeleteMapping
-	public Map<String, Object> deleteQuery(@Valid @RequestBody(required = true) DeleteBody deleteBody) {
-		if (admissionQueryRepo.existsById(deleteBody.getId())) {
-			admissionQueryRepo.deleteById(deleteBody.getId());
+	@DeleteMapping("/{id}")
+	public Map<String, Object> deleteQuery(@PathVariable String id) {
+		if (admissionQueryRepo.existsById(id)) {
+			admissionQueryRepo.deleteById(id);
 			return Map.of(Const.MESSAGE, Const.SUCCESS);
 		} else
 			return Map.of(Const.MESSAGE, Const.Not_Found);
@@ -214,19 +216,6 @@ public class AdmissionQueryController {
 
 }
 
-@Data
-class DeleteBody {
-	@NotNull
-	private String id;
-
-}
-
-@Data
-class GetOneBody {
-	@NotNull
-	private String id;
-
-}
 
 @Data
 class UpdateBody {
