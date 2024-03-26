@@ -10,7 +10,7 @@ import 'react-toastify/dist/ReactToastify.css';
 import Admin from './admin/Admin.jsx';
 import Dashboard from './admin/Dashboard.jsx';
 import LoginForm from './admin/LoginForm.jsx';
-import Queries from './admin/Queries.jsx';
+import Queries from './admin/queries/Queries.jsx';
 import Admission from './admin/admission/Admission.jsx';
 import Classes from './admin/classes/Classes.jsx';
 import AddNewUser from './admin/users/AddNewUser.jsx';

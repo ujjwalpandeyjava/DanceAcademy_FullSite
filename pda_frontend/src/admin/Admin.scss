@@ -219,7 +219,41 @@
 		}
 	}
 	.queries {
-		color: green;
+		// color: green;
+		.queryList {
+			max-width: 100%;
+			overflow: auto;
+			table {
+				// border: 1px solid #6f6f6f61;
+				background-color: #e6f4ec7b;
+				border-top: none;
+				padding: 5px;
+				margin-top: 1em;
+				width: 100%;
+				thead tr {
+					th {
+						background-color: rgba(202, 249, 223, 0.902);
+						border-bottom: 1px dotted gray;
+						padding: 4px 8px;
+						text-transform: capitalize;
+						white-space: nowrap;
+					}
+				}
+				tbody tr {
+					// border-: 1px dotted gray;
+					td {
+						padding: 8px 10px;
+						border: none;
+					}
+					&:nth-child(even) {
+						background-color: mintcream;
+					}
+					&:hover {
+						background-color: #e6f4ecbb;
+					}
+				}
+			}
+		}
 	}
 	.classes {
 		color: rgb(236, 32, 144);
@@ -235,16 +269,81 @@
 			justify-content: space-between;
 			align-items: center;
 			border-radius: 4px;
-			.addNewUserBtn{
+			.addNewUserBtn {
 				border: 1px solid #0b0f3b;
 				padding: 4px 8px;
 				border-radius: 5px;
 				text-transform: uppercase;
-				&:hover{
+				&:hover {
 					transition: all 200ms ease-out;
 					background-color: #0d1250;
 					color: white;
 				}
+			}
+		}
+
+		.usersList {
+			max-width: 100%;
+			overflow: auto;
+			table {
+				// border: 1px solid #6f6f6f61;
+				background-color: #e6f4ec7b;
+				border-top: none;
+				padding: 5px;
+				margin-top: 1em;
+				width: 100%;
+				thead tr {
+					th {
+						background-color: rgba(202, 249, 223, 0.902);
+						border-bottom: 1px dotted gray;
+						padding: 4px 8px;
+						text-transform: capitalize;
+						white-space: nowrap;
+					}
+				}
+				tbody tr {
+					// border-: 1px dotted gray;
+					td {
+						padding: 8px 10px;
+						border: none;
+					}
+					&:nth-child(even) {
+						background-color: mintcream;
+					}
+					&:hover {
+						background-color: #e6f4ecbb;
+					}
+				}
+			}
+		}
+	}
+
+	.registerSection {
+		// background: radial-gradient(rgb(250, 254, 242) 0% 45%, rgb(136, 213, 230));
+		// height: 90dvh;
+		margin-top: 4em;
+		// width: 100dvw;
+		display: grid;
+		place-content: center;
+		justify-items: center;
+		align-items: center;
+		justify-content: center;
+		align-content: center;
+		& > .form {
+			border: 1px solid black;
+			width: 50dvw;
+			font-size: 1.25rem;
+			min-width: 350px;
+			max-width: 550px;
+			padding: 1rem 3rem 2rem 3rem;
+			border-radius: 8px;
+			background-color: white;
+			transition: all 150ms ease;
+			max-height: 93%;
+			overflow: auto;
+			margin: 1rem;
+			&:hover {
+				box-shadow: 0 0 5px gray;
 			}
 		}
 	}

@@ -54,6 +54,12 @@ const apiEndPoints = {
 			{
 				save: (formData) => ax.post(url + "/save", formData, {
 					headers: { 'Content-Type': 'application/json' }
+				}),
+				getAll: () => ax.get(url),
+				updateUser: (id, newStatus) => ax.patch(url + "/" + id, null, {
+					params: {
+						newStatus: newStatus
+					}
 				})
 			}
 		)
@@ -61,7 +67,13 @@ const apiEndPoints = {
 	USERS(url = "api/v1/users") {
 		return {
 			// login: (payload) => ax.post(url + "/getToken", payload.body, { params: { ...payload.params } }),
-			getAll: (params) => ax.get(url, { params: { ...params } })
+			getAll: (params) => ax.get(url, { params: { ...params } }),
+			updateUser: (id, payload) => ax.patch(url + "/update/" + id, payload.params, {
+				params: {},
+				headers: {
+					"Content-Type": "application/json"
+				}
+			})
 		}
 	}
 }

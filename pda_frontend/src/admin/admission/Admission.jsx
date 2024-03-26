@@ -67,6 +67,8 @@ function Admission() {
                   <option value="New">New</option>
                   <option value="Contacted">Contacted</option>
                   <option value="Resolved">Resolved</option>
+                  <option value="Admitted">Admitted</option>
+                  
                 </select>
               </div>}
               <button disabled={admissions.last} onClick={() => setPageNo((pre) => pre += 1)}>Next</button>

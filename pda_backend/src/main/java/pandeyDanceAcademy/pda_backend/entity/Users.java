@@ -7,7 +7,10 @@ import org.springframework.data.mongodb.core.mapping.Document;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.User;
 
+import lombok.Setter;
+
 @Document
+@Setter
 public class Users extends User {
 
 	private static final long serialVersionUID = 1L;
@@ -19,7 +22,14 @@ public class Users extends User {
 	public Users(String username, String password, boolean enabled, boolean accountNonExpired, boolean credentialsNonExpired, boolean accountNonLocked, Collection<? extends GrantedAuthority> authorities) {
 		super(username, password, enabled, accountNonExpired, credentialsNonExpired, accountNonLocked, authorities);
 	}	
-	
+
+	// Cause error
+//	public Users(String id, String createdDateTime,  String username, String password, boolean enabled, boolean accountNonExpired, boolean credentialsNonExpired, boolean accountNonLocked, Collection<? extends GrantedAuthority> authorities) {
+//		super(username, password, enabled, accountNonExpired, credentialsNonExpired, accountNonLocked, authorities);
+//		this.id = id;
+//		this.createdDateTime = createdDateTime;
+//	}
+//	
 	public String getId() {
 		return id;
 	}

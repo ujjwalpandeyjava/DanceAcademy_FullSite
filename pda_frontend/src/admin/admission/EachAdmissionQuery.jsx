@@ -11,13 +11,18 @@ function EachAdmissionQuery({ query, status }) {
 
 	const actionType = {
 		"New": <button className="delete" onClick={() => resolveQuery(query.id, "Contacted")}>Mark contacted <TbPlugConnected /></button>,
-		"Contacted": <button className="delete" onClick={() => resolveQuery(query.id, "Resolved")}>Mark Resolved <RiThumbUpLine /></button>,
+		"Contacted": <>
+			<button className="delete" onClick={() => resolveQuery(query.id, "Resolved")}>Mark Not-Interested <RiThumbUpLine /></button>
+			<button className="delete" onClick={() => resolveQuery(query.id, "Admitted")}>Mark Admitted <RiThumbUpLine /></button>
+		</>,
 		"Resolved": <button className="delete" onClick={() => resolveQuery(query.id, "Contacted")}>Re-Connect <MdOutlineSwapCalls /></button>,
+		"Admitted": "Now a student",
 	}
 	const actionTypeSolved = {
 		"New": <button className="delete"> Contacted < MdDone /></button>,
-		"Contacted": <button className="delete"> Resolved < MdDone /></button>,
-		"Resolved": <button className="delete"> Re-Connected < MdDone /></button>
+		"Contacted": "Check respective section",
+		"Resolved": <button className="delete">Re-Connected < MdDone /></button>,
+		"Admitted": ""
 	}
 
 	function resolveQuery(id, status) {

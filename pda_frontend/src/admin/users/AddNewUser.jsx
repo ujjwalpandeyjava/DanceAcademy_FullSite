@@ -1,9 +1,12 @@
 import { useRef, useState } from "react";
 import { SiBytedance } from "react-icons/si";
+import { toast } from "react-toastify";
+import apiEndPoints from "../../actions/api";
+import { TailSpinner } from "../../components/global/Utlity";
 import sheet from '../LoginForm.module.css';
 import Head from "../miniComp/Head";
-import apiEndPoints from "../../actions/api";
-import { toast } from "react-toastify";
+
+
 function AddNewUser() {
   const username = useRef();
   const password = useRef();
@@ -29,27 +32,25 @@ function AddNewUser() {
     event.preventDefault();
     if (validateForm()) {
       setIsLoading(true)
-      apiEndPoints.AUTH().registerNewUser({
+      const body = {
         emailID: username.current.value,
         defaultPassword: password.current.value
-      })
+      }
+      apiEndPoints.AUTH().registerNewUser(body)
         .then(e => {
+          console.log(e);
           if (e.status === 202) {
-            resetForm();
             return e.data;
-          }
-          else if (e.status === 208)
-            toast.error(`User: '${username.current.value}' already exists`);
-
-          console.log(e)
+          } else if (e.status === 208)
+            toast.error(`User: '${body.emailID}' already exists`);
         })
         .then(resp => {
+          console.log(resp);
           if (!resp)
             return;
 
-          console.log(resp);
           toast.success(resp.Message + " - " + resp.Action);
-          // resp.UserID
+          resetForm();
         })
         .catch(e => console.error(e.message))
         .finally(a => {
@@ -61,26 +62,27 @@ function AddNewUser() {
   return (
     <div>
       <Head title={"Add New USer"} />
-      <div className={sheet.loginForm}>
-        <form onSubmit={console.log("--")}>
-          <SiBytedance className={sheet.heading} />
-          <div className={sheet.inputContainer}>
-            <label className="requiredStar">Email ID:</label>
-            <input type="email" name="uname" ref={username} />
-            {errorMessages.name && <div className={sheet.error}>{errorMessages.name}</div>}
-          </div>
-          <div className={sheet.inputContainer}>
-            <label className="requiredStar">Default Password</label>
-            <input type="password" name="pass" ref={password} />
-            {errorMessages.pass && <div className={sheet.error}>{errorMessages.pass}</div>}
-          </div>
-          <div className={sheet.inputContainer}>
-            <label className="requiredStar">Confirm Password</label>
-            <input type="password" name="pass" ref={password2} />
-            {errorMessages.pass2 && <div className={sheet.error}>{errorMessages.pass2}</div>}
-          </div>
-          <button disabled={isLoading} type="submit" className={sheet.submitBtn} value="Register" onClick={handleSubmit}>Register</button>
-        </form>
+      <div className="registerSection">
+        {isLoading ? TailSpinner() :
+          <div className="form">
+            <SiBytedance className={sheet.heading} />
+            <div className={sheet.inputContainer}>
+              <label className="requiredStar">Email ID:</label>
+              <input type="email" name="uname" ref={username} />
+              {errorMessages.name && <div className={sheet.error}>{errorMessages.name}</div>}
+            </div>
+            <div className={sheet.inputContainer}>
+              <label className="requiredStar">Default Password</label>
+              <input type="password" name="pass" ref={password} />
+              {errorMessages.pass && <div className={sheet.error}>{errorMessages.pass}</div>}
+            </div>
+            <div className={sheet.inputContainer}>
+              <label className="requiredStar">Confirm Password</label>
+              <input type="password" name="pass" ref={password2} />
+              {errorMessages.pass2 && <div className={sheet.error}>{errorMessages.pass2}</div>}
+            </div>
+            <button disabled={isLoading} type="submit" className={sheet.submitBtn} value="Register" onClick={handleSubmit}>Register</button>
+          </div>}
       </div>
 
     </div>
