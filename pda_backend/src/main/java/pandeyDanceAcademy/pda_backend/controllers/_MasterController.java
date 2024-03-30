@@ -2,22 +2,41 @@ package pandeyDanceAcademy.pda_backend.controllers;
 
 import java.security.Principal;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-@RestController
-//@CrossOrigin(origins = { "http://localhost:3000", "http://localhost:8080" })
-public class _MasterController {
+import jakarta.servlet.http.HttpServletRequest;
 
-	@GetMapping(value = {"/","index","home" })
+@RestController
+public class _MasterController {
+	
+	private Logger logger = LoggerFactory.getLogger(_MasterController.class);
+	
+	@Value("${ClientLogin}")
+	private String redirectURL;
+
+	@GetMapping(value = { "/", "index", "home" })
 	public String getHomeURL() {
 		System.out.println("Getting current user..");
 		return "At home page";
 	}
-	
+
 	@GetMapping("/currentUser")
 	public Object oneUser(Principal principle) { // Principal represents current user
+		return principle != null ? principle : "work";
+	}
 
-		return principle;
+	@GetMapping("/redirect")
+	public ResponseEntity<String> myApi(HttpServletRequest request) {
+		String originUrl = request.getHeader("Origin");
+	    logger.debug("Received request at agent  {}", request.getHeader("Origin"));
+		return ResponseEntity.status(HttpStatus.TEMPORARY_REDIRECT).header(HttpHeaders.LOCATION, originUrl+"/ind.html").body("Redirecting to " + originUrl);
+//		return ResponseEntity.status(HttpStatus.TEMPORARY_REDIRECT).header(HttpHeaders.LOCATION, redirectURL).body("Redirecting to " + redirectURL);
 	}
 }

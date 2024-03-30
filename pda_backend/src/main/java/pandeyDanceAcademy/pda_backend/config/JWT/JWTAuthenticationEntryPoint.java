@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.web.AuthenticationEntryPoint;
 import org.springframework.stereotype.Component;
@@ -17,11 +18,13 @@ import jakarta.servlet.http.HttpServletResponse;
 @Component
 public class JWTAuthenticationEntryPoint implements AuthenticationEntryPoint {
 
+	  @Value("${ClientLogin}")
+	  private String clientLoginUrl;
 	
-	private final ObjectMapper objectMapper;
+//	private final ObjectMapper objectMapper;
 
     public JWTAuthenticationEntryPoint(ObjectMapper objectMapper) {
-        this.objectMapper = objectMapper;
+//        this.objectMapper = objectMapper;
     }
     
     
@@ -40,7 +43,9 @@ public class JWTAuthenticationEntryPoint implements AuthenticationEntryPoint {
         responseBody.put("error", "Access denied");
         responseBody.put("message", authException.getMessage());
 
-        objectMapper.writeValue(response.getWriter(), responseBody);
+        response.sendRedirect(clientLoginUrl);
+//      objectMapper.writeValue(response.getWriter(), responseBody);
+
 	}
 
 }

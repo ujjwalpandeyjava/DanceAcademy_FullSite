@@ -14,14 +14,14 @@ import javax.management.RuntimeErrorException;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.http.converter.HttpMessageNotReadableException;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.BadCredentialsException;
-import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
-import org.springframework.security.core.Authentication;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -67,8 +67,12 @@ public class AuthController {
 	private RegistrationsRepo userRegistrationRepo;
 	private UserRepository registeredUserRepo;
 	private UserDetailsService userDetailsService;
+	@SuppressWarnings("unused")
 	private AuthenticationManager authenticationManager;
 	private final JWTHelper jwtHelper;
+
+	@Value("${ClientLogin}")
+	private String clientLoginUrl;
 
 	public AuthController(AuthenticationManager authenticationManager, JWTHelper jwtHelper,
 			UserDetailsService userDetailsService, PasswordEncoder passwordEncoderBCrypt, EmailDetails eDetails,
@@ -256,7 +260,8 @@ public class AuthController {
 		UserDetails userDetail = userDetailsService.loadUserByUsername(usernameFromToken);
 		String revokeToken = jwtHelper.revokeToken(userDetail.getUsername());
 
-		return ResponseEntity.ok(Map.of(Const.MESSAGE, "Token revoked successfully -- " + revokeToken));
+//		return ResponseEntity.ok(Map.of(Const.MESSAGE, "Token revoked successfully -- " + revokeToken));
+		return ResponseEntity.status(HttpStatus.TEMPORARY_REDIRECT).header(HttpHeaders.LOCATION, clientLoginUrl).body(Map.of(Const.MESSAGE, "Token revoked successfully -- " + revokeToken + ", Redirecting to " + clientLoginUrl));
 	}
 
 	@ExceptionHandler({ MethodArgumentNotValidException.class, HttpMessageNotReadableException.class, IOException.class,

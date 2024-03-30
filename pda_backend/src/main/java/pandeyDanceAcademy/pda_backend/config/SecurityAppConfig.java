@@ -42,7 +42,7 @@ public class SecurityAppConfig {
 		CorsConfiguration corConfigs = new CorsConfiguration();
 		corConfigs.setAllowCredentials(true);
 
-		corConfigs.setAllowedOrigins(Arrays.asList("http://localhost:3000", "https://localhost:3000"));
+		corConfigs.setAllowedOrigins(Arrays.asList("http://localhost:3000", "https://localhost:3000", "http://127.0.0.1:5500"));
 
 		corConfigs.setAllowedMethods(Arrays.asList(HttpMethod.GET.name(), HttpMethod.POST.name(), HttpMethod.PUT.name(),
 				HttpMethod.DELETE.name(), HttpMethod.PATCH.name()));
@@ -62,7 +62,7 @@ public class SecurityAppConfig {
 		http.cors(cors -> cors.configurationSource(corsConfigurationSource())).csrf(csrf -> csrf.disable())
 				.authorizeHttpRequests(authorize -> {
 //					authorize.requestMatchers("/**").permitAll();	// For testings
-					authorize.requestMatchers(HttpMethod.GET, "/", "index", "home", "error").permitAll();
+					authorize.requestMatchers(HttpMethod.GET, "/", "index", "home", "error", "/currentUser", "/redirect").permitAll();
 					authorize.requestMatchers(HttpMethod.POST, "/api/v1/auth/getToken").permitAll();
 					authorize.requestMatchers(HttpMethod.GET, "/api/v1/auth/verifyNewUser").permitAll();
 					authorize.requestMatchers(HttpMethod.POST, "/api/v1/admissionQuery/save", "/api/v1/query/save").permitAll();
