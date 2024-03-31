@@ -52,9 +52,7 @@ const LoginForm = () => {
 				})
 				.catch(e => {
 					console.log(e);
-					if (e.message === "Network Error") {
-						toast("Server not working")
-					} else if (e.response.status === 400) {
+					 if (e?.response?.status === 400) {
 						let text = '';
 						for (let key in e.response.data) {
 							if (e.response.data.hasOwnProperty(key)) {

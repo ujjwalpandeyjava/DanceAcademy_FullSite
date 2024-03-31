@@ -92,20 +92,19 @@ ax.interceptors.request.use(config => {
 			clearTimeout(window.reLoginTime);
 			window.reLoginTime = setTimeout(() => {
 				toast(
-					<p className="logoutWarning">
-						<p>you are about to logout!</p>
-						<p className="logoutWarningActions">
+					<div className="logoutWarning">
+						<div>you are about to logout!</div>
+						<div className="logoutWarningActions">
 							<button onClick={refreshToken}>Stay logged-in</button>
 							<button onClick={logoutUser}>Logout</button>
-						</p>
-					</p>
+						</div>
+					</div>
 				);
 				clearTimeout(window.extraTimeTimeOut)
 				window.extraTimeTimeOut = setTimeout(() => {
 					logoutUser();
 				}, extraTime);
 			}, Math.max(1, (tokenData.expireTime - extraTime - new Date().getTime())));
-			console.log(Math.max(1, (tokenData.expireTime - extraTime - new Date().getTime())));
 		}
 	}
 	return config;
@@ -116,14 +115,16 @@ ax.interceptors.request.use(config => {
 
 
 ax.interceptors.response.use(response => {
-	//	console.log("response data: " , response, response.data || response.json);
+	// console.log("response data: ", response, response.data || response.json);
 	if (response.request.responseURL.endsWith("api/v1/auth/getToken")) {
 		addJWTTokenInLocalStorage(response.data);
 	}
 	return response;
 }, function (error) {
 	// console.error("Error in response interceptor: ", error);
-	if (error?.response?.status === 401) {
+	if (error?.code === "ERR_NETWORK") {
+		toast("Server not working")
+	} else if (error?.response?.status === 401) {
 		toast.error("Logged out!")
 		getToHome();
 	}

@@ -140,9 +140,9 @@ public class AuthController {
 			body.append("""
 					<html>
 						<body>
-							<h1>Welcome to the hoola loop</h1>
-							<p>This is your loging OTP:<br/>
-							<b>""" + userReg.getOtp() + "</b><a  href=\"" + fullUrl
+							<h1>Welcome to the Holla Loop</h1>
+							<p>This is your loging OTP:
+							<b>""" + userReg.getOtp() + "</b><br/>Direct Link for verification: <a href=\"" + fullUrl
 					+ "\">Click here to verify </a></body></html>");
 			eDetails.setMsgBody(body.toString());
 			boolean mailSent = emailService.sendSimpleMailWithHTMLContent(eDetails);
