@@ -16,7 +16,7 @@ public class Const {
 
 	public static final int JWT_TOKEN_VALIDITY = 120;
 	public static final String JWT_TOKEN_VALIDITY_UNIT_S = MINUTES;
-	public static final String MESSAGE_S = "MESSAGE";
+	public static final String MESSAGE_UPPER = "MESSAGE";
 	public final static String Action = "Action";
 	public final static String MESSAGE = "Message";
 	public final static String SUCCESS = "Success";
@@ -28,6 +28,7 @@ public class Const {
 	public static final String ALREADY_PRESENT = "Already Present";
 	public static final String USER_EXISTS = "User already exist";
 	public static final String INCORRECT_EMAIL = "Incorrect email";
+	public static final Object CONTENT = "Content";
 
 	private Const() {
 	}

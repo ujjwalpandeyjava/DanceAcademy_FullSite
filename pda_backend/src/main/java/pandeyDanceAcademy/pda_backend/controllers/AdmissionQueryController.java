@@ -40,6 +40,7 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
 import jakarta.validation.Valid;
+import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.Max;
 import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotBlank;
@@ -52,7 +53,7 @@ import pandeyDanceAcademy.pda_backend.entity.File_Type;
 import pandeyDanceAcademy.pda_backend.entity.File_Type.File_TypeBuilder;
 import pandeyDanceAcademy.pda_backend.global.constants.Const;
 import pandeyDanceAcademy.pda_backend.global.constants.QueryStatuses;
-import pandeyDanceAcademy.pda_backend.service.respoInter.AdimissionQueryRepo;
+import pandeyDanceAcademy.pda_backend.respo.inter.AdimissionQueryRepo;
 
 @RestController
 @RequestMapping("/api/v1/admissionQuery")
@@ -117,8 +118,7 @@ public class AdmissionQueryController {
 	@PostMapping("/paginated")
 	public Page<CustomerQueryEntity> getQueryPaginated(@Valid @RequestBody GetPagginate pq) {
 		Order order = pq.getSort() < 0 ? Order.desc(pq.getSortByKey()) : Order.asc(pq.getSortByKey());
-		return admissionQueryRepo.findAllByStatus(PageRequest.of(pq.getPageNo(), pq.getPageSize(), Sort.by(order)),
-				pq.getStatus());
+		return admissionQueryRepo.findAllByStatus(PageRequest.of(pq.getPageNo(), pq.getPageSize(), Sort.by(order)),pq.getStatus());
 	}
 
 	@GetMapping("/all")
@@ -183,11 +183,8 @@ public class AdmissionQueryController {
 		return new ResponseEntity<Map<String, Object>>(returnObj, statusCode);
 	}
 
-	@ExceptionHandler({ MethodArgumentNotValidException.class, HttpMessageNotReadableException.class, IOException.class,
-			IllegalArgumentException.class, Exception.class })
+	@ExceptionHandler({ MethodArgumentNotValidException.class, HttpMessageNotReadableException.class, IOException.class, IllegalArgumentException.class, Exception.class })
 	public ResponseEntity<Map<String, Object>> handleValidationExceptions(Exception ex) {
-		System.err.println(ex.getClass() + " | " + ex.getMessage());
-
 		Map<String, Object> errors = new HashMap<>();
 		if (ex instanceof MethodArgumentNotValidException) {
 			MethodArgumentNotValidException ex1 = (MethodArgumentNotValidException) ex;
@@ -202,8 +199,8 @@ public class AdmissionQueryController {
 			errors.put("Message", ex1.getMessage());
 		} else if (ex instanceof HttpMessageNotReadableException) {
 			var ex1 = (HttpMessageNotReadableException) ex;
-			System.err.println(ex1.getMessage());
 			errors.put("Message", "Request Body missing!");
+			errors.put("FullMessage", ex1.getMessage());
 		} else if (ex instanceof IllegalArgumentException) {
 			var ex1 = (IllegalArgumentException) ex;
 			errors.put("Message", ex1.getMessage());
@@ -248,6 +245,8 @@ class CustomerQueryEntityModel {
 	private String gender;
 	@NotBlank(message = "DanceForm must be filled")
 	private String danceForm;
+	@NotBlank
+	@Email
 	private String email;
 	@NotBlank(message = "Contact must be given for connecting purpose")
 	private String contactNo;

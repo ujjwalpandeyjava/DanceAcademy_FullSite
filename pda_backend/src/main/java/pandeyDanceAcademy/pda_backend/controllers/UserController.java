@@ -21,7 +21,7 @@ import lombok.Data;
 import lombok.ToString;
 import pandeyDanceAcademy.pda_backend.entity.Users;
 import pandeyDanceAcademy.pda_backend.global.constants.Const;
-import pandeyDanceAcademy.pda_backend.service.respoInter.UserRepository;
+import pandeyDanceAcademy.pda_backend.respo.inter.UserRepository;
 
 @RestController
 @RequestMapping("api/v1/users")

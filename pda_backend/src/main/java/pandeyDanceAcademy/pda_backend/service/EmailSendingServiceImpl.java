@@ -15,10 +15,10 @@ import jakarta.mail.internet.AddressException;
 import jakarta.mail.internet.InternetAddress;
 import jakarta.mail.internet.MimeMessage;
 import pandeyDanceAcademy.pda_backend.entity.EmailDetails;
-import pandeyDanceAcademy.pda_backend.service.inters.EmailSendingService;
+import pandeyDanceAcademy.pda_backend.service.inter.EmailSendingServiceInter;
 
 @Service
-public class EmailSendingServiceImpl implements EmailSendingService {
+public class EmailSendingServiceImpl implements EmailSendingServiceInter {
 
 	@Autowired
 	private JavaMailSender javaMailSender;

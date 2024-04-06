@@ -40,9 +40,8 @@ public class JWTAuthenticationFilter extends OncePerRequestFilter {
 
 	@Override
 	protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
-
 		String reqHeader = request.getHeader("authorization");
-		logger.info("request Header authorization {}", reqHeader);
+//		logger.info("request Header authorization {}", reqHeader);
 		String username = null;
 		String token = null;
 
@@ -52,23 +51,18 @@ public class JWTAuthenticationFilter extends OncePerRequestFilter {
 				username = this.jwtHelper.getUsernameFromToken(token);
 			} catch (IllegalArgumentException e) {
 				logger.error("Illegal argument whil fetching the username!! Error: {}", e.getMessage());
-//				e.printStackTrace();
 			} catch (ExpiredJwtException e) {
 				logger.error("Token alread expired!! Error: {}", e.getMessage());
-//				e.printStackTrace();
 			} catch (MalformedJwtException e) {
 				logger.error("Tempered token!! Error: {}", e.getMessage());
-//				e.printStackTrace();
 			} catch (Exception e) {
 				logger.error("Generic error!! Error: {}", e.getMessage());
-//				e.printStackTrace();
 			}
 
-		} else {
+		} else
 			logger.warn("Invalid header value");
-		}
 
-		// user hitting with token
+		// User hitting with token
 		if (username != null && SecurityContextHolder.getContext().getAuthentication() == null) {
 			UserDetails userDetail = this.userDetailsService.loadUserByUsername(username);
 			Boolean isTokenValid = this.jwtHelper.validateToken(token, userDetail);
@@ -80,7 +74,6 @@ public class JWTAuthenticationFilter extends OncePerRequestFilter {
 				logger.info("Token not valid with the logged-in user");
 			}
 		}
-
 		
 		filterChain.doFilter(request, response);
 	}

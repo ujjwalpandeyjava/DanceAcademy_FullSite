@@ -6,7 +6,7 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
 import pandeyDanceAcademy.pda_backend.entity.Users;
-import pandeyDanceAcademy.pda_backend.service.respoInter.UserRepository;
+import pandeyDanceAcademy.pda_backend.respo.inter.UserRepository;
 
 @Service
 public class MyUserDetailsService implements UserDetailsService {

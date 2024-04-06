@@ -21,7 +21,7 @@ import jakarta.validation.Valid;
 import pandeyDanceAcademy.pda_backend.entity.Query;
 import pandeyDanceAcademy.pda_backend.global.constants.Const;
 import pandeyDanceAcademy.pda_backend.global.constants.QueryStatuses;
-import pandeyDanceAcademy.pda_backend.service.respoInter.QueryRepo;
+import pandeyDanceAcademy.pda_backend.respo.inter.QueryRepo;
 
 @RestController
 @RequestMapping("/api/v1/query")
@@ -37,8 +37,7 @@ public class QueryController {
 
 	@PostMapping("/save")
 	public ResponseEntity<Map<Object, Object>> addCustomerQuery(@Valid @RequestBody Query body) {
-		logger.info("Request body: {}", body);
-		return ResponseEntity.status(HttpStatus.CREATED).body(Map.of(Const.MESSAGE, Const.SUCCESS, "Query", queryRepo.save(body)));
+		return ResponseEntity.status(HttpStatus.CREATED).body(Map.of(Const.MESSAGE, Const.SUCCESS, "savedDetails", queryRepo.save(body)));
 	}
 
 	@GetMapping()

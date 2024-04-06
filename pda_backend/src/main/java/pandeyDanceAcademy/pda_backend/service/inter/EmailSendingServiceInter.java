@@ -1,8 +1,8 @@
-package pandeyDanceAcademy.pda_backend.service.inters;
+package pandeyDanceAcademy.pda_backend.service.inter;
 
 import pandeyDanceAcademy.pda_backend.entity.EmailDetails;
 
-public interface EmailSendingService {
+public interface EmailSendingServiceInter {
 	// Send a simple text email to the desired recipient
 	boolean sendSimpleMail(EmailDetails details);
 

@@ -18,33 +18,34 @@ import jakarta.servlet.http.HttpServletResponse;
 @Component
 public class JWTAuthenticationEntryPoint implements AuthenticationEntryPoint {
 
-	  @Value("${ClientLogin}")
-	  private String clientLoginUrl;
-	
+	@Value("${ClientLogin}")
+	private String clientLoginUrl;
+
 //	private final ObjectMapper objectMapper;
 
-    public JWTAuthenticationEntryPoint(ObjectMapper objectMapper) {
+	public JWTAuthenticationEntryPoint(ObjectMapper objectMapper) {
 //        this.objectMapper = objectMapper;
-    }
-    
-    
+	}
+
 	// Exception handler for JWT
 	@Override
-	public void commence(HttpServletRequest request, HttpServletResponse response, AuthenticationException authException) throws IOException, ServletException {
-		
+	public void commence(HttpServletRequest request, HttpServletResponse response,
+			AuthenticationException authException) throws IOException, ServletException {
+
 		response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
-		
+
 		// Without this line response will be a simple string.
-        response.setContentType("application/json");
+		response.setContentType("application/json");
 
-        Map<String, Object> responseBody = new HashMap<>();
-        responseBody.put("path", request.getRequestURI());
-        responseBody.put("method", request.getMethod());
-        responseBody.put("error", "Access denied");
-        responseBody.put("message", authException.getMessage());
+		Map<String, Object> responseBody = new HashMap<>();
+		responseBody.put("path", request.getRequestURI());
+		responseBody.put("method", request.getMethod());
+		responseBody.put("error", "Access denied");
+		responseBody.put("message", authException.getMessage());
+		System.out.println(authException.getMessage());
 
-        response.sendRedirect(clientLoginUrl);
-//      objectMapper.writeValue(response.getWriter(), responseBody);
+//        response.sendRedirect(clientLoginUrl);
+		new ObjectMapper().writeValue(response.getWriter(), responseBody);
 
 	}
 

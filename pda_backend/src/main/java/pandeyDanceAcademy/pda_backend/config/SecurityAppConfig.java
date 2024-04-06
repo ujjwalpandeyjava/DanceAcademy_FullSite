@@ -19,6 +19,7 @@ import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 
 import pandeyDanceAcademy.pda_backend.config.JWT.JWTAuthenticationEntryPoint;
 import pandeyDanceAcademy.pda_backend.config.JWT.JWTAuthenticationFilter;
+import pandeyDanceAcademy.pda_backend.global.constants.UserAuthorities_Types;
 
 @Configuration
 @EnableWebSecurity
@@ -42,7 +43,7 @@ public class SecurityAppConfig {
 		CorsConfiguration corConfigs = new CorsConfiguration();
 		corConfigs.setAllowCredentials(true);
 
-		corConfigs.setAllowedOrigins(Arrays.asList("http://localhost:3000", "https://localhost:3000", "http://127.0.0.1:5500"));
+		corConfigs.setAllowedOrigins(Arrays.asList("http://localhost:3000", "http://localhost:8080", "http://127.0.0.1:5500"));
 
 		corConfigs.setAllowedMethods(Arrays.asList(HttpMethod.GET.name(), HttpMethod.POST.name(), HttpMethod.PUT.name(),
 				HttpMethod.DELETE.name(), HttpMethod.PATCH.name()));
@@ -63,10 +64,11 @@ public class SecurityAppConfig {
 				.authorizeHttpRequests(authorize -> {
 //					authorize.requestMatchers("/**").permitAll();	// For testings
 					authorize.requestMatchers(HttpMethod.GET, "/", "index", "home", "error", "/currentUser", "/redirect").permitAll();
+					authorize.requestMatchers(HttpMethod.GET, "/api/v1/classes/").permitAll();
 					authorize.requestMatchers(HttpMethod.POST, "/api/v1/auth/getToken").permitAll();
 					authorize.requestMatchers(HttpMethod.GET, "/api/v1/auth/verifyNewUser").permitAll();
 					authorize.requestMatchers(HttpMethod.POST, "/api/v1/admissionQuery/save", "/api/v1/query/save").permitAll();
-					authorize.requestMatchers(HttpMethod.POST, "/api/v1/auth/addNewUser").hasAnyAuthority("ADMIN");
+					authorize.requestMatchers(HttpMethod.POST, "/api/v1/auth/addNewUser", "/api/v1/classes").hasAnyAuthority(UserAuthorities_Types.ADMIN);
 					authorize.anyRequest().authenticated();
 				}).exceptionHandling(eh -> eh.authenticationEntryPoint(jwtEntryPoint))
 				.sessionManagement(sessMag -> sessMag.sessionCreationPolicy(SessionCreationPolicy.STATELESS))

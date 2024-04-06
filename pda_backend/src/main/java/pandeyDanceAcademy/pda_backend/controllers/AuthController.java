@@ -15,7 +15,6 @@ import javax.management.RuntimeErrorException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -52,9 +51,9 @@ import pandeyDanceAcademy.pda_backend.entity.EmailDetails;
 import pandeyDanceAcademy.pda_backend.entity.Registrations;
 import pandeyDanceAcademy.pda_backend.entity.Users;
 import pandeyDanceAcademy.pda_backend.global.constants.Const;
-import pandeyDanceAcademy.pda_backend.service.inters.EmailSendingService;
-import pandeyDanceAcademy.pda_backend.service.respoInter.RegistrationsRepo;
-import pandeyDanceAcademy.pda_backend.service.respoInter.UserRepository;
+import pandeyDanceAcademy.pda_backend.respo.inter.RegistrationsRepo;
+import pandeyDanceAcademy.pda_backend.respo.inter.UserRepository;
+import pandeyDanceAcademy.pda_backend.service.inter.EmailSendingServiceInter;
 import pandeyDanceAcademy.pda_backend.utlity.Generator;
 
 @RestController
@@ -63,7 +62,7 @@ public class AuthController {
 	Logger logger = LoggerFactory.getLogger(AuthController.class);
 	private PasswordEncoder passwordEncoderBCrypt;
 	private EmailDetails eDetails;
-	private EmailSendingService emailService;
+	private EmailSendingServiceInter emailService;
 	private RegistrationsRepo userRegistrationRepo;
 	private UserRepository registeredUserRepo;
 	private UserDetailsService userDetailsService;
@@ -76,7 +75,7 @@ public class AuthController {
 
 	public AuthController(AuthenticationManager authenticationManager, JWTHelper jwtHelper,
 			UserDetailsService userDetailsService, PasswordEncoder passwordEncoderBCrypt, EmailDetails eDetails,
-			EmailSendingService emailService, RegistrationsRepo userRegistrationRepo,
+			EmailSendingServiceInter emailService, RegistrationsRepo userRegistrationRepo,
 			UserRepository registeredUserRepo) {
 		this.authenticationManager = authenticationManager;
 		this.jwtHelper = jwtHelper;
@@ -237,15 +236,16 @@ public class AuthController {
 	}
 
 	/**
-	 * In a typical JWT setup, the server doesn’t store tokens after they are
+	 * In a typical JWT setup, the server does not store tokens after they are
 	 * issued, so there’s no way to “delete” a token from the server. The token is
-	 * stateless, meaning all the information it carries is contained within the
+	 * stateLess, meaning all the information it carries is contained within the
 	 * token itself. Once a token is issued, it’s valid until its expiration time,
 	 * unless the server implements a token blacklist.
 	 * 
 	 * 
-	 * We can do these stuff to keep track of revoked jwt 1. Token Blacklisting 2.
-	 * Token versioning 3. Short Expiration Times
+	 * We can do these stuff to keep track of revoked JWT 
+	 * 1. Token Blacklisting 
+	 * 2. Token versioning 3. Short Expiration Times
 	 * 
 	 * @param token
 	 * @return
@@ -260,8 +260,8 @@ public class AuthController {
 		UserDetails userDetail = userDetailsService.loadUserByUsername(usernameFromToken);
 		String revokeToken = jwtHelper.revokeToken(userDetail.getUsername());
 
-//		return ResponseEntity.ok(Map.of(Const.MESSAGE, "Token revoked successfully -- " + revokeToken));
-		return ResponseEntity.status(HttpStatus.TEMPORARY_REDIRECT).header(HttpHeaders.LOCATION, clientLoginUrl).body(Map.of(Const.MESSAGE, "Token revoked successfully -- " + revokeToken + ", Redirecting to " + clientLoginUrl));
+		return ResponseEntity.ok(Map.of(Const.MESSAGE, "Token revoked successfully -- " + revokeToken));
+//		return ResponseEntity.status(HttpStatus.TEMPORARY_REDIRECT).header(HttpHeaders.LOCATION, clientLoginUrl).body(Map.of(Const.MESSAGE, "Token revoked successfully -- " + revokeToken + ", Redirecting to " + clientLoginUrl));
 	}
 
 	@ExceptionHandler({ MethodArgumentNotValidException.class, HttpMessageNotReadableException.class, IOException.class,
