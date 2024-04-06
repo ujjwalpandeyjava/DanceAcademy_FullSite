@@ -1,6 +1,6 @@
 import axios from "axios";
 import { toast } from "react-toastify";
-import { addJWTTokenInLocalStorage, getJWTTokenFromLocalStorage, getToHome, logoutUser, refreshToken } from "../components/global/Utlity";
+import { addJWTTokenInLocalStorage, getJWTTokenFromLocalStorage, getToHome, logoutUser, refreshToken } from "../visitor/global/Utlity";
 
 window.reLoginTime = null;
 window.extraTimeTimeOut = null;
@@ -75,13 +75,35 @@ const apiEndPoints = {
 				}
 			})
 		}
+	},
+	EMAIL(url = "api/v1/email") {
+		return {
+			simpleMail: (payload) => {
+				console.log(payload);
+				return ax.post(url + "/sendMail", payload.body, {
+					params: { ...payload.params }
+				})
+			}
+		}
+	},
+	CLASSES(url = "api/v1/classes") {
+		return {
+			getClasses: () => ax.get(url + "/"),
+			getFutureClasses: () => ax.get(url + "/newBatches"),
+			getPastClasses: () => ax.get(url + "/oldBatches"),
+			addNewClass: (payload) => ax.post(url + "/addNewClass", payload.body, {
+				params: payload.params
+			}),
+			deleteClass: (id) => ax.delete(url + "/" + id, {})
+		}
 	}
 }
 
 ax.interceptors.request.use(config => {
 	// console.log("from interceptor", { "Req params": config.params, "Req headers": config.headers });
 	// Set the header in their own api calls..
-	// config.headers['Content-Type'] = 'application/json';
+	// config.headers["Content-Type"] = "application/json";
+	// config.headers["Content-Type"] = "text/html; charset=utf-8";
 	// config.headers['Accept'] = 'application/json';
 
 	if (!config.url.endsWith('v1/auth/getToken')) {

@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import apiEndPoints from "../../actions/api";
-import { fallingLines } from "../../components/global/Utlity";
+import { fallingLines } from "../../visitor/global/Utlity";
 import Head from "../miniComp/Head";
 import AddNewAction from './AddNewAction';
 import ListOfUsers from './ListOfUsers';

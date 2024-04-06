@@ -6,10 +6,9 @@ import { RiCustomerService2Line } from "react-icons/ri";
 import { Link, Outlet } from 'react-router-dom';
 import sheet from './admin.module.css';
 import apiEndPoints from '../actions/api';
-import { logoutUser } from '../components/global/Utlity';
+import { logoutUser } from '../visitor/global/Utlity';
 import './Admin.scss';
 import { FaUsers } from "react-icons/fa";
-
 
 // https://www.npmjs.com/package/echarts for queries
 function Admin() {
@@ -21,11 +20,8 @@ function Admin() {
 				console.log(response);
 				return response.data
 			})
-			.then(response => {
-				// console.log(response);
-			})
 			.catch(error => {
-				console.error(error.message)
+				console.error(error, error.message)
 			});
 		window.addEventListener('resize', widthChange);
 		return () => {

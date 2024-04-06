@@ -18,10 +18,6 @@ function Apply() {
   const [submitState, setSubmitState] = useState(false);
 
   function submitForm() {
-    if (!name.current.value || !gender.current.value || !danceForm.current.value || !contactNo.current.value) {
-      toast.warn("Fill all required fields, (Name, Gender, Danced form, Contact No)");
-      return;
-    }
     setSubmitState(true)
     const formData = new FormData();
     formData.append("name", name.current.value);
@@ -41,8 +37,6 @@ function Apply() {
         formData.append("nImgList", imagesUpload.current.files[i]);
     }
 
-    console.log(formData);
-
     apiEndPoints.ADMISSION_QUERY_V1()
       .save(formData)
       .then(async response => {
@@ -54,13 +48,9 @@ function Apply() {
       })
       .catch(error => {
         if (error.response.status === 400) {
-          console.log(error.response.data);
-          let m = "";
-          for (const key in error.response.data) {
+          for (const key in error.response.data)
             if (error.response.data.hasOwnProperty(key))
-              m += `${error.response.data[key]}\n`
-          }
-          console.error(m);
+              toast.warn(`${key}: ${error.response.data[key]}`);
         }
       })
       .finally(() => {

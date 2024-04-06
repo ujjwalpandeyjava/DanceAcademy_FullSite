@@ -1,0 +1,32 @@
+.h1 {
+    text-align: center;
+    font-size: 3rem;
+    font-family: cursive;
+    font-weight: 100;
+    margin-bottom: 1.3rem;
+}
+
+.latestClasses {
+    margin-bottom: 1em;
+    padding: 1em;
+    overflow: auto;
+}
+.latestClasses table {
+    margin: auto;
+    text-align: left;
+    font-size: 1.25rem;
+}
+.latestClasses table tr :is(th, td) {
+    padding: 2px 1.3rem;
+}
+.latestClasses table tr:hover {
+    /* filter:  drop-shadow(0px 0px 3px gray); */
+    /* box-shadow: 1px 2px 3px gray; */
+    background-color: rgba(201, 201, 201, 0.574);
+}
+.notes{
+    min-width: 150px;
+    max-width: 200px;
+    white-space: nowrap;
+    overflow: scroll;
+}

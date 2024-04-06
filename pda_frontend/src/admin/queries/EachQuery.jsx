@@ -41,7 +41,7 @@ function EachQuery({ query }) {
 				</select>
 			</td>
 			<td>{moment(query.createdDateTime).format("DD-MM-YYYY HH:mm a")}</td>
-			<td>{query.solvedDateTime ? moment(query.solvedDateTime).format("DD-MM-YYYY HH:mm a") : "Connect"}</td>
+			<td>{query.solvedDateTime ? moment(query.solvedDateTime).format("DD-MM-YYYY HH:mm a") : "----"}</td>
 		</tr>)
 }
 

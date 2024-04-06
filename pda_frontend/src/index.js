@@ -1,9 +1,9 @@
 import React, { Fragment } from 'react';
 import ReactDOM from 'react-dom/client';
-import Apply from './components/apply';
-import ClassInfo from './components/classInfo';
-import Contact from './components/contact';
-import Home from './components/home';
+import Apply from './visitor/apply';
+import ClassInfo from './visitor/classInfo';
+import Contact from './visitor/contact';
+import Home from './visitor/home';
 // import { Provider } from 'react-redux';
 import { Outlet, Route, RouterProvider, createBrowserRouter, createRoutesFromElements } from 'react-router-dom';
 import 'react-toastify/dist/ReactToastify.css';
@@ -16,7 +16,7 @@ import Classes from './admin/classes/Classes.jsx';
 import AddNewUser from './admin/users/AddNewUser.jsx';
 import Users from './admin/users/Users.jsx';
 import App from './app';
-import './components/global/index.css';
+import './visitor/global/index.css';
 
 document.title = "Pandey Dance Academy";
 const routesWithJSX = createBrowserRouter(

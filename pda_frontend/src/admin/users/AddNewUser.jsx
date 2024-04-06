@@ -2,7 +2,7 @@ import { useRef, useState } from "react";
 import { SiBytedance } from "react-icons/si";
 import { toast } from "react-toastify";
 import apiEndPoints from "../../actions/api";
-import { TailSpinner } from "../../components/global/Utlity";
+import { TailSpinner } from "../../visitor/global/Utlity";
 import sheet from '../LoginForm.module.css';
 import Head from "../miniComp/Head";
 

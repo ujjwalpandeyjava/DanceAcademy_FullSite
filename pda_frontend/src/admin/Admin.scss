@@ -158,6 +158,20 @@
 				}
 			}
 			& > .details {
+				& > .contactReply {
+					margin-top: 3px;
+					display: flex;
+					justify-content: space-between;
+					align-items: center;
+					align-content: center;
+					flex-direction: row;
+					flex-wrap: wrap;
+					gap: 1em;
+					& > button.reply {
+						color: gray;
+						padding: 3px 0.7em;
+					}
+				}
 				padding: 2px 9px;
 				& > .detailsAction {
 					display: flex;
@@ -191,6 +205,64 @@
 							&:hover {
 								background-color: #ff8383;
 								color: black;
+							}
+						}
+					}
+				}
+			}
+
+			.emailReply {
+				box-shadow:
+					0 12px 14px -11px gray,
+					0 0 2px rgb(198, 197, 197);
+				max-width: 90%;
+				margin: 1em auto;
+				padding: 0.5em 0.6em;
+				border-radius: 4px;
+				input,
+				textarea {
+					margin-top: 5px;
+					min-width: 90%;
+					display: block;
+					margin-left: 10px;
+					padding: 0.3em 0.8em;
+				}
+				& > :is(h1, h2, h3, h4) {
+					margin: auto;
+					text-align: center;
+					text-transform: capitalize;
+					border-bottom: 1px dashed rgb(69, 69, 69);
+					filter: drop-shadow(-2px -2px 1px rgb(205, 239, 248)) drop-shadow(2px 2px 1px rgb(203, 232, 199));
+				}
+				& > div {
+					margin-block: 1em;
+					&.to {
+						& > input {
+							// cursor: no-drop;
+							cursor: none;
+						}
+					}
+					&.body {
+					}
+					&.action {
+						display: flex;
+						flex-direction: row;
+						flex-wrap: wrap;
+						align-content: center;
+						justify-content: space-evenly;
+						align-items: center;
+						button {
+							color: black;
+							background-color: #b8ceff;
+							border-radius: 5px;
+							box-shadow: 1px 1px 4px slateblue;
+							padding: 4px 11px;
+							font-size: large;
+							cursor: pointer;
+							&.close {
+								background-color: #ff6666;
+								box-shadow: 1px 1px 4px #ff6666;
+								border-color: firebrick;
 							}
 						}
 					}
@@ -256,7 +328,110 @@
 		}
 	}
 	.classes {
-		color: rgb(236, 32, 144);
+		// color: rgb(236, 32, 144);
+		& > div {
+			max-width: 100%;
+			overflow: auto;
+		}
+		& > .categorySelection {
+			display: flex;
+			flex-direction: row;
+			flex-wrap: nowrap;
+			align-items: center;
+			justify-content: flex-start;
+			padding: 0 2em;
+			gap: 2em;
+			margin-bottom: 1em;
+			border-bottom: 1px solid rgb(89, 13, 51);
+			& > button {
+				color: rgb(226, 55, 84);
+				border: 1px solid;
+				padding: 0.5em 1.5em;
+				border-radius: 5px;
+				cursor: pointer;
+				margin-block: 0 1.3em;
+				&:hover {
+					box-shadow: 0 0 4px pink;
+					background-color: rgba(255, 192, 203, 0.39);
+				}
+
+				&.active {
+					background-color: pink;
+					color: rgb(6, 6, 40);
+					font-weight: bold;
+				}
+			}
+		}
+		& table {
+			text-align: left;
+			width: 100%;
+			padding: 5px 1em;
+			& tr {
+				&:hover {
+					background-color: #bababac0;
+				}
+				& :is(th, td) {
+					padding: 7px 10px;
+					vertical-align: middle;
+					// &.notes {
+					min-width: 160px;
+					max-width: 200px;
+					white-space: nowrap;
+					overflow: scroll;
+					// }
+					button {
+						color: black;
+						padding: 3px 1em;
+						color: red;
+						border: 1px solid;
+						border-radius: 3px;
+						cursor: pointer;
+						transition: all 150ms ease-in-out;
+						&:hover {
+							color: white;
+							background-color: red;
+						}
+					}
+				}
+				& th {
+					text-transform: capitalize;
+				}
+			}
+		}
+		& .addClassForm {
+			// background-color: #0b0f3b;
+			padding-bottom: 1em;
+			& > div {
+				margin-block: 1em;
+				margin-left: 1em;
+				& > label {
+					display: block;
+					margin-left: -0.8em;
+				}
+				& > input {
+					margin-top: 0.5em;
+					padding: 5px 1em;
+					width: 100%;
+					min-width: 300px;
+				}
+			}
+			& > button {
+				color: #0f0f4d;
+				padding: 5px 1em;
+				border: 1px solid;
+				background-color: #e9e9ff;
+				font-size: 1.3em;
+				border-radius: 5px;
+				width: 350px;
+				margin: auto;
+				margin-top: 1.5em;
+				display: block;
+				cursor: pointer;
+				&:hover {
+					box-shadow: 0 0 5px gray;
+				}
+			}
+		}
 	}
 	.users {
 		.AddNewAction {

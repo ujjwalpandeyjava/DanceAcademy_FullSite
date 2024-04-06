@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import Head from "../miniComp/Head";
 import apiEndPoints from "../../actions/api";
-import { fallingLines } from "../../components/global/Utlity";
+import { fallingLines } from "../../visitor/global/Utlity";
 import EachQuery from "./EachQuery";
 
 
@@ -16,23 +16,18 @@ export default function Queries() {
         // console.log(response);
         if (response.status === 200) {
           return response.data;
-        } else {
+        } else
           console.warn(response);
-        }
       })
       .then(response => {
         console.log(response);
-        setQueries(response,);
+        setQueries(response);
       })
       .catch(error => {
         console.error(error, error.message);
       })
       .finally(() =>
         setIsLoading(false))
-
-    return () => {
-      // setQueries(null);
-    }
   }, [])
 
 
@@ -42,8 +37,8 @@ export default function Queries() {
       <Head title={"Queries"} />
       <div className="queries">
         {queries === null || isLoading ? fallingLines() : <div className="queryList">
-          {queries?.queries?.length < 1 ?
-            <h2>No user found!</h2> :
+          {queries?.queries?.length < 1  || queries?.length < 1?
+            <h2>No query found!</h2> :
             <table>
               <thead>
                 <tr>
@@ -52,7 +47,7 @@ export default function Queries() {
                   <th>Contact</th>
                   <th>Description</th>
                   <th>Status</th>
-                  <th>Date Time</th>
+                  <th>Asked on at</th>
                   <th>Solved on</th>
                 </tr>
               </thead>
