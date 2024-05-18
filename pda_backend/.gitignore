@@ -35,3 +35,4 @@ build/
 /.apt_generated_tests/
 
 /uploads
+.DS_Store

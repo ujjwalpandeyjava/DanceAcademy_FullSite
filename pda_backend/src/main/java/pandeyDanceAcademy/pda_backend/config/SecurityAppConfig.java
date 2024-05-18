@@ -63,7 +63,7 @@ public class SecurityAppConfig {
 		http.cors(cors -> cors.configurationSource(corsConfigurationSource())).csrf(csrf -> csrf.disable())
 				.authorizeHttpRequests(authorize -> {
 //					authorize.requestMatchers("/**").permitAll();	// For testings
-					authorize.requestMatchers(HttpMethod.GET, "/", "index", "home", "error", "/currentUser", "/redirect").permitAll();
+					authorize.requestMatchers(HttpMethod.GET, "/", "index", "home", "error", "/currentUser", "/redirect", "/api/v1/classes/", "api/v2/classes/**").permitAll();
 					authorize.requestMatchers(HttpMethod.GET, "/api/v1/classes/").permitAll();
 					authorize.requestMatchers(HttpMethod.POST, "/api/v1/auth/getToken").permitAll();
 					authorize.requestMatchers(HttpMethod.GET, "/api/v1/auth/verifyNewUser").permitAll();

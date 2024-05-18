@@ -7,7 +7,8 @@ window.extraTimeTimeOut = null;
 
 const ax = axios.create({
 	baseURL: `http://localhost:8882`,
-	timeout: 30000
+	timeout: 30000,
+	withCredentials: true	// Allow cookies
 });
 const apiEndPoints = {
 	SIMPLE(url = '') {
@@ -105,8 +106,7 @@ ax.interceptors.request.use(config => {
 	// config.headers["Content-Type"] = "application/json";
 	// config.headers["Content-Type"] = "text/html; charset=utf-8";
 	// config.headers['Accept'] = 'application/json';
-
-	if (!config.url.endsWith('v1/auth/getToken')) {
+	if (!config.url.endsWith('v1/auth/getToken') && !config.url.endsWith('api/v1/classes/')) {
 		let tokenData = getJWTTokenFromLocalStorage();
 		if (tokenData) {
 			config.headers['Authorization'] = `Bearer ${tokenData.token}`;

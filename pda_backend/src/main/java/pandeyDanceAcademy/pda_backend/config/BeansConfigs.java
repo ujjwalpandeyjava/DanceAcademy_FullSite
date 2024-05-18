@@ -2,6 +2,7 @@ package pandeyDanceAcademy.pda_backend.config;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.Primary;
 import org.springframework.context.annotation.Scope;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
@@ -12,14 +13,17 @@ import pandeyDanceAcademy.pda_backend.entity.EmailDetails;
 import pandeyDanceAcademy.pda_backend.entity.Registrations;
 
 @Configuration
+//@Scope(ConfigurableBeanFactory.SCOPE_PROTOTYPE)	// Not sensed by intellisense
 public class BeansConfigs {
 
+	@Primary
 	@Bean
 	@Scope("prototype")
 	public EmailDetails getEmailDetails() {
 		return new EmailDetails();
 	}
 
+	// default: @Bean(name = "getUserRegistration")
 	@Bean
 	@Scope("prototype")
 	public Registrations getUserRegistration() {
